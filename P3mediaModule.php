@@ -26,3 +26,5 @@ class P3mediaModule extends CWebModule
 			return false;
 	}
 }
+
+?>
