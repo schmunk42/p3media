@@ -1,6 +1,6 @@
 <?php
 
-class P3mediaModule extends CWebModule
+class P3MediaModule extends CWebModule
 {
 	public function init()
 	{
