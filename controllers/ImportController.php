@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('p3media.extensions.jquery-file-upload.*');
+
 class ImportController extends Controller {
 
 	public $breadcrumbs = array(
@@ -10,14 +12,38 @@ class ImportController extends Controller {
 		$this->render('index');
 	}
 
-	public function actionUpload()
-	{
+	public function actionUpload() {
 		$this->render('upload');
 	}
 
-	public function actionUploadFile()
-	{
-		echo '[{"name":"picture1.jpg","size":902604,"url":"\/\/example.org\/files\/picture1.jpg","thumbnail_url":"\/\/example.org\/thumbnails\/picture1.jpg","delete_url":"\/\/example.org\/upload-handler?file=picture1.jpg","delete_type":"DELETE"},{"name":"picture2.jpg","size":841946,"url":"\/\/example.org\/files\/picture2.jpg","thumbnail_url":"\/\/example.org\/thumbnails\/picture2.jpg","delete_url":"\/\/example.org\/upload-handler?file=picture2.jpg","delete_type":"DELETE"}]';
+	public function actionUploadFile() {
+		$script_dir = Yii::app()->basePath.'/data/p3media';
+		$script_dir_url = Yii::app()->baseUrl;
+		$options = array(
+			'upload_dir' => $script_dir . '/files/',
+			'upload_url' => $script_dir_url . '/files/',
+			'thumbnails_dir' => $script_dir . '/thumbnails/',
+			'thumbnails_url' => $script_dir_url . '/thumbnails/',
+			'thumbnail_max_width' => 80,
+			'thumbnail_max_height' => 80,
+			'field_name' => 'file'
+		);
+		$upload_handler = new EFileUploadHandler($options);
+
+		switch ($_SERVER['REQUEST_METHOD']) {
+			case 'HEAD':
+			case 'GET':
+				$upload_handler->get();
+				break;
+			case 'POST':
+				$upload_handler->post();
+				break;
+			#case 'DELETE':
+			#	$upload_handler->delete();
+			#	break;
+			default:
+				header('HTTP/1.0 405 Method Not Allowed');
+		}
 	}
 
 	public function actionScan() {
@@ -61,7 +87,7 @@ class ImportController extends Controller {
 		} else {
 			$warnings[] = "File not found";
 		}
-		
+
 		$result['errors'] = $warnings;
 		$result['message'] = $message;
 		echo CJSON::encode($result);
@@ -81,7 +107,7 @@ class ImportController extends Controller {
 			$model->originalName = $fileName;
 			copy($filePath, Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $md5);
 
-			$model->type = 1;//Media::TYPE_FILE;
+			$model->type = 1; //Media::TYPE_FILE;
 			$model->path = $md5 . ".xxx";
 			$model->parent_id = 1;
 			$model->md5 = $md5;
