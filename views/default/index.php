@@ -3,12 +3,14 @@ $this->breadcrumbs=array(
 	$this->module->id,
 );
 ?>
-<h1><?php echo $this->uniqueId . '/' . $this->action->id; ?></h1>
+<h1>Phundament 3 Media</h1>
 
+<h2>Import</h2>
 <p>
-This is the view content for action "<?php echo $this->action->id; ?>".
-The action belongs to the controller "<?php echo get_class($this); ?>" in the "<?php echo $this->module->id; ?>" module.
+<?php echo CHtml::link('Scan import directory', array('import/scan')); ?>
 </p>
+
+<h2>Manage</h2>
 <p>
-You may customize this page by editing <tt><?php echo __FILE__; ?></tt>
+<?php echo CHtml::link('Manage media files', array('media/admin')); ?>
 </p>
