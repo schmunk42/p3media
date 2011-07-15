@@ -2,6 +2,9 @@
 
 class P3MediaModule extends CWebModule
 {
+	public $dataAlias = "application.data.p3media";
+	public $importAlias = "application.data.p3media-import";
+
 	public function init()
 	{
 		// this method is called when the module is being created

@@ -44,20 +44,26 @@ Features
 
 Requirements
 ------------
-  - jQuery v. 1.4+
-  - jQuery UI v. 1.8+ (optional)
+  - jQuery v. 1.6+
+  - jQuery UI v. 1.8+ (required: Widget, optional: Progressbar, Button)
+  - jQuery Iframe Transport plugin (included)
+  - jQuery Templates plugin v. 1.0+ (optional)
+
+The jQuery UI widget factory is a requirement for the basic File Upload plugin, but very lightweight without any other dependencies. 
+The UI version of the File Upload plugin also requires the jQuery UI Progressbar and Button components as well as the jQuery Templates plugin. These dependencies are marked as optional, as the basic File Upload plugin can be used without them and the UI version of the plugin can be extended to override these dependencies with alternative solutions.
 
 Browser Support (tested versions)
 ---------------------------------
-  - Google Chrome - 7.0, 8.0, 9.0, 10.0, 11.0
-  - Apple Safari - 4.0, 5.0 ¹
-  - Mozilla Firefox - 3.5, 3.6, 4.0
-  - Opera - 10.6, 11.0, 11.1 ²
-  - Microsoft Internet Explorer 6.0, 7.0, 8.0, 9.0 ³
+  - Google Chrome - 7.0+
+  - Apple Safari - 4.0+
+  - Mozilla Firefox - 3.0+
+  - Opera - 10.0+
+  - Microsoft Internet Explorer 6.0+
 
-¹ Drag & Drop is not supported on the Windows version of Safari.
-² Opera has no suppport for Drag & Drop or upload progress, but support for multiple file selection since version 11.1.
-³ MSIE has no support for Drag & Drop, multiple file selection or upload progress.
+Drag & Drop is only supported on Google Chrome, Firefox 4.0+ and Safari 5.0+.  
+Microsoft Internet Explorer has no support for multiple file selection or upload progress.  
+Extended browser support information:
+https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support
 
 License
 -------
@@ -71,3 +77,13 @@ https://github.com/blueimp/jQuery-File-Upload
 Documentation
 -------------
 https://github.com/blueimp/jQuery-File-Upload/wiki
+
+Donations
+---------
+jQuery File Upload is free software, but you can donate to support the developer, Sebastian Tschan:
+
+flattr (€):
+https://flattr.com/thing/286433/jQuery-File-Upload-Plugin
+
+PayPal ($):
+https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PYWYSYP77KL54

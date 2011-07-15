@@ -1,12 +1,7 @@
-<?php
-
-$this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
-
-?>
 <!DOCTYPE HTML>
 <!--
 /*
- * jQuery File Upload Plugin HTML Example 5.0.5
+ * jQuery File Upload Plugin Tests 3.0.1
  * https://github.com/blueimp/jQuery-File-Upload
  *
  * Copyright 2010, Sebastian Tschan
@@ -16,58 +11,44 @@ $this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
  * http://creativecommons.org/licenses/MIT/
  */
 -->
-
-<div id="file_upload">
-    <form action="<?php echo $this->createUrl('import/upload') ?>" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file[]" multiple>
-        <button type="submit">Upload</button>
-        <div class="file_upload_label">Upload files</div>
-    </form>
-    <table class="files">
-        <tr class="file_upload_template" style="display:none;">
-            <td class="file_upload_preview"></td>
-            <td class="file_name"></td>
-            <td class="file_size"></td>
-            <td class="file_upload_progress"><div></div></td>
-            <td class="file_upload_start"><button>Start</button></td>
-            <td class="file_upload_cancel"><button>Cancel</button></td>
-        </tr>
-        <tr class="file_download_template" style="display:none;">
-            <td class="file_download_preview"></td>
-            <td class="file_name"><a></a></td>
-            <td class="file_size"></td>
-            <td class="file_download_delete" colspan="3"><button>Delete</button></td>
-        </tr>
-    </table>
-    <div class="file_upload_overall_progress"><div style="display:none;"></div></div>
-    <div class="file_upload_buttons">
-        <button class="file_upload_start">Start All</button> 
-        <button class="file_upload_cancel">Cancel All</button> 
-        <button class="file_download_delete">Delete All</button>
-    </div>
-</div>
-
-
-<!--
-
-<div id="fileupload">
-        <div class="fileupload-buttonbar">
-
-            <label class="fileinput-button">
-                <span>Add files...</span>
-                <input type="file" name="files[]" multiple>
-            </label>
-            <button type="submit" class="start">Start upload</button>
-            <button type="reset" class="cancel">Cancel upload</button>
-            <button type="button" class="delete">Delete files</button>
-			<img>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<title>jQuery File Upload Plugin Tests</title>
+<link rel="stylesheet" href="http://code.jquery.com/qunit/git/qunit.css">
+</head>
+<body>
+<h1 id="qunit-header">jQuery File Upload Plugin Tests</h1>
+<h2 id="qunit-banner"></h2>
+<div id="qunit-testrunner-toolbar"></div>
+<h2 id="qunit-userAgent"></h2>
+<ol id="qunit-tests"></ol>
+<div id="qunit-fixture">
+    <div id="fileupload">
+        <form action="../example/upload.php" method="POST" enctype="multipart/form-data">
+            <div class="fileupload-buttonbar">
+                <label class="fileinput-button">
+                    <span>Add files...</span>
+                    <input type="file" name="files[]" multiple>
+                </label>
+                <button type="submit" class="start">Start upload</button>
+                <button type="reset" class="cancel">Cancel upload</button>
+                <button type="button" class="delete">Delete files</button>
+            </div>
+        </form>
+        <div class="fileupload-content">
+            <table class="files"></table>
+            <div class="fileupload-progressbar"></div>
         </div>
-    <div class="fileupload-content">
-        <table class="files"></table>
-        <div class="fileupload-progressbar"></div>
     </div>
 </div>
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script src="../jquery.iframe-transport.js"></script>
+<script src="../jquery.fileupload.js"></script>
+<script src="../jquery.fileupload-ui.js"></script>
+<script src="http://code.jquery.com/qunit/git/qunit.js"></script>
 <script id="template-upload" type="text/x-jquery-tmpl">
     <tr class="template-upload{{if error}} ui-state-error{{/if}}">
         <td class="preview"></td>
@@ -89,7 +70,6 @@ $this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
         <td class="cancel"><button>Cancel</button></td>
     </tr>
 </script>
-
 <script id="template-download" type="text/x-jquery-tmpl">
     <tr class="template-download{{if error}} ui-state-error{{/if}}">
         {{if error}}
@@ -130,4 +110,6 @@ $this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
         </td>
     </tr>
 </script>
--->
+<script src="tests.js"></script>
+</body> 
+</html>

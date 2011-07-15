@@ -26,12 +26,13 @@ class EFileUpload extends CWidget {
 
 		$cs->registerScriptFile($am->publish($assetsPath.DIRECTORY_SEPARATOR.'jquery.fileupload.js'), CClientScript::POS_END);
 		$cs->registerScriptFile($am->publish($assetsPath.DIRECTORY_SEPARATOR.'jquery.fileupload-ui.js'), CClientScript::POS_END);
-		$cs->registerScriptFile($am->publish($assetsPath.DIRECTORY_SEPARATOR.'jquery.iframe-transport.js'), CClientScript::POS_END);
+		#$cs->registerScriptFile($am->publish($assetsPath.DIRECTORY_SEPARATOR.'jquery.iframe-transport.js'), CClientScript::POS_END);
 
+        $cs->registerScriptFile($am->publish($assetsPath.DIRECTORY_SEPARATOR.'example/jquery.fileupload-uix.js'), CClientScript::POS_END);
 		$cs->registerCssFile($am->publish($assetsPath.DIRECTORY_SEPARATOR.'jquery.fileupload-ui.css'));
 		$cs->registerCssFile($am->publish($assetsPath.DIRECTORY_SEPARATOR.'example/style.css'));
 
-		$cs->registerScriptFile($am->publish($assetsPath.DIRECTORY_SEPARATOR.'example/application.js'), CClientScript::POS_END);
+		$cs->registerScriptFile($am->publish($assetsPath.DIRECTORY_SEPARATOR.'../application.js'), CClientScript::POS_END);
 	}
 }
 
