@@ -1,5 +1,5 @@
 <?php
-$this->breadcrumbs=array(
+$this->breadcrumbs = array(
 	$this->module->id,
 );
 ?>
@@ -7,10 +7,17 @@ $this->breadcrumbs=array(
 
 <h2>Import</h2>
 <p>
-<?php echo CHtml::link('Scan import directory', array('import/scan')); ?>
+<ul>
+	<li><?php echo CHtml::link('Scan import directory', array('import/scan')); ?></li>
+	<li><?php echo CHtml::link('Upload from browser', array('import/upload')); ?></li>
+</ul>
 </p>
 
 <h2>Manage</h2>
 <p>
-<?php echo CHtml::link('Manage media files', array('media/admin')); ?>
+<ul>
+	<li>
+		<?php echo CHtml::link('Manage media files', array('media/admin')); ?>
+	</li>
+</ul>
 </p>

@@ -1,3 +1,4 @@
+<?php $this->breadcrumbs[] = 'Scan'; ?>
 
 <table>
 

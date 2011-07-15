@@ -1,4 +1,5 @@
 <?php
+$this->breadcrumbs[] = 'Upload';
 
 $this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
 
@@ -18,7 +19,7 @@ $this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
 -->
 
 <div id="file_upload">
-    <form action="<?php echo $this->createUrl('import/upload') ?>" method="POST" enctype="multipart/form-data">
+    <form action="<?php echo $this->createUrl('import/uploadFile') ?>" method="POST" enctype="multipart/form-data">
         <input type="file" name="file[]" multiple>
         <button type="submit">Upload</button>
         <div class="file_upload_label">Upload files</div>
