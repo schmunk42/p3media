@@ -17,7 +17,6 @@ $(function () {
     $('#file_upload').fileUploadUIX();
     
     // Load existing files:
-    alert('uix');
     $.getJSON($('#file_upload').fileUploadUIX('option', 'url'), function (files) {
         var options = $('#file_upload').fileUploadUIX('option');
         options.adjustMaxNumberOfFiles(-files.length);

@@ -42,15 +42,16 @@ class ImportController extends Controller {
 				break;
 			case 'POST':
 				$result = $upload_handler->post();
+				$this->createMedia($result->name, $this->getDataDirectory(false).DIRECTORY_SEPARATOR.$result->name);
 				break;
-			#case 'DELETE':
-			#	$upload_handler->delete();
-			#	break;
+			case 'DELETE':
+				#$upload_handler->delete();
+				#$result = false;
+				$result = $this->deleteMedia($_GET['file']);
+				break;
 			default:
 				header('HTTP/1.0 405 Method Not Allowed');
 		}
-
-		$this->createMedia($result->name, $this->getDataDirectory(false).DIRECTORY_SEPARATOR.$result->name);
 
 		echo CJSON::encode($result);
 	}
@@ -112,7 +113,7 @@ class ImportController extends Controller {
 			$dataFilePath = $this->generateFileName($fileName);
 			copy($importFilePath, Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $dataFilePath);
 			
-			$this->createMedia($fileName, $dataFilePath);
+			echo CJSON::encode($this->createMedia($fileName, $dataFilePath));
 		} else {
 			throw new CHttpException(500, 'File not found');
 		}
@@ -137,7 +138,7 @@ class ImportController extends Controller {
 			$model->size = filesize($fullFilePath);
 
 			if ($model->save()) {
-				echo CJSON::encode($model->attributes);
+				return $model->attributes;
 			} else {
 				$errorMessage = "";
 				foreach ($model->errors AS $attrErrors) {
@@ -146,6 +147,14 @@ class ImportController extends Controller {
 				throw new CHttpException(500, $errorMessage);
 			}
 
+	}
+
+	private function deleteMedia($fileName){
+		$attributes['path'] = $this->getDataDirectory(false).DIRECTORY_SEPARATOR.$fileName;
+		$model = Media::model()->findByAttributes($attributes);
+		unlink($this->getDataDirectory(true).DIRECTORY_SEPARATOR.$fileName);
+		$model->delete();
+		return true;
 	}
 
 
