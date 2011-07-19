@@ -14,11 +14,11 @@ class EFileUploadHandler
     
     function __construct($options) {
         $this->upload_dir = $options['upload_dir'];
-        $this->upload_url = $options['upload_url'];
-        $this->thumbnails_dir = $options['thumbnails_dir'];
-        $this->thumbnails_url = $options['thumbnails_url'];
-        $this->thumbnail_max_width = $options['thumbnail_max_width'];
-        $this->thumbnail_max_height = $options['thumbnail_max_height'];
+        #$this->upload_url = $options['upload_url'];
+        #$this->thumbnails_dir = $options['thumbnails_dir'];
+        #$this->thumbnails_url = $options['thumbnails_url'];
+        #$this->thumbnail_max_width = $options['thumbnail_max_width'];
+        #$this->thumbnail_max_height = $options['thumbnail_max_height'];
         $this->field_name = $options['field_name'];
     }
     
@@ -28,15 +28,15 @@ class EFileUploadHandler
             $file = new stdClass();
             $file->name = $file_name;
             $file->size = filesize($file_path);
-            $file->url = $this->upload_url.rawurlencode($file->name);
-            $file->thumbnail = is_file($this->thumbnails_dir.$file_name) ?
-                $this->thumbnails_url.rawurlencode($file->name) : null;
+            #$file->url = $this->upload_url.rawurlencode($file->name);
+            #$file->thumbnail = is_file($this->thumbnails_dir.$file_name) ?
+            #    $this->thumbnails_url.rawurlencode($file->name) : null;
             return $file;
         }
         return null;
     }
 
-    private function create_thumbnail($file_name) {
+   /* private function create_thumbnail($file_name) {
         $file_path = $this->upload_dir.$file_name;
         $thumbnail_path = $this->thumbnails_dir.$file_name;
         list($img_width, $img_height) = @getimagesize($file_path);
@@ -83,7 +83,7 @@ class EFileUploadHandler
         @imagedestroy($src_img);
         @imagedestroy($thumbnail_img);
         return $success;
-    }
+    }*/
     
     private function handle_file_upload($uploaded_file, $name, $size, $type, $error) {
         $file = new stdClass();
@@ -95,6 +95,11 @@ class EFileUploadHandler
                 $file->name = substr($file->name, 1);
             }
             $file_path = $this->upload_dir.$file->name;
+			if (is_file($file_path)) {
+				#$file->error = "File exists";
+				#return $file;
+				throw new CHttpException(400, 'File exists');
+			}
             $append_file = is_file($file_path) && $file->size > filesize($file_path);
             clearstatcache();
             if ($uploaded_file && is_uploaded_file($uploaded_file)) {
@@ -119,8 +124,8 @@ class EFileUploadHandler
             $file_size = filesize($file_path);
             if ($file_size === $file->size) {
                 $file->url = $this->upload_url.rawurlencode($file->name);
-                $file->thumbnail = $this->create_thumbnail($file->name) ?
-                    $this->thumbnails_url.rawurlencode($file->name) : null;
+                /*$file->thumbnail = $this->create_thumbnail($file->name) ?
+                    $this->thumbnails_url.rawurlencode($file->name) : null;*/
             }
             $file->size = $file_size;
         } else {
@@ -142,7 +147,7 @@ class EFileUploadHandler
         }
         header('Cache-Control: no-cache, must-revalidate');
         header('Content-type: application/json');
-        echo json_encode($info);
+        return $info;
     }
     
     public function post() {
@@ -194,7 +199,7 @@ class EFileUploadHandler
         } else {
             header('Content-type: text/plain');
         }
-        echo json_encode($info);
+        return $info;
     }
     
     public function delete() {
@@ -207,7 +212,7 @@ class EFileUploadHandler
             unlink($thumbnail_path);
         }
         header('Content-type: application/json');
-        echo json_encode($success);
+        return $success;
     }
 }
 ?>

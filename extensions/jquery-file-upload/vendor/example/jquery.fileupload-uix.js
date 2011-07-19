@@ -166,14 +166,14 @@
                 downloadRow = handler.downloadTemplate
                     .clone().removeAttr('id');
             downloadRow.attr('data-id', file.id || file.name);
-            downloadRow.find('.file_name a')
+            downloadRow.find('.file_name')
                 .text(fileName);
             downloadRow.find('.file_size')
                 .text(handler.formatFileSize(file.size));
             if (thumbnailUrl) {
-                downloadRow.find('.file_download_preview').append(
+                /*downloadRow.find('.file_download_preview').append(
                     $('<a/>').append($('<img/>').attr('src', thumbnailUrl))
-                );
+                );*/
                 downloadRow.find('a').attr('target', '_blank');
             }
             downloadRow.find('a')

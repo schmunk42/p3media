@@ -35,7 +35,7 @@ $this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
         </tr>
         <tr class="file_download_template" style="display:none;">
             <td class="file_download_preview"></td>
-            <td class="file_name"><a></a></td>
+            <td class="file_name"></td>
             <td class="file_size"></td>
             <td class="file_download_delete" colspan="3"><button>Delete</button></td>
         </tr>
@@ -44,7 +44,7 @@ $this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
     <div class="file_upload_buttons">
         <button class="file_upload_start">Start All</button> 
         <button class="file_upload_cancel">Cancel All</button> 
-        <button class="file_download_delete">Delete All</button>
+        <!--<button class="file_download_delete">Delete All</button>-->
     </div>
 </div>
 

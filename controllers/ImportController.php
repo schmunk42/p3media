@@ -8,6 +8,11 @@ class ImportController extends Controller {
 		'P3 Media' => array('/p3media')
 	);
 
+	public function  init() {
+		parent::init();
+		$this->getDataDirectory();
+	}
+
 	public function actionIndex() {
 		$this->render('index');
 	}
@@ -17,15 +22,15 @@ class ImportController extends Controller {
 	}
 
 	public function actionUploadFile() {
-		$script_dir = Yii::app()->basePath.'/data/p3media';
-		$script_dir_url = Yii::app()->baseUrl;
+		#$script_dir = Yii::app()->basePath.'/data/p3media';
+		#$script_dir_url = Yii::app()->baseUrl;
 		$options = array(
-			'upload_dir' => $script_dir . '/files/',
-			'upload_url' => $script_dir_url . '/files/',
-			'thumbnails_dir' => $script_dir . '/thumbnails/',
-			'thumbnails_url' => $script_dir_url . '/thumbnails/',
-			'thumbnail_max_width' => 80,
-			'thumbnail_max_height' => 80,
+			'upload_dir' => $this->getDataDirectory(true).DIRECTORY_SEPARATOR,
+			#'upload_url' => $script_dir_url . '/files/',
+			#'thumbnails_dir' => $script_dir . '/thumbnails/',
+			#'thumbnails_url' => $script_dir_url . '/thumbnails/',
+			#'thumbnail_max_width' => 80,
+			#'thumbnail_max_height' => 80,
 			'field_name' => 'file'
 		);
 		$upload_handler = new EFileUploadHandler($options);
@@ -33,10 +38,10 @@ class ImportController extends Controller {
 		switch ($_SERVER['REQUEST_METHOD']) {
 			case 'HEAD':
 			case 'GET':
-				$upload_handler->get();
+				$result = $upload_handler->get();
 				break;
 			case 'POST':
-				$upload_handler->post();
+				$result = $upload_handler->post();
 				break;
 			#case 'DELETE':
 			#	$upload_handler->delete();
@@ -44,6 +49,10 @@ class ImportController extends Controller {
 			default:
 				header('HTTP/1.0 405 Method Not Allowed');
 		}
+
+		$this->createMedia($result->name, $this->getDataDirectory(false).DIRECTORY_SEPARATOR.$result->name);
+
+		echo CJSON::encode($result);
 	}
 
 	public function actionScan() {
@@ -93,27 +102,39 @@ class ImportController extends Controller {
 		echo CJSON::encode($result);
 	}
 
-	public function actionFile() {
+	public function actionLocalFile() {
 
 		if ($this->resolveFilePath($_GET['fileName'])) {
+
 			$fileName = $_GET['fileName'];
-			$filePath = $this->resolveFilePath($_GET['fileName']);
-			$md5 = md5_file($filePath);
-			$getimagesize = getimagesize($filePath);
+			$importFilePath = $this->resolveFilePath($_GET['fileName']);
+
+			$dataFilePath = $this->generateFileName($fileName);
+			copy($importFilePath, Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $dataFilePath);
+			
+			$this->createMedia($fileName, $dataFilePath);
+		} else {
+			throw new CHttpException(500, 'File not found');
+		}
+	}
+
+	private function createMedia($fileName, $filePath){
+			$fullFilePath = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $filePath;
+			$md5 = md5_file($fullFilePath);
+			$getimagesize = getimagesize($fullFilePath);
 
 			$model = new Media;
 
-			$model->title = $this->cleanName($_GET['fileName'], 32);
+			$model->title = $this->cleanName($fileName, 32);
 			$model->originalName = $fileName;
-			copy($filePath, Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $md5);
 
 			$model->type = 1; //Media::TYPE_FILE;
-			$model->path = $md5 . ".xxx";
+			$model->path = $filePath;
 			$model->parent_id = 1;
 			$model->md5 = $md5;
-			$model->mimeType = exec("file -bI " . escapeshellarg($filePath));
-			$model->info = CJSON::encode(getimagesize($filePath));
-			$model->size = filesize($filePath);
+			$model->mimeType = exec("file -bI " . escapeshellarg($fullFilePath));
+			$model->info = CJSON::encode(getimagesize($fullFilePath));
+			$model->size = filesize($fullFilePath);
 
 			if ($model->save()) {
 				echo CJSON::encode($model->attributes);
@@ -124,10 +145,9 @@ class ImportController extends Controller {
 				}
 				throw new CHttpException(500, $errorMessage);
 			}
-		} else {
-			throw new CHttpException(500, 'File not found');
-		}
+
 	}
+
 
 	private function resolveFilePath($fileName) {
 		$filePath = realpath(Yii::getPathOfAlias($this->module->importAlias) . DIRECTORY_SEPARATOR . $fileName);
@@ -152,6 +172,24 @@ class ImportController extends Controller {
 			$name = substr($name, 0, $maxLength / 2 - 2) . ".." . substr($name, strlen($name) - $maxLength / 2 + 1);
 		}
 		return $name;
+	}
+
+	private function generateFileName($fileName){
+		$ext = strrchr($fileName,'.');
+		return Yii::app()->user->id.DIRECTORY_SEPARATOR.uniqid($fileName."-").$ext;
+	}
+
+	private function getDataDirectory($fullPath = true){
+		$dataDirectory = Yii::app()->user->id;
+		$fullDataDirectory = Yii::getPathOfAlias($this->module->dataAlias).DIRECTORY_SEPARATOR.$dataDirectory;
+		if (!is_dir($fullDataDirectory)) {
+			mkdir ($fullDataDirectory);
+		}
+
+		if ($fullPath === true)
+			return $fullDataDirectory;
+		else
+			return $dataDirectory;
 	}
 
 	// -----------------------------------------------------------

@@ -35,7 +35,7 @@
 		echo CHtml::ajaxButton(
 			'import',
 			array(
-				'import/file',
+				'import/localFile',
 				'fileName' => $file->name,
 			),
 			array(
