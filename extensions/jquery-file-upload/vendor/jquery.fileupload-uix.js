@@ -257,8 +257,10 @@
         this.deleteHandler = function (e) {
             var row = $(this).closest('tr');
 	    if (confirm('Are you sure?')) {
+
+	    var qsaChar = (uploadHandler.url.search(/\?/) == -1)? '?' : '&';
             $.ajax({
-                url: uploadHandler.url + '&file=' + encodeURIComponent(
+                url: uploadHandler.url + qsaChar + 'file=' + encodeURIComponent(
                     row.attr('data-id')
                 ),
                 type: 'DELETE',
