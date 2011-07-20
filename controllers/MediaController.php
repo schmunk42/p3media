@@ -1,128 +1,108 @@
 <?php
 
-class MediaController extends GController
-{
-	public $layout='//layouts/column2';
+class MediaController extends GController {
 
-	public function filters()
-{
-	return array(
-			'accessControl', 
-			);
-}
+	public $layout = '//layouts/column2';
 
-public function accessRules()
-{
-	return array(
-			array('allow',  
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-				),
-			array('allow', 
-				'actions'=>array('getOptions', 'create','update'),
-				'users'=>array('@'),
-				),
-			array('allow', 
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-				),
-			array('deny', 
-				'users'=>array('*'),
-				),
-			);
-}
+	public function filters() {
+		return array(
+			'accessControl',
+		);
+	}
 
-		public function actionView()
-	{
-		$this->render('view',array(
+	public function accessRules() {
+		return array(
+			array('allow',
+				'actions' => array('admin', 'delete', 'getOptions', 'create', 'update', 'view', 'index'),
+				'users' => array('admin'),
+			),
+			array('deny',
+				'users' => array('*'),
+			),
+		);
+	}
+
+	public function actionView() {
+		$this->render('view', array(
 			'model' => $this->loadModel(),
 		));
 	}
 
-	public function actionCreate()
-	{
+	public function actionCreate() {
 		$model = new Media;
 
-				$this->performAjaxValidation($model, 'media-form');
-    
-		if(isset($_POST['Media'])) {
+		$this->performAjaxValidation($model, 'media-form');
+
+		if (isset($_POST['Media'])) {
 			$model->attributes = $_POST['Media'];
 
 
-			if($model->save()) {
-				$this->redirect(array('view','id'=>$model->id));
-			}			
-		} elseif(isset($_GET['Media'])) {
-				$model->attributes = $_GET['Media'];
+			if ($model->save()) {
+				$this->redirect(array('view', 'id' => $model->id));
+			}
+		} elseif (isset($_GET['Media'])) {
+			$model->attributes = $_GET['Media'];
 		}
 
 
-		if(Yii::app()->request->isAjaxRequest)
-			$this->renderPartial('_miniform',array( 'model'=>$model, 'relation' => $_GET['relation']));
+		if (Yii::app()->request->isAjaxRequest)
+			$this->renderPartial('_miniform', array('model' => $model, 'relation' => $_GET['relation']));
 		else
-			$this->render('create',array( 'model'=>$model));
+			$this->render('create', array('model' => $model));
 	}
 
-
-	public function actionUpdate()
-	{
+	public function actionUpdate() {
 		$model = $this->loadModel();
 
-				$this->performAjaxValidation($model, 'media-form');
-		
-		if(isset($_POST['Media']))
-		{
+		$this->performAjaxValidation($model, 'media-form');
+
+		if (isset($_POST['Media'])) {
 			$model->attributes = $_POST['Media'];
 
 
-			if($model->save()) {
+			if ($model->save()) {
 
-      $this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('view', 'id' => $model->id));
 			}
 		}
 
-		$this->render('update',array(
-					'model'=>$model,
-					));
+		$this->render('update', array(
+			'model' => $model,
+		));
 	}
 
-	public function actionDelete()
-	{
-		if(Yii::app()->request->isPostRequest)
-		{
+	public function actionDelete() {
+		if (Yii::app()->request->isPostRequest) {
 			$this->loadModel()->delete();
 
-			if(!isset($_GET['ajax']))
-			{
-				if(isset($_POST['returnUrl']))
-					$this->redirect($_POST['returnUrl']); 
+			if (!isset($_GET['ajax'])) {
+				if (isset($_POST['returnUrl']))
+					$this->redirect($_POST['returnUrl']);
 				else
 					$this->redirect(array('admin'));
 			}
 		}
 		else
 			throw new CHttpException(400,
-					Yii::t('app', 'Invalid request. Please do not repeat this request again.'));
+				Yii::t('app', 'Invalid request. Please do not repeat this request again.'));
 	}
 
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('Media');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+	public function actionIndex() {
+		$dataProvider = new CActiveDataProvider('Media');
+		$this->render('index', array(
+			'dataProvider' => $dataProvider,
 		));
 	}
 
-	public function actionAdmin()
-	{
-		$model=new Media('search');
+	public function actionAdmin() {
+		$model = new Media('search');
 		$model->unsetAttributes();
 
-		if(isset($_GET['Media']))
+		if (isset($_GET['Media']))
 			$model->attributes = $_GET['Media'];
 
-		$this->render('admin',array(
-			'model'=>$model,
+		$this->render('admin', array(
+			'model' => $model,
 		));
 	}
 

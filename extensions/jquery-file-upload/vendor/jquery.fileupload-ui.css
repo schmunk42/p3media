@@ -119,6 +119,8 @@ form.file_upload button,
 .file_upload .file_name {
   padding: 0 10px;
   font-size: 1.1em;
+
+  width: 50%;
 }
 
 .file_upload .file_size {

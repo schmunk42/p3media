@@ -46,7 +46,6 @@
         
     UploadHandler = function (container, options) {
         var uploadHandler = this;
-
         this.locale = {};
         this.maxFileSize = null;
         this.minFileSize = 1;
@@ -257,6 +256,7 @@
 
         this.deleteHandler = function (e) {
             var row = $(this).closest('tr');
+	    if (confirm('Are you sure?')) {
             $.ajax({
                 url: uploadHandler.url + '&file=' + encodeURIComponent(
                     row.attr('data-id')
@@ -270,6 +270,7 @@
                 }
             });
             e.preventDefault();
+	    }
         };
         
         this.initEventHandlers = function () {

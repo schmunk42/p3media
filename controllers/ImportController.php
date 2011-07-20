@@ -4,6 +4,31 @@ Yii::import('p3media.extensions.jquery-file-upload.*');
 
 class ImportController extends Controller {
 
+	public function filters()
+{
+	return array(
+			'accessControl',
+			);
+}
+
+public function accessRules()
+{
+	return array(
+			array('allow',
+				'actions'=>array('upload', 'uploadFile'),
+				'roles'=>array('p3media-user'),
+				),
+			array('allow',
+				'actions'=>array('index','check','localFile','scan'),
+				'users'=>array('admin'),
+				'roles'=>array('p3media-admin'),
+				),
+			array('deny',
+				'users'=>array('*'),
+				),
+			);
+}
+
 	public $breadcrumbs = array(
 		'P3 Media' => array('/p3media')
 	);

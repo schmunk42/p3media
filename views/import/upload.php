@@ -2,7 +2,6 @@
 $this->breadcrumbs[] = 'Upload';
 
 $this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
-
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -20,13 +19,18 @@ $this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
 
 <div id="file_upload">
     <form action="<?php echo $this->createUrl('import/uploadFile') ?>" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file[]" multiple>
+        <input type="file" name="file[]" multiple acceptFileTypes="pdf">
         <button type="submit">Upload</button>
         <div class="file_upload_label">Upload files</div>
     </form>
     <table class="files">
         <tr class="file_upload_template" style="display:none;">
-            <td class="file_upload_preview"></td>
+            <td class="file_upload_preview">
+				<div class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only">
+					<span class="ui-button-icon-primary ui-icon ui-icon-document-b"></span>
+					<span class="ui-button-text">Document</span>
+				</div>
+			</td>
             <td class="file_name"></td>
             <td class="file_size"></td>
             <td class="file_upload_progress"><div></div></td>
@@ -34,10 +38,17 @@ $this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
             <td class="file_upload_cancel"><button>Cancel</button></td>
         </tr>
         <tr class="file_download_template" style="display:none;">
-            <td class="file_download_preview"></td>
+            <td class="file_download_preview">
+				<div class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only">
+					<span class="ui-button-icon-primary ui-icon ui-icon-document"></span>
+					<span class="ui-button-text">Document</span>
+				</div>
+			</td>
             <td class="file_name"></td>
             <td class="file_size"></td>
-            <td class="file_download_delete" colspan="3"><button>Delete</button></td>
+			<td class="file_upload_progress"><div></div></td>
+			<td class="file_upload_start"></td>
+            <td class="file_download_delete"><button>Delete</button></td>
         </tr>
     </table>
     <div class="file_upload_overall_progress"><div style="display:none;"></div></div>
