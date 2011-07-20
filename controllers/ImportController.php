@@ -110,10 +110,10 @@ public function accessRules()
 		if (is_file($filePath) && strstr($filePath, Yii::getPathOfAlias($this->module->importAlias))) {
 			$md5 = md5_file($filePath);
 			$result['md5'] = $md5;
-			if (Media::model()->findByAttributes(array('md5' => $md5)) !== null) {
+			if (P3Media::model()->findByAttributes(array('md5' => $md5)) !== null) {
 				$message .= $warnings[] = "Identical file exists";
 			}
-			if (Media::model()->findByAttributes(array('originalName' => $fileName)) !== null) {
+			if (P3Media::model()->findByAttributes(array('originalName' => $fileName)) !== null) {
 				$message .= $warnings[] = "File with same name exists";
 			}
 
@@ -149,12 +149,12 @@ public function accessRules()
 			$md5 = md5_file($fullFilePath);
 			$getimagesize = getimagesize($fullFilePath);
 
-			$model = new Media;
+			$model = new P3Media;
 
 			$model->title = $this->cleanName($fileName, 32);
 			$model->originalName = $fileName;
 
-			$model->type = 1; //Media::TYPE_FILE;
+			$model->type = 1; //P3Media::TYPE_FILE;
 			$model->path = $filePath;
 			$model->parent_id = 1;
 			$model->md5 = $md5;
@@ -176,7 +176,7 @@ public function accessRules()
 
 	private function deleteMedia($fileName){
 		$attributes['path'] = $this->getDataDirectory(false).DIRECTORY_SEPARATOR.$fileName;
-		$model = Media::model()->findByAttributes($attributes);
+		$model = P3Media::model()->findByAttributes($attributes);
 		unlink($this->getDataDirectory(true).DIRECTORY_SEPARATOR.$fileName);
 		$model->delete();
 		return true;
@@ -193,7 +193,7 @@ public function accessRules()
 	}
 
 	private function findMd5($md5) {
-		$model = Media::model()->findByAttributes(array('md5' => $md5));
+		$model = P3Media::model()->findByAttributes(array('md5' => $md5));
 		if ($model === null)
 			return false;
 		else

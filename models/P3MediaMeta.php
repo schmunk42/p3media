@@ -1,6 +1,6 @@
 <?php
 
-class Media extends BaseMedia
+class P3MediaMeta extends BaseP3MediaMeta
 {
 	// Add your model-specific methods here. This file will not be overriden by gtc except you force it.
 	public static function model($className=__CLASS__)
@@ -14,7 +14,7 @@ class Media extends BaseMedia
 	}
 
 	public function __toString() {
-		return (string) $this->title;
+		return (string) $this->language;
 
 	}
 
@@ -41,5 +41,5 @@ class Media extends BaseMedia
 
 		public function getName()
 	{
-		return $this->title;	}
+		return $this->language;	}
 	}

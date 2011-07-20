@@ -21,12 +21,9 @@
  * @property string $keywords
  * @property string $customData
  *
- * Relations of table "p3_media_meta" available as properties of the model:
- * @property MediaMeta $parent
- * @property MediaMeta[] $mediaMetas
- * @property Media $p3Media
+ * There are no model relations.
  */
-abstract class BaseMediaMeta extends GActiveRecord{
+abstract class BaseP3MediaMeta extends GActiveRecord{
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -40,15 +37,15 @@ abstract class BaseMediaMeta extends GActiveRecord{
 	public function rules()
 	{
 		return array(
-			array('id, parent_id, p3_media_id', 'required'),
-			array('owner, language, status, type, checkAccess, begin, end, createdAt, createdBy, modifiedAt, modifiedBy, keywords, customData', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, parent_id, p3_media_id, modifiedAt', 'required'),
+			array('owner, language, status, type, checkAccess, begin, end, createdAt, createdBy, modifiedBy, keywords, customData', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('id, parent_id, p3_media_id, owner, status', 'numerical', 'integerOnly'=>true),
 			array('language', 'length', 'max'=>8),
 			array('type', 'length', 'max'=>45),
 			array('checkAccess', 'length', 'max'=>128),
 			array('createdBy, modifiedBy', 'length', 'max'=>32),
 			array('keywords', 'length', 'max'=>255),
-			array('begin, end, createdAt, modifiedAt, customData', 'safe'),
+			array('begin, end, createdAt, customData', 'safe'),
 			array('id, parent_id, p3_media_id, owner, language, status, type, checkAccess, begin, end, createdAt, createdBy, modifiedAt, modifiedBy, keywords, customData', 'safe', 'on'=>'search'),
 		);
 	}
@@ -56,9 +53,6 @@ abstract class BaseMediaMeta extends GActiveRecord{
 	public function relations()
 	{
 		return array(
-			'parent' => array(self::BELONGS_TO, 'MediaMeta', 'parent_id'),
-			'mediaMetas' => array(self::HAS_MANY, 'MediaMeta', 'parent_id'),
-			'p3Media' => array(self::BELONGS_TO, 'Media', 'p3_media_id'),
 		);
 	}
 

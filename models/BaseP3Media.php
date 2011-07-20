@@ -16,12 +16,9 @@
  * @property integer $size
  * @property string $info
  *
- * Relations of table "p3_media" available as properties of the model:
- * @property Media $parent
- * @property Media[] $medias
- * @property MediaMeta[] $mediaMetas
+ * There are no model relations.
  */
-abstract class BaseMedia extends GActiveRecord{
+abstract class BaseP3Media extends GActiveRecord{
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -51,9 +48,6 @@ abstract class BaseMedia extends GActiveRecord{
 	public function relations()
 	{
 		return array(
-			'parent' => array(self::BELONGS_TO, 'Media', 'parent_id'),
-			'medias' => array(self::HAS_MANY, 'Media', 'parent_id'),
-			'mediaMetas' => array(self::HAS_MANY, 'MediaMeta', 'p3_media_id'),
 		);
 	}
 
