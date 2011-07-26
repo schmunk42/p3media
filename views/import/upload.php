@@ -20,7 +20,7 @@ $this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
 <h2>Settings</h2>
 <ul>
 	<li>only PDFs</li>
-	<li>max. 3MB per file</li>
+	<li>max. 10MB per file</li>
 	<li>12 files total</li>
 </ul>
 <h2>How To</h2>

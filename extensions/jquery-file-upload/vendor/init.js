@@ -14,7 +14,7 @@
 
 $(function () {
     // Initialize jQuery File Upload (Extended User Interface Version):
-    $('#file_upload').fileUploadUIX({acceptFileTypes:/pdf/,maxFileSize:3000000,maxNumberOfFiles:12});
+    $('#file_upload').fileUploadUIX({acceptFileTypes:/pdf/,maxFileSize:10485760,maxNumberOfFiles:12});
     
     // Load existing files:
     $.getJSON($('#file_upload').fileUploadUIX('option', 'url'), function (files) {
