@@ -17,7 +17,7 @@ $this->breadcrumbs = array(
 <p>
 <ul>
 	<li>
-		<?php echo CHtml::link('Manage media files', array('/p3media/p3media/admin')); ?>
+		<?php echo CHtml::link('Manage media files', array('/p3media/p3Media/admin')); ?>
 	</li>
 </ul>
 </p>
