@@ -106,8 +106,10 @@ public function accessRules()
 		$message = null;
 
 		$fileName = $_GET['fileName'];
+		
 		$filePath = realpath(Yii::getPathOfAlias($this->module->importAlias) . DIRECTORY_SEPARATOR . $fileName);
-		if (is_file($filePath) && strstr($filePath, Yii::getPathOfAlias($this->module->importAlias))) {
+		
+		if (is_file($filePath) && strstr($filePath, realpath(Yii::getPathOfAlias($this->module->importAlias)))) {
 			$md5 = md5_file($filePath);
 			$result['md5'] = $md5;
 			if (P3Media::model()->findByAttributes(array('md5' => $md5)) !== null) {
@@ -185,7 +187,7 @@ public function accessRules()
 
 	private function resolveFilePath($fileName) {
 		$filePath = realpath(Yii::getPathOfAlias($this->module->importAlias) . DIRECTORY_SEPARATOR . $fileName);
-		if (is_file($filePath) && strstr($filePath, Yii::getPathOfAlias($this->module->importAlias))) {
+		if (is_file($filePath) && strstr($filePath, realpath(Yii::getPathOfAlias($this->module->importAlias)))) {
 			return $filePath;
 		} else {
 			return false;
