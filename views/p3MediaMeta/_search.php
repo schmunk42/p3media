@@ -7,17 +7,12 @@
 
         <div class="row">
                 <?php echo $form->label($model,'id'); ?>
-                <?php echo $form->textField($model,'id'); ?>
+                <?php echo $form->dropDownList($model,'id',CHtml::listData(P3Media::model()->findAll(), 'id', 'recordTitle'),array('prompt'=>Yii::t('app', 'All'))); ?>
         </div>
     
         <div class="row">
                 <?php echo $form->label($model,'parent_id'); ?>
-                <?php echo $form->dropDownList($model,'parent_id',CHtml::listData(MediaMeta::model()->findAll(), 'id', 'recordTitle'),array('prompt'=>Yii::t('app', 'All'))); ?>
-        </div>
-    
-        <div class="row">
-                <?php echo $form->label($model,'p3_media_id'); ?>
-                <?php echo $form->dropDownList($model,'p3_media_id',CHtml::listData(Media::model()->findAll(), 'id', 'recordTitle'),array('prompt'=>Yii::t('app', 'All'))); ?>
+                <?php echo $form->dropDownList($model,'parent_id',CHtml::listData(P3MediaMeta::model()->findAll(), 'id', 'recordTitle'),array('prompt'=>Yii::t('app', 'All'))); ?>
         </div>
     
         <div class="row">
@@ -50,7 +45,7 @@
                 <?php $this->widget('zii.widgets.jui.CJuiDatePicker',
 						 array(
 								 'model'=>'$model',
-								 'name'=>'MediaMeta[begin]',
+								 'name'=>'P3MediaMeta[begin]',
 								 'language'=> substr(Yii::app()->language,0,strpos(Yii::app()->language,'_')),
 								 'value'=>$model->begin,
 								 'htmlOptions'=>array('size'=>10, 'style'=>'width:80px !important'),
@@ -70,7 +65,7 @@
                 <?php $this->widget('zii.widgets.jui.CJuiDatePicker',
 						 array(
 								 'model'=>'$model',
-								 'name'=>'MediaMeta[end]',
+								 'name'=>'P3MediaMeta[end]',
 								 'language'=> substr(Yii::app()->language,0,strpos(Yii::app()->language,'_')),
 								 'value'=>$model->end,
 								 'htmlOptions'=>array('size'=>10, 'style'=>'width:80px !important'),

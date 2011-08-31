@@ -6,7 +6,7 @@ $this->breadcrumbs=array(
 	$model->title,
 	);
 
-if(!isset($this->menu))
+if(!isset($this->menu) || $this->menu === array())
 $this->menu=array(
 		array('label'=>Yii::t('app', 'List') . ' P3Media', 'url'=>array('index')),
 		array('label'=>Yii::t('app', 'Create') . ' P3Media', 'url'=>array('create')),
@@ -25,7 +25,11 @@ $locale = CLocale::getInstance(Yii::app()->language);
 'data'=>$model,
 	'attributes'=>array(
 					'id',
-		'parent_id',
+		array(
+			'name'=>'parent_id',
+			'value'=>($model->parent !== null)?CHtml::link($model->parent->title, array('p3Media/view','id'=>$model->parent->id)):'n/a',
+			'type'=>'html',
+		),
 		'title',
 		'description',
 		'type',
@@ -39,4 +43,27 @@ $locale = CLocale::getInstance(Yii::app()->language);
 	)); ?>
 
 
-	
+	<h2><?php echo CHtml::link(Yii::t('app','{relation}',array('{relation}'=>'P3Medias')), array('p3Media/admin'));?></h2>
+<ul><?php if (is_array($model->p3Medias)) foreach($model->p3Medias as $foreignobj) { 
+
+					echo '<li>';
+					echo CHtml::link(
+						$foreignobj->title?$foreignobj->title:$foreignobj->id,
+						array('p3Media/view', 'id' => $foreignobj->id));
+
+					}; ?></ul><p><?php echo CHtml::link(
+				Yii::t('app','Create'),
+				array('p3Media/create', 'P3Media' => array('parent_id'=>$model->id))
+				);  ?></p><h2><?php echo CHtml::link(Yii::t('app','{relation}',array('{relation}'=>'P3MediaMeta')),'/$this->resolveRelationController($relation)/admin');?></h2>
+<ul><?php $foreignobj = $model->p3MediaMeta; 
+
+					if ($foreignobj !== null) {
+					echo '<li>';
+					echo CHtml::link(
+						$foreignobj->owner?$foreignobj->owner:$foreignobj->id,
+						array('$this->resolveRelationController($relation)/view', 'id' => $foreignobj->id));
+
+					} ?></ul><p><?php if($model->p3MediaMeta === null) echo CHtml::link(
+				Yii::t('app','Create'),
+				array('p3MediaMeta/create', 'P3MediaMeta' => array('id'=>$model->{$model->tableSchema->primaryKey}))
+				);  ?></p>

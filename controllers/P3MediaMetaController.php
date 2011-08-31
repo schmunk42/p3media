@@ -1,6 +1,6 @@
 <?php
 
-class P3MediaController extends GController
+class P3MediaMetaController extends GController
 {
 	public $layout='//layouts/column2';
 
@@ -41,19 +41,19 @@ public function accessRules()
 
 	public function actionCreate()
 	{
-		$model = new P3Media;
+		$model = new P3MediaMeta;
 
-				$this->performAjaxValidation($model, 'p3-media-form');
+				$this->performAjaxValidation($model, 'p3-media-meta-form');
     
-		if(isset($_POST['P3Media'])) {
-			$model->attributes = $_POST['P3Media'];
+		if(isset($_POST['P3MediaMeta'])) {
+			$model->attributes = $_POST['P3MediaMeta'];
 
 
 			if($model->save()) {
 				$this->redirect(array('view','id'=>$model->id));
 			}			
-		} elseif(isset($_GET['P3Media'])) {
-				$model->attributes = $_GET['P3Media'];
+		} elseif(isset($_GET['P3MediaMeta'])) {
+				$model->attributes = $_GET['P3MediaMeta'];
 		}
 
 
@@ -68,11 +68,11 @@ public function accessRules()
 	{
 		$model = $this->loadModel();
 
-				$this->performAjaxValidation($model, 'p3-media-form');
+				$this->performAjaxValidation($model, 'p3-media-meta-form');
 		
-		if(isset($_POST['P3Media']))
+		if(isset($_POST['P3MediaMeta']))
 		{
-			$model->attributes = $_POST['P3Media'];
+			$model->attributes = $_POST['P3MediaMeta'];
 
 
 			if($model->save()) {
@@ -107,7 +107,7 @@ public function accessRules()
 
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('P3Media');
+		$dataProvider=new CActiveDataProvider('P3MediaMeta');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -115,11 +115,11 @@ public function accessRules()
 
 	public function actionAdmin()
 	{
-		$model=new P3Media('search');
+		$model=new P3MediaMeta('search');
 		$model->unsetAttributes();
 
-		if(isset($_GET['P3Media']))
-			$model->attributes = $_GET['P3Media'];
+		if(isset($_GET['P3MediaMeta']))
+			$model->attributes = $_GET['P3MediaMeta'];
 
 		$this->render('admin',array(
 			'model'=>$model,

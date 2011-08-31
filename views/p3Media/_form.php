@@ -10,13 +10,6 @@
 	echo $form->errorSummary($model);
 ?>
 	<div class="row">
-<?php echo $form->labelEx($model,'parent_id'); ?>
-<?php echo $form->textField($model,'parent_id'); ?>
-<?php echo $form->error($model,'parent_id'); ?>
-<?php if('_HINT_P3Media.parent_id' != $hint = Yii::t('app', '_HINT_P3Media.parent_id')) echo $hint; ?>
-</div>
-
-<div class="row">
 <?php echo $form->labelEx($model,'title'); ?>
 <?php echo $form->textField($model,'title',array('size'=>32,'maxlength'=>32)); ?>
 <?php echo $form->error($model,'title'); ?>
@@ -32,7 +25,7 @@
 
 <div class="row">
 <?php echo $form->labelEx($model,'type'); ?>
-<?php echo $form->textField($model,'type'); ?>
+<?php echo $form->textField($model,'type',array('size'=>45,'maxlength'=>45)); ?>
 <?php echo $form->error($model,'type'); ?>
 <?php if('_HINT_P3Media.type' != $hint = Yii::t('app', '_HINT_P3Media.type')) echo $hint; ?>
 </div>
@@ -60,7 +53,7 @@
 
 <div class="row">
 <?php echo $form->labelEx($model,'mimeType'); ?>
-<?php echo $form->textField($model,'mimeType',array('size'=>60,'maxlength'=>128)); ?>
+<?php echo $form->textField($model,'mimeType',array('size'=>60,'maxlength'=>64)); ?>
 <?php echo $form->error($model,'mimeType'); ?>
 <?php if('_HINT_P3Media.mimeType' != $hint = Yii::t('app', '_HINT_P3Media.mimeType')) echo $hint; ?>
 </div>
@@ -77,6 +70,27 @@
 <?php echo $form->textArea($model,'info',array('rows'=>6, 'cols'=>50)); ?>
 <?php echo $form->error($model,'info'); ?>
 <?php if('_HINT_P3Media.info' != $hint = Yii::t('app', '_HINT_P3Media.info')) echo $hint; ?>
+</div>
+
+<div class="row">
+<label for="parent"><?php echo Yii::t('app', 'Parent'); ?></label>
+<?php $this->widget(
+					'Relation',
+					array(
+							'model' => $model,
+							'relation' => 'parent',
+							'fields' => 'title',
+							'allowEmpty' => false,
+							'style' => 'dropdownlist',
+							'htmlOptions' => array(
+								'checkAll' => Yii::t('app', 'Choose all'),
+								),)
+						); ?><br />
+</div>
+
+<div class="row">
+<label for="p3MediaMeta"><?php echo Yii::t('app', 'P3MediaMeta'); ?></label>
+<?php if ($model->p3MediaMeta !== null) echo $model->p3MediaMeta->title;; ?><br />
 </div>
 
 

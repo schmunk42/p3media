@@ -6,7 +6,7 @@ $this->breadcrumbs=array(
 	Yii::t('app', 'Manage'),
 );
 
-if(!isset($this->menu))
+if(!isset($this->menu) || $this->menu === array())
 $this->menu=array(
 		array('label'=>Yii::t('app', 'List') . ' P3Media',
 			'url'=>array('index')),
@@ -36,7 +36,7 @@ foreach ($model->relations() AS $key => $relation)
 {
 	echo  "<li>".
 		substr(str_replace("Relation","",$relation[0]),1)." ".
-		CHtml::link(Yii::t("app",$relation[1]), array("/".$this->resolveRelationController($relation)."/admin"))." (".$relation[2].")".
+		CHtml::link(Yii::t("app",$relation[1]), array($this->resolveRelationController($relation)."/admin"))." (".$relation[2].")".
 		" </li>";
 }
 echo "</ul>";
@@ -57,7 +57,11 @@ $locale = CLocale::getInstance(Yii::app()->language);
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
-		'parent_id',
+		array(
+					'name'=>'parent_id',
+					'value'=>'CHtml::value($data,\'p3Medias.recordTitle\')',
+							'filter'=>CHtml::listData(P3Media::model()->findAll(), 'id', 'recordTitle'),
+							),
 		'title',
 		'description',
 		'type',

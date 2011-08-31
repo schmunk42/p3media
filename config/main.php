@@ -2,7 +2,7 @@
 
 return array(
 	'import' => array(
-		'p3media.models.*',
+		'application.modules.p3media.models.*',
 	),
 	'modules' => array(
 		'p3media'=>array(

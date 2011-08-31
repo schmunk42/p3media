@@ -8,10 +8,6 @@
 	<?php echo CHtml::encode($data->parent_id); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('p3_media_id')); ?>:</b>
-	<?php echo CHtml::encode($data->p3_media_id); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('owner')); ?>:</b>
 	<?php echo CHtml::encode($data->owner); ?>
 	<br />
@@ -28,11 +24,11 @@
 	<?php echo CHtml::encode($data->type); ?>
 	<br />
 
-	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('checkAccess')); ?>:</b>
 	<?php echo CHtml::encode($data->checkAccess); ?>
 	<br />
 
+	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('begin')); ?>:</b>
 	<?php echo CHtml::encode($data->begin); ?>
 	<br />

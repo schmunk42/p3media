@@ -12,7 +12,7 @@
     
         <div class="row">
                 <?php echo $form->label($model,'parent_id'); ?>
-                <?php echo $form->textField($model,'parent_id'); ?>
+                <?php echo $form->dropDownList($model,'parent_id',CHtml::listData(P3Media::model()->findAll(), 'id', 'recordTitle'),array('prompt'=>Yii::t('app', 'All'))); ?>
         </div>
     
         <div class="row">
@@ -27,7 +27,7 @@
     
         <div class="row">
                 <?php echo $form->label($model,'type'); ?>
-                <?php echo $form->textField($model,'type'); ?>
+                <?php echo $form->textField($model,'type',array('size'=>45,'maxlength'=>45)); ?>
         </div>
     
         <div class="row">
@@ -47,7 +47,7 @@
     
         <div class="row">
                 <?php echo $form->label($model,'mimeType'); ?>
-                <?php echo $form->textField($model,'mimeType',array('size'=>60,'maxlength'=>128)); ?>
+                <?php echo $form->textField($model,'mimeType',array('size'=>60,'maxlength'=>64)); ?>
         </div>
     
         <div class="row">

@@ -2,15 +2,15 @@
 if(!isset($this->breadcrumbs))
 
 $this->breadcrumbs=array(
-	'Media Metas'=>array(Yii::t('app', 'index')),
+	'P3 Media Metas'=>array(Yii::t('app', 'index')),
 	Yii::t('app', 'Manage'),
 );
 
-if(!isset($this->menu))
+if(!isset($this->menu) || $this->menu === array())
 $this->menu=array(
-		array('label'=>Yii::t('app', 'List') . ' MediaMeta',
+		array('label'=>Yii::t('app', 'List') . ' P3MediaMeta',
 			'url'=>array('index')),
-		array('label'=>Yii::t('app', 'Create') . ' MediaMeta',
+		array('label'=>Yii::t('app', 'Create') . ' P3MediaMeta',
 		'url'=>array('create')),
 	);
 
@@ -20,7 +20,7 @@ $this->menu=array(
 				return false;
 				});
 			$('.search-form form').submit(function(){
-				$.fn.yiiGridView.update('media-meta-grid', {
+				$.fn.yiiGridView.update('p3-media-meta-grid', {
 data: $(this).serialize()
 });
 				return false;
@@ -28,7 +28,7 @@ data: $(this).serialize()
 			");
 		?>
 
-<h1> <?php echo Yii::t('app', 'Manage'); ?> Media Metas</h1>
+<h1> <?php echo Yii::t('app', 'Manage'); ?> P3 Media Metas</h1>
 
 <?php
 echo "<ul>";
@@ -36,7 +36,7 @@ foreach ($model->relations() AS $key => $relation)
 {
 	echo  "<li>".
 		substr(str_replace("Relation","",$relation[0]),1)." ".
-		CHtml::link(Yii::t("app",$relation[1]), array("/".$this->resolveRelationController($relation)."/admin"))." (".$relation[2].")".
+		CHtml::link(Yii::t("app",$relation[1]), array($this->resolveRelationController($relation)."/admin"))." (".$relation[2].")".
 		" </li>";
 }
 echo "</ul>";
@@ -52,26 +52,25 @@ echo "</ul>";
 $locale = CLocale::getInstance(Yii::app()->language);
 
  $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'media-meta-grid',
+	'id'=>'p3-media-meta-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'id',
 		array(
-					'name'=>'parent_id',
-					'value'=>'CHtml::value($data,\'mediaMetas.recordTitle\')',
-							'filter'=>CHtml::listData(MediaMeta::model()->findAll(), 'id', 'recordTitle'),
+					'name'=>'id',
+					'value'=>'CHtml::value($data,\'id0.recordTitle\')',
+							'filter'=>CHtml::listData(P3Media::model()->findAll(), 'id', 'recordTitle'),
 							),
 		array(
-					'name'=>'p3_media_id',
-					'value'=>'CHtml::value($data,\'p3Media.recordTitle\')',
-							'filter'=>CHtml::listData(Media::model()->findAll(), 'id', 'recordTitle'),
+					'name'=>'parent_id',
+					'value'=>'CHtml::value($data,\'p3MediaMetas.recordTitle\')',
+							'filter'=>CHtml::listData(P3MediaMeta::model()->findAll(), 'id', 'recordTitle'),
 							),
 		'owner',
 		'language',
 		'status',
-		/*
 		'type',
+		/*
 		'checkAccess',
 		'begin',
 		'end',

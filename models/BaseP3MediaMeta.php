@@ -6,7 +6,6 @@
  * Columns in table "p3_media_meta" available as properties of the model:
  * @property integer $id
  * @property integer $parent_id
- * @property integer $p3_media_id
  * @property integer $owner
  * @property string $language
  * @property integer $status
@@ -21,7 +20,10 @@
  * @property string $keywords
  * @property string $customData
  *
- * There are no model relations.
+ * Relations of table "p3_media_meta" available as properties of the model:
+ * @property P3MediaMeta $parent
+ * @property P3MediaMeta[] $p3MediaMetas
+ * @property P3Media $id0
  */
 abstract class BaseP3MediaMeta extends GActiveRecord{
 	public static function model($className=__CLASS__)
@@ -37,22 +39,25 @@ abstract class BaseP3MediaMeta extends GActiveRecord{
 	public function rules()
 	{
 		return array(
-			array('id, parent_id, p3_media_id, modifiedAt', 'required'),
-			array('owner, language, status, type, checkAccess, begin, end, createdAt, createdBy, modifiedBy, keywords, customData', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, parent_id, p3_media_id, owner, status', 'numerical', 'integerOnly'=>true),
+			array('id, parent_id', 'required'),
+			array('owner, language, status, type, checkAccess, begin, end, createdAt, createdBy, modifiedAt, modifiedBy, keywords, customData', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, parent_id, owner, status', 'numerical', 'integerOnly'=>true),
 			array('language', 'length', 'max'=>8),
 			array('type', 'length', 'max'=>45),
 			array('checkAccess', 'length', 'max'=>128),
 			array('createdBy, modifiedBy', 'length', 'max'=>32),
 			array('keywords', 'length', 'max'=>255),
-			array('begin, end, createdAt, customData', 'safe'),
-			array('id, parent_id, p3_media_id, owner, language, status, type, checkAccess, begin, end, createdAt, createdBy, modifiedAt, modifiedBy, keywords, customData', 'safe', 'on'=>'search'),
+			array('begin, end, createdAt, modifiedAt, customData', 'safe'),
+			array('id, parent_id, owner, language, status, type, checkAccess, begin, end, createdAt, createdBy, modifiedAt, modifiedBy, keywords, customData', 'safe', 'on'=>'search'),
 		);
 	}
 
 	public function relations()
 	{
 		return array(
+			'parent' => array(self::BELONGS_TO, 'P3MediaMeta', 'parent_id'),
+			'p3MediaMetas' => array(self::HAS_MANY, 'P3MediaMeta', 'parent_id'),
+			'id0' => array(self::BELONGS_TO, 'P3Media', 'id'),
 		);
 	}
 
@@ -61,7 +66,6 @@ abstract class BaseP3MediaMeta extends GActiveRecord{
 		return array(
 			'id' => Yii::t('app', 'ID'),
 			'parent_id' => Yii::t('app', 'Parent'),
-			'p3_media_id' => Yii::t('app', 'P3 Media'),
 			'owner' => Yii::t('app', 'Owner'),
 			'language' => Yii::t('app', 'Language'),
 			'status' => Yii::t('app', 'Status'),
@@ -85,7 +89,6 @@ abstract class BaseP3MediaMeta extends GActiveRecord{
 
 		$criteria->compare('id', $this->id);
 		$criteria->compare('parent_id', $this->parent_id);
-		$criteria->compare('p3_media_id', $this->p3_media_id);
 		$criteria->compare('owner', $this->owner);
 		$criteria->compare('language', $this->language, true);
 		$criteria->compare('status', $this->status);
