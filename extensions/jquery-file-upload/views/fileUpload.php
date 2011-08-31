@@ -30,6 +30,7 @@
         <div class="fileupload-progressbar"></div>
     </div>
 </div>
+	
 <script id="template-upload" type="text/x-jquery-tmpl">
     <tr class="template-upload{{if error}} ui-state-error{{/if}}">
         <td class="preview"></td>
