@@ -3,37 +3,37 @@
 Yii::import('p3media.extensions.jquery-file-upload.*');
 
 class ImportController extends Controller {
-
-	public function filters()
-{
-	return array(
+	
+	
+	
+	public function filters() {
+		return array(
 			'accessControl',
-			);
-}
+		);
+	}
 
-public function accessRules()
-{
-	return array(
+	public function accessRules() {
+		return array(
 			array('allow',
-				'actions'=>array('upload', 'uploadFile'),
-				'roles'=>array('p3media-user'),
-				),
+				'actions' => array('upload', 'uploadFile'),
+				'roles' => array('p3media-user'),
+			),
 			array('allow',
-				'actions'=>array('index','check','localFile','scan'),
-				'users'=>array('admin'),
-				'roles'=>array('p3media-admin'),
-				),
+				'actions' => array('index', 'check', 'localFile', 'scan'),
+				'users' => array('admin'),
+				'roles' => array('p3media-admin'),
+			),
 			array('deny',
-				'users'=>array('*'),
-				),
-			);
-}
+				'users' => array('*'),
+			),
+		);
+	}
 
 	public $breadcrumbs = array(
 		'P3 Media' => array('/p3media')
 	);
 
-	public function  init() {
+	public function init() {
 		parent::init();
 		$this->getDataDirectory();
 	}
@@ -47,38 +47,60 @@ public function accessRules()
 	}
 
 	public function actionUploadFile() {
+		$contents = $this->uploadHandler();
+		echo $contents;
+		exit;
+		#echo CJSON::encode($result);
+	}
+	
+	private function uploadHandler(){
 		#$script_dir = Yii::app()->basePath.'/data/p3media';
 		#$script_dir_url = Yii::app()->baseUrl;
 		$options = array(
-			'upload_dir' => $this->getDataDirectory(true).DIRECTORY_SEPARATOR,
+			'upload_dir' => $this->getDataDirectory(true) . DIRECTORY_SEPARATOR,
 			#'upload_url' => $script_dir_url . '/files/',
 			#'thumbnails_dir' => $script_dir . '/thumbnails/',
 			#'thumbnails_url' => $script_dir_url . '/thumbnails/',
 			#'thumbnail_max_width' => 80,
 			#'thumbnail_max_height' => 80,
-			'field_name' => 'file'
+			'field_name' => 'files',
+			'image_versions' => array('thumbnail') // thumbnails disbaled
 		);
-		$upload_handler = new EFileUploadHandler($options);
 
+		// wrapper for jQuery-file-upload/upload.php
+		$upload_handler = new UploadHandler($options);
+
+		header('Pragma: no-cache');
+		header('Cache-Control: private, no-cache');
+		header('Content-Disposition: inline; filename="files.json"');
+		header('X-Content-Type-Options: nosniff');
+
+		ob_start();
 		switch ($_SERVER['REQUEST_METHOD']) {
 			case 'HEAD':
 			case 'GET':
-				$result = $upload_handler->get();
+				$upload_handler->get();
+				$contents = ob_get_contents();
 				break;
 			case 'POST':
-				$result = $upload_handler->post();
-				$this->createMedia($result->name, $this->getDataDirectory(false).DIRECTORY_SEPARATOR.$result->name);
+				$upload_handler->post();
+				$contents = ob_get_contents();
+				$result = CJSON::decode($contents);
+				#var_dump($result);exit;
+				$this->createMedia($result[0]['name'], $this->getDataDirectory(false).DIRECTORY_SEPARATOR.$result[0]['name']);
 				break;
 			case 'DELETE':
-				#$upload_handler->delete();
-				#$result = false;
+				$upload_handler->delete();
+				$contents = ob_get_contents();
 				$result = $this->deleteMedia($_GET['file']);
 				break;
 			default:
 				header('HTTP/1.0 405 Method Not Allowed');
+				$contents = ob_get_contents();
 		}
-
-		echo CJSON::encode($result);
+		ob_end_clean();
+		
+		return $contents;
 	}
 
 	public function actionScan() {
@@ -106,9 +128,9 @@ public function accessRules()
 		$message = null;
 
 		$fileName = $_GET['fileName'];
-		
+
 		$filePath = realpath(Yii::getPathOfAlias($this->module->importAlias) . DIRECTORY_SEPARATOR . $fileName);
-		
+
 		if (is_file($filePath) && strstr($filePath, realpath(Yii::getPathOfAlias($this->module->importAlias)))) {
 			$md5 = md5_file($filePath);
 			$result['md5'] = $md5;
@@ -139,51 +161,49 @@ public function accessRules()
 
 			$dataFilePath = $this->generateFileName($fileName);
 			copy($importFilePath, Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $dataFilePath);
-			
+
 			echo CJSON::encode($this->createMedia($fileName, $dataFilePath));
 		} else {
 			throw new CHttpException(500, 'File not found');
 		}
 	}
 
-	private function createMedia($fileName, $filePath){
-			$fullFilePath = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $filePath;
-			$md5 = md5_file($fullFilePath);
-			$getimagesize = getimagesize($fullFilePath);
+	private function createMedia($fileName, $filePath) {
+		$fullFilePath = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $filePath;
+		$md5 = md5_file($fullFilePath);
+		$getimagesize = getimagesize($fullFilePath);
 
-			$model = new P3Media;
+		$model = new P3Media;
 
-			$model->title = $this->cleanName($fileName, 32);
-			$model->originalName = $fileName;
+		$model->title = $this->cleanName($fileName, 32);
+		$model->originalName = $fileName;
 
-			$model->type = 1; //P3Media::TYPE_FILE;
-			$model->path = $filePath;
-			$model->parent_id = 1;
-			$model->md5 = $md5;
-			$model->mimeType = exec("file -bI " . escapeshellarg($fullFilePath));
-			$model->info = CJSON::encode(getimagesize($fullFilePath));
-			$model->size = filesize($fullFilePath);
+		$model->type = 1; //P3Media::TYPE_FILE;
+		$model->path = $filePath;
+		$model->parent_id = 1;
+		$model->md5 = $md5;
+		$model->mimeType = exec("file -bI " . escapeshellarg($fullFilePath));
+		$model->info = CJSON::encode(getimagesize($fullFilePath));
+		$model->size = filesize($fullFilePath);
 
-			if ($model->save()) {
-				return $model->attributes;
-			} else {
-				$errorMessage = "";
-				foreach ($model->errors AS $attrErrors) {
-					$errorMessage .= implode(',', $attrErrors);
-				}
-				throw new CHttpException(500, $errorMessage);
+		if ($model->save()) {
+			return $model->attributes;
+		} else {
+			$errorMessage = "";
+			foreach ($model->errors AS $attrErrors) {
+				$errorMessage .= implode(',', $attrErrors);
 			}
-
+			throw new CHttpException(500, $errorMessage);
+		}
 	}
 
-	private function deleteMedia($fileName){
-		$attributes['path'] = $this->getDataDirectory(false).DIRECTORY_SEPARATOR.$fileName;
+	private function deleteMedia($fileName) {
+		$attributes['path'] = $this->getDataDirectory(false) . DIRECTORY_SEPARATOR . $fileName;
 		$model = P3Media::model()->findByAttributes($attributes);
-		unlink($this->getDataDirectory(true).DIRECTORY_SEPARATOR.$fileName);
+		#unlink($this->getDataDirectory(true) . DIRECTORY_SEPARATOR . $fileName);
 		$model->delete();
 		return true;
 	}
-
 
 	private function resolveFilePath($fileName) {
 		$filePath = realpath(Yii::getPathOfAlias($this->module->importAlias) . DIRECTORY_SEPARATOR . $fileName);
@@ -210,16 +230,18 @@ public function accessRules()
 		return $name;
 	}
 
-	private function generateFileName($fileName){
-		$ext = strrchr($fileName,'.');
-		return Yii::app()->user->id.DIRECTORY_SEPARATOR.uniqid($fileName."-").$ext;
+	private function generateFileName($fileName) {
+		$ext = strrchr($fileName, '.');
+		return Yii::app()->user->id . DIRECTORY_SEPARATOR . uniqid($fileName . "-") . $ext;
 	}
 
-	private function getDataDirectory($fullPath = true){
+	private function getDataDirectory($fullPath = true) {
 		$dataDirectory = Yii::app()->user->id;
-		$fullDataDirectory = Yii::getPathOfAlias($this->module->dataAlias).DIRECTORY_SEPARATOR.$dataDirectory;
+		$fullDataDirectory = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $dataDirectory;
+		
 		if (!is_dir($fullDataDirectory)) {
-			mkdir ($fullDataDirectory);
+			mkdir($fullDataDirectory);
+			chmod($fullDataDirectory, 0777); // problems when doing this with mkdir
 		}
 
 		if ($fullPath === true)
