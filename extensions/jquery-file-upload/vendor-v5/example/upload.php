@@ -291,25 +291,4 @@ class UploadHandler
     }
 }
 
-$upload_handler = new UploadHandler();
-
-header('Pragma: no-cache');
-header('Cache-Control: private, no-cache');
-header('Content-Disposition: inline; filename="files.json"');
-header('X-Content-Type-Options: nosniff');
-
-switch ($_SERVER['REQUEST_METHOD']) {
-    case 'HEAD':
-    case 'GET':
-        $upload_handler->get();
-        break;
-    case 'POST':
-        $upload_handler->post();
-        break;
-    case 'DELETE':
-        $upload_handler->delete();
-        break;
-    default:
-        header('HTTP/1.0 405 Method Not Allowed');
-}
 ?>
