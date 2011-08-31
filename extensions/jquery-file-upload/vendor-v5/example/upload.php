@@ -1,6 +1,6 @@
 <?php
 /*
- * jQuery File Upload Plugin PHP Example 5.2.2
+ * jQuery File Upload Plugin PHP Example 5.2.4
  * https://github.com/blueimp/jQuery-File-Upload
  *
  * Copyright 2010, Sebastian Tschan
@@ -50,7 +50,7 @@ class UploadHandler
             )
         );
         if ($options) {
-            $this->options = array_merge_recursive($this->options, $options);
+            $this->options = array_replace_recursive($this->options, $options);
         }
     }
     
@@ -163,14 +163,14 @@ class UploadHandler
     
     private function handle_file_upload($uploaded_file, $name, $size, $type, $error) {
         $file = new stdClass();
-        $file->name = basename(stripslashes($name));
+        // Remove path information and dots around the filename, to prevent uploading
+        // into different directories or replacing hidden system files.
+        // Also remove control characters and spaces (\x00..\x20) around the filename:
+        $file->name = trim(basename(stripslashes($name)), ".\x00..\x20");
         $file->size = intval($size);
         $file->type = $type;
         $error = $this->has_error($uploaded_file, $file, $error);
         if (!$error && $file->name) {
-            if ($file->name[0] === '.') {
-                $file->name = substr($file->name, 1);
-            }
             $file_path = $this->options['upload_dir'].$file->name;
             $append_file = is_file($file_path) && $file->size > filesize($file_path);
             clearstatcache();
@@ -296,6 +296,7 @@ $upload_handler = new UploadHandler();
 header('Pragma: no-cache');
 header('Cache-Control: private, no-cache');
 header('Content-Disposition: inline; filename="files.json"');
+header('X-Content-Type-Options: nosniff');
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'HEAD':
