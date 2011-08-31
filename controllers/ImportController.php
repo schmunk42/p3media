@@ -3,7 +3,9 @@
 Yii::import('p3media.extensions.jquery-file-upload.*');
 
 class ImportController extends Controller {
-
+	
+	
+	
 	public function filters() {
 		return array(
 			'accessControl',
@@ -45,6 +47,13 @@ class ImportController extends Controller {
 	}
 
 	public function actionUploadFile() {
+		$contents = $this->uploadHandler();
+		echo $contents;
+		exit;
+		#echo CJSON::encode($result);
+	}
+	
+	private function uploadHandler(){
 		#$script_dir = Yii::app()->basePath.'/data/p3media';
 		#$script_dir_url = Yii::app()->baseUrl;
 		$options = array(
@@ -60,22 +69,22 @@ class ImportController extends Controller {
 
 		// wrapper for jQuery-file-upload/upload.php
 		$upload_handler = new UploadHandler($options);
-		ob_start();
+
 		header('Pragma: no-cache');
 		header('Cache-Control: private, no-cache');
 		header('Content-Disposition: inline; filename="files.json"');
 		header('X-Content-Type-Options: nosniff');
+
+		ob_start();
 		switch ($_SERVER['REQUEST_METHOD']) {
 			case 'HEAD':
 			case 'GET':
 				$upload_handler->get();
 				$contents = ob_get_contents();
-				ob_end_clean();
 				break;
 			case 'POST':
 				$upload_handler->post();
 				$contents = ob_get_contents();
-				ob_end_clean();
 				$result = CJSON::decode($contents);
 				#var_dump($result);exit;
 				$this->createMedia($result[0]['name'], $this->getDataDirectory(false).DIRECTORY_SEPARATOR.$result[0]['name']);
@@ -83,17 +92,15 @@ class ImportController extends Controller {
 			case 'DELETE':
 				$upload_handler->delete();
 				$contents = ob_get_contents();
-				ob_end_clean();
 				$result = $this->deleteMedia($_GET['file']);
 				break;
 			default:
-				$contents = ob_get_contents();
-				ob_end_clean();
 				header('HTTP/1.0 405 Method Not Allowed');
+				$contents = ob_get_contents();
 		}
-		echo $contents;
-		exit;
-		#echo CJSON::encode($result);
+		ob_end_clean();
+		
+		return $contents;
 	}
 
 	public function actionScan() {
@@ -231,8 +238,10 @@ class ImportController extends Controller {
 	private function getDataDirectory($fullPath = true) {
 		$dataDirectory = Yii::app()->user->id;
 		$fullDataDirectory = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $dataDirectory;
+		
 		if (!is_dir($fullDataDirectory)) {
 			mkdir($fullDataDirectory);
+			chmod($fullDataDirectory, 0777); // problems when doing this with mkdir
 		}
 
 		if ($fullPath === true)
