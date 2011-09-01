@@ -4,7 +4,21 @@ class FileController extends Controller
 {
 	public function actionIndex()
 	{
-		$this->render('index');
+		#$this->render('index');
+		if (!$_GET['id']) {
+			throw new CException('No file specified.');
+		} else {
+			$model = P3Media::model()->findByPk($_GET['id']);
+			$filename = Yii::getPathOfAlias($this->module->dataAlias).DIRECTORY_SEPARATOR.$model->path;
+			if (!is_file($filename)) {
+				throw new CException('File not found.');
+			} else {
+				header('Content-type: '.$model->mimeType);
+				readfile($filename);
+				exit;
+			}
+			
+		}
 	}
 
 	// -----------------------------------------------------------
