@@ -2,9 +2,45 @@
 
 class CkeditorController extends Controller
 {
+
+	public $layout = "//layouts/popup";
+	
+	private $_models;
+	
 	public function actionIndex()
 	{
-		$this->render('index');
+		$model=new P3Media('search');
+		$model->unsetAttributes();
+
+		if(isset($_GET['P3Media']))
+			$model->attributes = $_GET['P3Media'];
+				
+		$this->render('index', array('model'=>$model));
+	}
+
+	public function actionImage()
+	{
+		$model=new P3Media('search');
+		$model->unsetAttributes();
+		$model->attributes = array('mimeType' => 'image');
+
+		if(isset($_GET['P3Media']))
+			$model->attributes = $_GET['P3Media'];
+		
+
+		$this->render('index', array('model'=>$model));
+	}
+
+	public function actionFlash()
+	{
+		$this->render('index', array('model'=>$model));
+	}
+	
+	private function loadModel(){
+		$criteria = new CDbCriteria();
+		$criteria->addSearchCondition('mime', 'image');
+		
+		$this->_models = P3Media::model()->findAllByAttributes($criteria);		
 	}
 
 	// -----------------------------------------------------------

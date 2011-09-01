@@ -182,6 +182,9 @@ class ImportController extends Controller {
 		$model->path = $filePath;
 		$model->parent_id = 1;
 		$model->md5 = $md5;
+		if (!$mime = exec("file -bI " . escapeshellarg($fullFilePath))) {
+			$mime = $getimagesize['mime'];
+		}
 		$model->mimeType = exec("file -bI " . escapeshellarg($fullFilePath));
 		$model->info = CJSON::encode(getimagesize($fullFilePath));
 		$model->size = filesize($fullFilePath);

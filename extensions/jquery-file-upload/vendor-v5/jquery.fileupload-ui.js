@@ -479,7 +479,7 @@
         _deleteHandler: function (e) {
             e.preventDefault();
             var button = $(this);
-            e.data.fileupload._trigger('destroy', e, {
+	    e.data.fileupload._trigger('destroy', e, {
                 context: button.closest('.template-download'),
                 url: button.attr('data-url'),
                 type: button.attr('data-type'),
