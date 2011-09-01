@@ -11,8 +11,10 @@ class CkeditorController extends Controller
 	{
 		$model=new P3Media('search');
 		$model->unsetAttributes();
-		$model->attributes = array('mime'=>'image');
-		
+
+		if(isset($_GET['P3Media']))
+			$model->attributes = $_GET['P3Media'];
+				
 		$this->render('index', array('model'=>$model));
 	}
 
@@ -20,7 +22,11 @@ class CkeditorController extends Controller
 	{
 		$model=new P3Media('search');
 		$model->unsetAttributes();
-		$model->attributes = array('mime'=>'image');
+		$model->attributes = array('mimeType' => 'image');
+
+		if(isset($_GET['P3Media']))
+			$model->attributes = $_GET['P3Media'];
+		
 
 		$this->render('index', array('model'=>$model));
 	}

@@ -6,12 +6,12 @@ class FileController extends Controller
 	{
 		#$this->render('index');
 		if (!$_GET['id']) {
-			throw new CHttpException(404, 'No file specified.');
+			throw new CException('No file specified.');
 		} else {
 			$model = P3Media::model()->findByPk($_GET['id']);
 			$filename = Yii::getPathOfAlias($this->module->dataAlias).DIRECTORY_SEPARATOR.$model->path;
 			if (!is_file($filename)) {
-				throw new CHttpException(404, 'File not found.');
+				throw new CException('File not found.');
 			} else {
 				header('Content-type: '.$model->mimeType);
 				readfile($filename);

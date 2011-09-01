@@ -21,7 +21,7 @@ data: $(this).serialize()
 			");
 ?>
 
-<h1> <?php echo Yii::t('app', 'Manage'); ?> P3 Medias</h1>
+<h1> <?php echo Yii::t('app', 'Ckeditor'); ?> P3 Medias</h1>
 
 <?php echo CHtml::link(Yii::t('app', 'Advanced Search'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
@@ -42,17 +42,23 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'columns' => array(
 		'id',
 		array(
+			'name' => 'path',
+			'type' => 'raw',
+			'value' => 'CHtml::link(
+				CHtml::image(Yii::app()->controller->createUrl("/p3media/file",array("id"=>$data->id)), $data->title, array("class"=>"ckeditor")),
+				"#", 
+				array("onclick"=>"select(".$data->id.");")
+				)
+				',
+		),
+		array(
 			'name' => 'parent_id',
 			'value' => 'CHtml::value($data,\'p3Medias.recordTitle\')',
 			'filter' => CHtml::listData(P3Media::model()->findAll(), 'id', 'recordTitle'),
 		),
-		array(
-			'name' => 'title',
-			'type' => 'raw',
-			'value' => 'CHtml::link(CHtml::encode($data->title), "#", array("onclick"=>"select(".$data->id.");"))',
-		),
+		'title',
 		'description',
-		'type',
+		'mimeType',
 		'path',
 	/*
 	  'md5',
