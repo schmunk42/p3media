@@ -14,19 +14,7 @@ $this->breadcrumbs[] = 'Upload';
  * http://creativecommons.org/licenses/MIT/
  */
 -->
-<h1>PadSync</h1>
-<h2>Settings</h2>
-<ul>
-	<li>only PDFs</li>
-	<li>max. 10MB per file</li>
-	<li>12 files total</li>
-</ul>
-<h2>How To</h2>
-<ol>
-	<li>Click on "Upload files" and select files or drag files there</li>
-	<li>Press [Start all]</li>
-	<li>Press [Update now" on your iPad]</li>
-</ol>
+<h1>Phundament 3 Media Upload</h1>
 <?php
-$this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
+	$this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
 ?>

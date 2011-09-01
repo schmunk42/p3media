@@ -88,7 +88,7 @@
             <td colspan="2"></td>
         {{/if}}
         <td class="delete">
-            <button data-type="${delete_type}" data-url="${delete_url}">Delete</button>
+            <button data-type="${delete_type}" data-url="${delete_url}" onclick="alert('File could not be deleted')">Delete</button>
         </td>
     </tr>
 </script>
