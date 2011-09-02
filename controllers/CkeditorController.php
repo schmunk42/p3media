@@ -23,10 +23,11 @@ class CkeditorController extends Controller
 		$model=new P3Media('search');
 		$model->unsetAttributes();
 		$model->attributes = array('mimeType' => 'image');
-
+                
 		if(isset($_GET['P3Media']))
 			$model->attributes = $_GET['P3Media'];
 		
+        $model->dbCriteria->order = "id DESC";
 
 		$this->render('index', array('model'=>$model));
 	}
