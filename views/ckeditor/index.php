@@ -23,7 +23,12 @@ data: $(this).serialize()
 
 <h1> <?php echo Yii::t('app', 'Ckeditor'); ?> P3 Medias</h1>
 
-<?php echo CHtml::link(Yii::t('app', 'Advanced Search'), '#', array('class' => 'search-button')); ?>
+<?php 
+ echo CHtml::link(Yii::t('app', 'Advanced Search'), '#', array('class' => 'search-button')); 
+echo " ";
+echo CHtml::link('Upload',array('/p3media/import/upload'),array('target'=>'_blank'));
+?>
+
 <div class="search-form" style="display:none">
 	<?php
 	$this->renderPartial('/p3Media/_search', array(
