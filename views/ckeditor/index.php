@@ -26,7 +26,7 @@ data: $(this).serialize()
 <?php echo CHtml::link(Yii::t('app', 'Advanced Search'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
 	<?php
-	$this->renderPartial('/p3media/_search', array(
+	$this->renderPartial('/p3Media/_search', array(
 		'model' => $model,
 	));
 	?>

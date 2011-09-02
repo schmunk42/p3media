@@ -37,4 +37,17 @@ class P3Media extends BaseP3Media {
 		return $this->title;
 	}
 
+public function search() {
+    $criteria=new CDbCriteria;
+    return new CActiveDataProvider(get_class($this), array(
+        'criteria'=>$criteria,
+        'sort'=>array(
+            'defaultOrder'=>'id DESC',
+        ),
+        'pagination'=>array(
+            'pageSize'=>4
+        ),
+    ));
+}
+
 }
