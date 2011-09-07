@@ -83,6 +83,22 @@ class ImportController extends Controller {
 				$contents = ob_get_contents();
 				break;
 			case 'POST':
+				// check if file exists
+				$upload = $_FILES[$options['field_name']];
+				$tmp_name = $_FILES[$options['field_name']]['tmp_name'];
+				if (is_array($tmp_name))
+				foreach ($tmp_name AS $index => $value){
+					$model = P3Media::model()->findByAttributes(array('path' => Yii::app()->user->id.DIRECTORY_SEPARATOR.$upload['name'][$index]));
+					if ($model !== null) {
+						#throw new CHttpException(500, 'File exists.');
+						$file = new stdClass();
+						$file->error = "File with same name already exists.";
+						$info[] = $file;
+						echo CJSON::encode($info);
+						exit;
+					}
+				}
+				
 				$upload_handler->post();
 				$contents = ob_get_contents();
 				$result = CJSON::decode($contents);
