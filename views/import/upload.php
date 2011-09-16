@@ -16,5 +16,5 @@ $this->breadcrumbs[] = 'Upload';
 -->
 <h1>Phundament 3 Media Upload</h1>
 <?php
-	$this->widget('p3media.extensions.jquery-file-upload.EFileUpload');
+	$this->widget('ext.p3extensions.widgets.jquery-file-upload.EFileUpload');
 ?>

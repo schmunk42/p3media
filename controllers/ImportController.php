@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('p3media.extensions.jquery-file-upload.*');
+Yii::import('ext.p3extensions.widgets.jquery-file-upload.*');
 
 class ImportController extends Controller {
 	
