@@ -4,10 +4,6 @@
 	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('parent_id')); ?>:</b>
-	<?php echo CHtml::encode($data->parent_id); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('title')); ?>:</b>
 	<?php echo CHtml::encode($data->title); ?>
 	<br />
@@ -28,11 +24,11 @@
 	<?php echo CHtml::encode($data->md5); ?>
 	<br />
 
-	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('originalName')); ?>:</b>
 	<?php echo CHtml::encode($data->originalName); ?>
 	<br />
 
+	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('mimeType')); ?>:</b>
 	<?php echo CHtml::encode($data->mimeType); ?>
 	<br />

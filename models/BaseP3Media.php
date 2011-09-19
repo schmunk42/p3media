@@ -5,10 +5,9 @@
  *
  * Columns in table "p3_media" available as properties of the model:
  * @property integer $id
- * @property integer $parent_id
  * @property string $title
  * @property string $description
- * @property string $type
+ * @property integer $type
  * @property string $path
  * @property string $md5
  * @property string $originalName
@@ -17,8 +16,6 @@
  * @property string $info
  *
  * Relations of table "p3_media" available as properties of the model:
- * @property P3Media $parent
- * @property P3Media[] $p3Medias
  * @property P3MediaMeta $p3MediaMeta
  */
 abstract class BaseP3Media extends GActiveRecord{
@@ -35,24 +32,20 @@ abstract class BaseP3Media extends GActiveRecord{
 	public function rules()
 	{
 		return array(
-			array('path, md5', 'required'),
-			array('parent_id, title, description, type, originalName, mimeType, size, info', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('parent_id, size', 'numerical', 'integerOnly'=>true),
+			array('title', 'required'),
+			array('description, type, path, md5, originalName, mimeType, size, info', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('type, size', 'numerical', 'integerOnly'=>true),
 			array('title, md5', 'length', 'max'=>32),
-			array('type', 'length', 'max'=>45),
 			array('path', 'length', 'max'=>255),
-			array('originalName', 'length', 'max'=>128),
-			array('mimeType', 'length', 'max'=>64),
+			array('originalName, mimeType', 'length', 'max'=>128),
 			array('description, info', 'safe'),
-			array('id, parent_id, title, description, type, path, md5, originalName, mimeType, size, info', 'safe', 'on'=>'search'),
+			array('id, title, description, type, path, md5, originalName, mimeType, size, info', 'safe', 'on'=>'search'),
 		);
 	}
 
 	public function relations()
 	{
 		return array(
-			'parent' => array(self::BELONGS_TO, 'P3Media', 'parent_id'),
-			'p3Medias' => array(self::HAS_MANY, 'P3Media', 'parent_id'),
 			'p3MediaMeta' => array(self::HAS_ONE, 'P3MediaMeta', 'id'),
 		);
 	}
@@ -61,7 +54,6 @@ abstract class BaseP3Media extends GActiveRecord{
 	{
 		return array(
 			'id' => Yii::t('app', 'ID'),
-			'parent_id' => Yii::t('app', 'Parent'),
 			'title' => Yii::t('app', 'Title'),
 			'description' => Yii::t('app', 'Description'),
 			'type' => Yii::t('app', 'Type'),
@@ -80,10 +72,9 @@ abstract class BaseP3Media extends GActiveRecord{
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id', $this->id);
-		$criteria->compare('parent_id', $this->parent_id);
 		$criteria->compare('title', $this->title, true);
 		$criteria->compare('description', $this->description, true);
-		$criteria->compare('type', $this->type, true);
+		$criteria->compare('type', $this->type);
 		$criteria->compare('path', $this->path, true);
 		$criteria->compare('md5', $this->md5, true);
 		$criteria->compare('originalName', $this->originalName, true);

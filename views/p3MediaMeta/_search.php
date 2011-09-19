@@ -11,13 +11,13 @@
         </div>
     
         <div class="row">
-                <?php echo $form->label($model,'parent_id'); ?>
-                <?php echo $form->dropDownList($model,'parent_id',CHtml::listData(P3MediaMeta::model()->findAll(), 'id', 'recordTitle'),array('prompt'=>Yii::t('app', 'All'))); ?>
+                <?php echo $form->label($model,'status'); ?>
+                <?php echo $form->textField($model,'status'); ?>
         </div>
     
         <div class="row">
-                <?php echo $form->label($model,'owner'); ?>
-                <?php echo $form->textField($model,'owner'); ?>
+                <?php echo $form->label($model,'type'); ?>
+                <?php echo $form->textField($model,'type',array('size'=>60,'maxlength'=>64)); ?>
         </div>
     
         <div class="row">
@@ -26,58 +26,63 @@
         </div>
     
         <div class="row">
-                <?php echo $form->label($model,'status'); ?>
-                <?php echo $form->textField($model,'status'); ?>
+                <?php echo $form->label($model,'treeParent_id'); ?>
+                <?php echo $form->dropDownList($model,'treeParent_id',CHtml::listData(P3MediaMeta::model()->findAll(), 'id', 'recordTitle'),array('prompt'=>Yii::t('app', 'All'))); ?>
         </div>
     
         <div class="row">
-                <?php echo $form->label($model,'type'); ?>
-                <?php echo $form->textField($model,'type',array('size'=>45,'maxlength'=>45)); ?>
-        </div>
-    
-        <div class="row">
-                <?php echo $form->label($model,'checkAccess'); ?>
-                <?php echo $form->textField($model,'checkAccess',array('size'=>60,'maxlength'=>128)); ?>
+                <?php echo $form->label($model,'treePosition'); ?>
+                <?php echo $form->textField($model,'treePosition'); ?>
         </div>
     
         <div class="row">
                 <?php echo $form->label($model,'begin'); ?>
-                <?php $this->widget('zii.widgets.jui.CJuiDatePicker',
-						 array(
-								 'model'=>'$model',
-								 'name'=>'P3MediaMeta[begin]',
-								 'language'=> substr(Yii::app()->language,0,strpos(Yii::app()->language,'_')),
-								 'value'=>$model->begin,
-								 'htmlOptions'=>array('size'=>10, 'style'=>'width:80px !important'),
-								 'options'=>array(
-									 'showButtonPanel'=>true,
-									 'changeYear'=>true,
-									 'changeYear'=>true,
-									 'dateFormat'=>'yy-mm-dd',
-									 ),
-								 )
-							 );
-					; ?>
+                <?php echo $form->textField($model,'begin'); ?>
         </div>
     
         <div class="row">
                 <?php echo $form->label($model,'end'); ?>
-                <?php $this->widget('zii.widgets.jui.CJuiDatePicker',
-						 array(
-								 'model'=>'$model',
-								 'name'=>'P3MediaMeta[end]',
-								 'language'=> substr(Yii::app()->language,0,strpos(Yii::app()->language,'_')),
-								 'value'=>$model->end,
-								 'htmlOptions'=>array('size'=>10, 'style'=>'width:80px !important'),
-								 'options'=>array(
-									 'showButtonPanel'=>true,
-									 'changeYear'=>true,
-									 'changeYear'=>true,
-									 'dateFormat'=>'yy-mm-dd',
-									 ),
-								 )
-							 );
-					; ?>
+                <?php echo $form->textField($model,'end'); ?>
+        </div>
+    
+        <div class="row">
+                <?php echo $form->label($model,'keywords'); ?>
+                <?php echo $form->textArea($model,'keywords',array('rows'=>6, 'cols'=>50)); ?>
+        </div>
+    
+        <div class="row">
+                <?php echo $form->label($model,'customData'); ?>
+                <?php echo $form->textArea($model,'customData',array('rows'=>6, 'cols'=>50)); ?>
+        </div>
+    
+        <div class="row">
+                <?php echo $form->label($model,'label'); ?>
+                <?php echo $form->textField($model,'label'); ?>
+        </div>
+    
+        <div class="row">
+                <?php echo $form->label($model,'owner'); ?>
+                <?php echo $form->textField($model,'owner',array('size'=>60,'maxlength'=>64)); ?>
+        </div>
+    
+        <div class="row">
+                <?php echo $form->label($model,'checkAccessCreate'); ?>
+                <?php echo $form->textField($model,'checkAccessCreate',array('size'=>60,'maxlength'=>256)); ?>
+        </div>
+    
+        <div class="row">
+                <?php echo $form->label($model,'checkAccessRead'); ?>
+                <?php echo $form->textField($model,'checkAccessRead',array('size'=>60,'maxlength'=>256)); ?>
+        </div>
+    
+        <div class="row">
+                <?php echo $form->label($model,'checkAccessUpdate'); ?>
+                <?php echo $form->textField($model,'checkAccessUpdate',array('size'=>60,'maxlength'=>256)); ?>
+        </div>
+    
+        <div class="row">
+                <?php echo $form->label($model,'checkAccessDelete'); ?>
+                <?php echo $form->textField($model,'checkAccessDelete',array('size'=>60,'maxlength'=>256)); ?>
         </div>
     
         <div class="row">
@@ -87,7 +92,7 @@
     
         <div class="row">
                 <?php echo $form->label($model,'createdBy'); ?>
-                <?php echo $form->textField($model,'createdBy',array('size'=>32,'maxlength'=>32)); ?>
+                <?php echo $form->textField($model,'createdBy',array('size'=>60,'maxlength'=>64)); ?>
         </div>
     
         <div class="row">
@@ -97,17 +102,22 @@
     
         <div class="row">
                 <?php echo $form->label($model,'modifiedBy'); ?>
-                <?php echo $form->textField($model,'modifiedBy',array('size'=>32,'maxlength'=>32)); ?>
+                <?php echo $form->textField($model,'modifiedBy',array('size'=>60,'maxlength'=>64)); ?>
         </div>
     
         <div class="row">
-                <?php echo $form->label($model,'keywords'); ?>
-                <?php echo $form->textField($model,'keywords',array('size'=>60,'maxlength'=>255)); ?>
+                <?php echo $form->label($model,'guid'); ?>
+                <?php echo $form->textField($model,'guid',array('size'=>60,'maxlength'=>64)); ?>
         </div>
     
         <div class="row">
-                <?php echo $form->label($model,'customData'); ?>
-                <?php echo $form->textArea($model,'customData',array('rows'=>6, 'cols'=>50)); ?>
+                <?php echo $form->label($model,'ancestor_guid'); ?>
+                <?php echo $form->textField($model,'ancestor_guid',array('size'=>60,'maxlength'=>64)); ?>
+        </div>
+    
+        <div class="row">
+                <?php echo $form->label($model,'model'); ?>
+                <?php echo $form->textField($model,'model',array('size'=>60,'maxlength'=>128)); ?>
         </div>
     
         <div class="row buttons">

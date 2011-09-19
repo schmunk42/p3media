@@ -8,11 +8,20 @@ $this->breadcrumbs=array(
 
 if(!isset($this->menu) || $this->menu === array())
 $this->menu=array(
-		array('label'=>Yii::t('app', 'List') . ' P3Media',
-			'url'=>array('index')),
-		array('label'=>Yii::t('app', 'Create') . ' P3Media',
-		'url'=>array('create')),
-	);
+	array(
+		'label' => Yii::t('app', 'Administration'), 
+		'items' => array(
+			array('label'=>Yii::t('app', 'Create') , 'url'=>array('create')),
+		)
+	),
+	/*array(
+		'label' => Yii::t('app', 'View'), 
+		'items' => array(
+			array('label'=>Yii::t('app', 'List') , 'url'=>array('index')),
+		)
+	)*/
+);
+
 
 		Yii::app()->clientScript->registerScript('search', "
 			$('.search-button').click(function(){
@@ -28,15 +37,15 @@ data: $(this).serialize()
 			");
 		?>
 
-<h1> <?php echo Yii::t('app', 'Manage'); ?> P3 Medias</h1>
+<h1> <?php echo Yii::t('app', 'Manage'); ?> <?php echo Yii::t('app', 'P3 Medias'); ?> </h1>
 
 <?php
 echo "<ul>";
 foreach ($model->relations() AS $key => $relation)
 {
 	echo  "<li>".
-		substr(str_replace("Relation","",$relation[0]),1)." ".
-		CHtml::link(Yii::t("app",$relation[1]), array($this->resolveRelationController($relation)."/admin"))." (".$relation[2].")".
+		Yii::t("app",substr(str_replace("Relation","",$relation[0]),1))." ".
+		CHtml::link(Yii::t("app",$relation[1]), array($this->resolveRelationController($relation)."/admin")).
 		" </li>";
 }
 echo "</ul>";
@@ -57,21 +66,16 @@ $locale = CLocale::getInstance(Yii::app()->language);
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
-		array(
-					'name'=>'parent_id',
-					'value'=>'CHtml::value($data,\'p3Medias.recordTitle\')',
-							'filter'=>CHtml::listData(P3Media::model()->findAll(), 'id', 'recordTitle'),
-							),
 		'title',
-		'description',
+#		'description',
 		'type',
 		'path',
-		/*
 		'md5',
+		/*
 		'originalName',
 		'mimeType',
 		'size',
-		'info',
+#		'info',
 		*/
 		array(
 			'class'=>'CButtonColumn',

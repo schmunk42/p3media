@@ -7,8 +7,8 @@ $this->breadcrumbs=array(
 
 if(!isset($this->menu))
 $this->menu=array(
-	array('label'=>Yii::t('app', 'List') . ' P3Media', 'url'=>array('index')),
-	array('label'=>Yii::t('app', 'Manage') . ' P3Media', 'url'=>array('admin')),
+	/*array('label'=>Yii::t('app', 'List') . ' P3Media', 'url'=>array('index')),
+	array('label'=>Yii::t('app', 'Manage') . ' P3Media', 'url'=>array('admin')),*/
 );
 ?>
 

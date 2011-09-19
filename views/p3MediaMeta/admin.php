@@ -8,11 +8,20 @@ $this->breadcrumbs=array(
 
 if(!isset($this->menu) || $this->menu === array())
 $this->menu=array(
-		array('label'=>Yii::t('app', 'List') . ' P3MediaMeta',
-			'url'=>array('index')),
-		array('label'=>Yii::t('app', 'Create') . ' P3MediaMeta',
-		'url'=>array('create')),
-	);
+	array(
+		'label' => Yii::t('app', 'Administration'), 
+		'items' => array(
+			array('label'=>Yii::t('app', 'Create') , 'url'=>array('create')),
+		)
+	),
+	/*array(
+		'label' => Yii::t('app', 'View'), 
+		'items' => array(
+			array('label'=>Yii::t('app', 'List') , 'url'=>array('index')),
+		)
+	)*/
+);
+
 
 		Yii::app()->clientScript->registerScript('search', "
 			$('.search-button').click(function(){
@@ -28,15 +37,15 @@ data: $(this).serialize()
 			");
 		?>
 
-<h1> <?php echo Yii::t('app', 'Manage'); ?> P3 Media Metas</h1>
+<h1> <?php echo Yii::t('app', 'Manage'); ?> <?php echo Yii::t('app', 'P3 Media Metas'); ?> </h1>
 
 <?php
 echo "<ul>";
 foreach ($model->relations() AS $key => $relation)
 {
 	echo  "<li>".
-		substr(str_replace("Relation","",$relation[0]),1)." ".
-		CHtml::link(Yii::t("app",$relation[1]), array($this->resolveRelationController($relation)."/admin"))." (".$relation[2].")".
+		Yii::t("app",substr(str_replace("Relation","",$relation[0]),1))." ".
+		CHtml::link(Yii::t("app",$relation[1]), array($this->resolveRelationController($relation)."/admin")).
 		" </li>";
 }
 echo "</ul>";
@@ -61,25 +70,33 @@ $locale = CLocale::getInstance(Yii::app()->language);
 					'value'=>'CHtml::value($data,\'id0.recordTitle\')',
 							'filter'=>CHtml::listData(P3Media::model()->findAll(), 'id', 'recordTitle'),
 							),
+		'status',
+		'type',
+		'language',
 		array(
-					'name'=>'parent_id',
+					'name'=>'treeParent_id',
 					'value'=>'CHtml::value($data,\'p3MediaMetas.recordTitle\')',
 							'filter'=>CHtml::listData(P3MediaMeta::model()->findAll(), 'id', 'recordTitle'),
 							),
-		'owner',
-		'language',
-		'status',
-		'type',
+		'treePosition',
 		/*
-		'checkAccess',
 		'begin',
 		'end',
+#		'keywords',
+#		'customData',
+		'label',
+		'owner',
+		'checkAccessCreate',
+		'checkAccessRead',
+		'checkAccessUpdate',
+		'checkAccessDelete',
 		'createdAt',
 		'createdBy',
 		'modifiedAt',
 		'modifiedBy',
-		'keywords',
-		'customData',
+		'guid',
+		'ancestor_guid',
+		'model',
 		*/
 		array(
 			'class'=>'CButtonColumn',

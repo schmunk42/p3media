@@ -19,7 +19,7 @@
 
 <div class="row">
 <?php echo $form->labelEx($model,'type'); ?>
-<?php echo $form->textField($model,'type',array('size'=>45,'maxlength'=>45)); ?>
+<?php echo $form->textField($model,'type'); ?>
 <?php echo $form->error($model,'type'); ?>
 </div>
 
@@ -43,7 +43,7 @@
 
 <div class="row">
 <?php echo $form->labelEx($model,'mimeType'); ?>
-<?php echo $form->textField($model,'mimeType',array('size'=>60,'maxlength'=>64)); ?>
+<?php echo $form->textField($model,'mimeType',array('size'=>60,'maxlength'=>128)); ?>
 <?php echo $form->error($model,'mimeType'); ?>
 </div>
 
