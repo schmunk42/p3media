@@ -24,12 +24,15 @@ class P3Media extends BaseP3Media {
 
 	public function behaviors() {
 		return array_merge(
-			/* array(
-			  'BehaviourName' => array(
-			  'class' => 'CWhateverBehavior'
-			  )
-			  ), */
-			parent::behaviors()
+			array(
+			'Upload' => array(
+				'class' => 'ext.p3extensions.behaviors.P3FileUploadBehavior',
+				'dataAlias' => Yii::app()->getModule('p3media')->dataAlias,
+				'trashAlias' => Yii::app()->getModule('p3media')->dataAlias.".trash",
+				'dataSubdirectory' => Yii::app()->user->id,
+				'uploadInstance' => 'fileUpload',
+			)
+			), parent::behaviors()
 		);
 	}
 
@@ -37,17 +40,17 @@ class P3Media extends BaseP3Media {
 		return $this->title;
 	}
 
-public function search() {
-    $criteria=new CDbCriteria;
-    return new CActiveDataProvider(get_class($this), array(
-        'criteria'=>$criteria,
-        'sort'=>array(
-            'defaultOrder'=>'id DESC',
-        ),
-        'pagination'=>array(
-            'pageSize'=>4
-        ),
-    ));
-}
+	public function search() {
+		$criteria = new CDbCriteria;
+		return new CActiveDataProvider(get_class($this), array(
+			'criteria' => $criteria,
+			'sort' => array(
+				'defaultOrder' => 'id DESC',
+			),
+			'pagination' => array(
+				'pageSize' => 4
+			),
+		));
+	}
 
 }

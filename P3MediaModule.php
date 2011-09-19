@@ -28,6 +28,38 @@ class P3MediaModule extends CWebModule
 		else
 			return false;
 	}
+	
+	public function getDataPath($relative = false){
+		
+		$relativeDataPath = Yii::app()->user->id;
+		$fullDataPath = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $relativeDataPath;
+		
+		if (!is_dir($fullDataPath)) {
+			mkdir($fullDataPath);
+			chmod($fullDataPath, 0777); // problems when doing this with mkdir
+		}
+
+		if ($relative === false)
+			return $fullDataPath;
+		else
+			return $relativeDataPath;
+	}
+	
+	/*public function generateUniqueFileName($fileName) {
+		$ext = strrchr($fileName, '.');
+		return Yii::app()->user->id . DIRECTORY_SEPARATOR . uniqid($fileName . "-") . $ext;
+	}*/
+	
+	public function resolveFilePath($fileName) {
+		$filePath = realpath(Yii::getPathOfAlias($this->module->importAlias) . DIRECTORY_SEPARATOR . $fileName);
+		if (is_file($filePath) && strstr($filePath, realpath(Yii::getPathOfAlias($this->module->importAlias)))) {
+			return $filePath;
+		} else {
+			return false;
+		}
+	}
+	
+	
 }
 
 ?>

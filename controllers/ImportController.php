@@ -223,16 +223,7 @@ class ImportController extends Controller {
 		$model->delete();
 		return true;
 	}
-
-	private function resolveFilePath($fileName) {
-		$filePath = realpath(Yii::getPathOfAlias($this->module->importAlias) . DIRECTORY_SEPARATOR . $fileName);
-		if (is_file($filePath) && strstr($filePath, realpath(Yii::getPathOfAlias($this->module->importAlias)))) {
-			return $filePath;
-		} else {
-			return false;
-		}
-	}
-
+	
 	private function findMd5($md5) {
 		$model = P3Media::model()->findByAttributes(array('md5' => $md5));
 		if ($model === null)
@@ -241,33 +232,9 @@ class ImportController extends Controller {
 			return true;
 	}
 
-	private function cleanName($name, $maxLength = 0) {
-		$name = preg_replace("/[^.A-Za-z0-9_-]/", "", $name);
-		if ($maxLength > 0 && strlen($name) > $maxLength) {
-			$name = substr($name, 0, $maxLength / 2 - 2) . ".." . substr($name, strlen($name) - $maxLength / 2 + 1);
-		}
-		return $name;
-	}
 
-	private function generateFileName($fileName) {
-		$ext = strrchr($fileName, '.');
-		return Yii::app()->user->id . DIRECTORY_SEPARATOR . uniqid($fileName . "-") . $ext;
-	}
+	
 
-	private function getDataDirectory($fullPath = true) {
-		$dataDirectory = Yii::app()->user->id;
-		$fullDataDirectory = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $dataDirectory;
-		
-		if (!is_dir($fullDataDirectory)) {
-			mkdir($fullDataDirectory);
-			chmod($fullDataDirectory, 0777); // problems when doing this with mkdir
-		}
-
-		if ($fullPath === true)
-			return $fullDataDirectory;
-		else
-			return $dataDirectory;
-	}
 
 	// -----------------------------------------------------------
 	// Uncomment the following methods and override them if needed
