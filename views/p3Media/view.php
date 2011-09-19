@@ -1,5 +1,5 @@
 <?php
-if(!isset($this->breadcrumbs))
+if(!isset($this->breadcrumbs) || ($this->breadcrumbs === array()))
 
 $this->breadcrumbs=array(
 'P3 Medias'=>array('index'),
@@ -48,20 +48,20 @@ $locale = CLocale::getInstance(Yii::app()->language);
 	)); ?>
 
 
-	<h2><?php echo CHtml::link(Yii::t('app','P3MediaMeta'), array('/p3MediaMeta/admin'));?></h2>
-<ul><?php $foreignobj = $model->p3MediaMeta; 
+	<h2><?php echo CHtml::link(Yii::t('app','P3MediaMeta'), array('/p3media/p3MediaMeta/admin'));?></h2>
+<ul><?php $foreignobj = $model->metaData; 
 
 					if ($foreignobj !== null) {
 					echo '<li>';
-					echo '#'.$model->p3MediaMeta->id.' ';
-					echo CHtml::link($model->p3MediaMeta->recordTitle, array('/p3MediaMeta/view','id'=>$model->p3MediaMeta->id));
+					echo '#'.$model->metaData->id.' ';
+					echo CHtml::link($model->metaData->recordTitle, array('/p3media/p3MediaMeta/view','id'=>$model->metaData->id));
 							
-					echo ' '.CHtml::link(Yii::t('app','Update'), array('/p3MediaMeta/update','id'=>$model->p3MediaMeta->id), array('class'=>'edit'));
+					echo ' '.CHtml::link(Yii::t('app','Update'), array('/p3media/p3MediaMeta/update','id'=>$model->metaData->id), array('class'=>'edit'));
 
 					
 					
 					}
-					?></ul><p><?php if($model->p3MediaMeta === null) echo CHtml::link(
+					?></ul><p><?php if($model->metaData === null) echo CHtml::link(
 				Yii::t('app','Create'),
-				array('/p3MediaMeta/create', 'P3MediaMeta' => array('id'=>$model->{$model->tableSchema->primaryKey}))
+				array('/p3media/p3MediaMeta/create', 'P3MediaMeta' => array('id'=>$model->{$model->tableSchema->primaryKey}))
 				);  ?></p>

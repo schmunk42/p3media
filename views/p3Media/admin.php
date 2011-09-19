@@ -1,5 +1,5 @@
 <?php
-if(!isset($this->breadcrumbs))
+if(!isset($this->breadcrumbs) || ($this->breadcrumbs === array()))
 
 $this->breadcrumbs=array(
 	'P3 Medias'=>array(Yii::t('app', 'index')),

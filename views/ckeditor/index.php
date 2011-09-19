@@ -39,15 +39,13 @@ echo CHtml::link('Upload',array('/p3media/import/upload'),array('target'=>'_blan
 
 <?php
 $locale = CLocale::getInstance(Yii::app()->language);
-
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id' => 'p3-media-grid',
 	'dataProvider' => $model->search(),
 	'filter' => $model,
 	'columns' => array(
-		'id',
 		array(
-			'name' => 'path',
+			#'name' => 'path',
 			'type' => 'raw',
 			'value' => 'CHtml::link(
 				CHtml::image(Yii::app()->controller->createUrl("/p3media/file",array("id"=>$data->id)), $data->title, array("class"=>"ckeditor")),
@@ -56,11 +54,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				)
 				',
 		),
-		array(
-			'name' => 'parent_id',
-			'value' => 'CHtml::value($data,\'p3Medias.recordTitle\')',
-			'filter' => CHtml::listData(P3Media::model()->findAll(), 'id', 'recordTitle'),
-		),
+		'id',
+		/*array(
+			'name' => 'metaData.treeParent_id',
+			'value' => 'CHtml::value($data,\'metaData.treeParent_id\')',
+			'filter' => CHtml::listData(P3Media::model()->with('metaData')->findAll(), 'metaData.id', 'recordTitle'),
+		),*/
 		'title',
 		'description',
 		'mimeType',
@@ -78,7 +77,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 
 <script type="text/javascript">
 	function select(id){
-		if (confirm('Select #'+id+'')) {		
+		if (confirm('Select #'+id+'?')) {		
 			//alert(id+'-'+preset);
 			//if($('#preset').val() == '') {
 			//    alert('Please choose an image preset.');

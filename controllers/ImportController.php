@@ -35,7 +35,7 @@ class ImportController extends Controller {
 
 	public function init() {
 		parent::init();
-		$this->getDataDirectory();
+		#$this->module->getDataPath(true);
 	}
 
 	public function actionIndex() {
@@ -57,7 +57,7 @@ class ImportController extends Controller {
 		#$script_dir = Yii::app()->basePath.'/data/p3media';
 		#$script_dir_url = Yii::app()->baseUrl;
 		$options = array(
-			'upload_dir' => $this->getDataDirectory(true) . DIRECTORY_SEPARATOR,
+			'upload_dir' => $this->module->getDataPath() . DIRECTORY_SEPARATOR,
 			#'upload_url' => $script_dir_url . '/files/',
 			#'thumbnails_dir' => $script_dir . '/thumbnails/',
 			#'thumbnails_url' => $script_dir_url . '/thumbnails/',
@@ -69,7 +69,6 @@ class ImportController extends Controller {
 
 		// wrapper for jQuery-file-upload/upload.php
 		$upload_handler = new UploadHandler($options);
-
 		header('Pragma: no-cache');
 		header('Cache-Control: private, no-cache');
 		header('Content-Disposition: inline; filename="files.json"');
@@ -103,7 +102,7 @@ class ImportController extends Controller {
 				$contents = ob_get_contents();
 				$result = CJSON::decode($contents);
 				#var_dump($result);exit;
-				$this->createMedia($result[0]['name'], $this->getDataDirectory(false).DIRECTORY_SEPARATOR.$result[0]['name']);
+				$this->createMedia($result[0]['name'], $this->module->getDataPath(true).DIRECTORY_SEPARATOR.$result[0]['name']);
 				break;
 			case 'DELETE':
 				$upload_handler->delete();
@@ -190,13 +189,13 @@ class ImportController extends Controller {
 		$getimagesize = getimagesize($fullFilePath);
 
 		$model = new P3Media;
-
-		$model->title = $this->cleanName($fileName, 32);
+		$model->detachBehavior('Upload');
+		
+		$model->title = P3StringHelper::cleanName($fileName, 32);
 		$model->originalName = $fileName;
 
 		$model->type = 1; //P3Media::TYPE_FILE;
 		$model->path = $filePath;
-		$model->parent_id = 1;
 		$model->md5 = $md5;
 		if (!$mime = exec("file -bI " . escapeshellarg($fullFilePath))) {
 			$mime = $getimagesize['mime'];
@@ -215,11 +214,11 @@ class ImportController extends Controller {
 			throw new CHttpException(500, $errorMessage);
 		}
 	}
-
+	
 	private function deleteMedia($fileName) {
-		$attributes['path'] = $this->getDataDirectory(false) . DIRECTORY_SEPARATOR . $fileName;
+		$attributes['path'] = $this->module->getDataPath(true) . DIRECTORY_SEPARATOR . $fileName;
 		$model = P3Media::model()->findByAttributes($attributes);
-		#unlink($this->getDataDirectory(true) . DIRECTORY_SEPARATOR . $fileName);
+		#unlink($this->getDataPath(true) . DIRECTORY_SEPARATOR . $fileName);
 		$model->delete();
 		return true;
 	}

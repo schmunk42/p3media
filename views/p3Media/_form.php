@@ -17,13 +17,13 @@
 ?>
 
 <div class="row">
+		<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
 		<?php echo CHtml::label('Upload File', 'fileUpload'); ?>
 		<div>
 
 			<?php
 			echo CHtml::fileField('fileUpload', null, array(
-				'style' => 'width: 100%',
-				#'onchange'=>'$("#P2File_name").val($("#fileUpload").val());'
+				'onchange'=>'if (!$("#P3Media_title").val()) $("#P3Media_title").val($("#fileUpload").val());'
 				)
 			);
 			?>
@@ -95,9 +95,9 @@
 </div>
 
 <div class="row">
-<label for="p3MediaMeta"><?php echo Yii::t('app', 'P3MediaMeta'); ?></label>
-<?php if ($model->p3MediaMeta !== null) echo $model->p3MediaMeta->recordTitle;; ?><br />
-<div class='hint'><?php if('hint.p3MediaMeta' != $hint = Yii::t('P3Media', 'hint.p3MediaMeta')) echo $hint; ?></div>
+<label for="metaData"><?php echo Yii::t('app', 'metaData'); ?></label>
+<?php if ($model->metaData !== null) echo $model->metaData->recordTitle;; ?><br />
+<div class='hint'><?php if('hint.metaData' != $hint = Yii::t('P3Media', 'hint.metaData')) echo $hint; ?></div>
 </div>
 
 

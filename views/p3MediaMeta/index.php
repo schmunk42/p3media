@@ -1,12 +1,12 @@
 <?php
-if(!isset($this->breadcrumbs))
+if(!isset($this->breadcrumbs) || ($this->breadcrumbs === array()))
 
 $this->breadcrumbs = array(
 	'P3 Media Metas',
 	Yii::t('app', 'Index'),
 );
 
-if(!isset($this->menu))
+if(!isset($this->menu) || $this->menu === array())
 $this->menu=array(
 	array('label'=>Yii::t('app', 'Create') . ' P3MediaMeta', 'url'=>array('create')),
 	array('label'=>Yii::t('app', 'Manage') . ' P3MediaMeta', 'url'=>array('admin')),

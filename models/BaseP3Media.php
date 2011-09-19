@@ -33,6 +33,7 @@ abstract class BaseP3Media extends GActiveRecord{
 	{
 		return array(
 			array('title', 'required'),
+			array('title', 'unique'),
 			array('description, type, path, md5, originalName, mimeType, size, info', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('type, size', 'numerical', 'integerOnly'=>true),
 			array('title, md5', 'length', 'max'=>32),
@@ -46,7 +47,7 @@ abstract class BaseP3Media extends GActiveRecord{
 	public function relations()
 	{
 		return array(
-			'p3MediaMeta' => array(self::HAS_ONE, 'P3MediaMeta', 'id'),
+			'metaData' => array(self::HAS_ONE, 'P3MediaMeta', 'id'),
 		);
 	}
 

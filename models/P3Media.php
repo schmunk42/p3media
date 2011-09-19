@@ -1,7 +1,7 @@
 <?php
 
 class P3Media extends BaseP3Media {
-
+	
 	// Add your model-specific methods here. This file will not be overriden by gtc except you force it.
 	public static function model($className=__CLASS__) {
 		return parent::model($className);
@@ -31,7 +31,12 @@ class P3Media extends BaseP3Media {
 				'trashAlias' => Yii::app()->getModule('p3media')->dataAlias.".trash",
 				'dataSubdirectory' => Yii::app()->user->id,
 				'uploadInstance' => 'fileUpload',
+				),
+			'MetaData' => array(
+				'class' => 'ext.p3extensions.behaviors.P3MetaDataBehavior',
+				'metaDataRelation' => 'metaData',
 			)
+				
 			), parent::behaviors()
 		);
 	}
@@ -42,10 +47,21 @@ class P3Media extends BaseP3Media {
 
 	public function search() {
 		$criteria = new CDbCriteria;
+		#$criteria->with = array('metaData');
+		$criteria->compare('id', $this->id);
+		$criteria->compare('title', $this->title, true);
+		$criteria->compare('description', $this->description, true);
+		$criteria->compare('type', $this->type);
+		$criteria->compare('path', $this->path, true);
+		$criteria->compare('md5', $this->md5, true);
+		$criteria->compare('originalName', $this->originalName, true);
+		$criteria->compare('mimeType', $this->mimeType, true);
+		$criteria->compare('size', $this->size);
+		$criteria->compare('info', $this->info, true);
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,
 			'sort' => array(
-				'defaultOrder' => 'id DESC',
+				'defaultOrder' => 't.id DESC',
 			),
 			'pagination' => array(
 				'pageSize' => 4

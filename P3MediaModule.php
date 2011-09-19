@@ -14,6 +14,7 @@ class P3MediaModule extends CWebModule
 		$this->setImport(array(
 			'p3media.models.*',
 			'p3media.components.*',
+			'ext.p3extensions.helpers.*',
 		));
 	}
 
@@ -29,10 +30,10 @@ class P3MediaModule extends CWebModule
 			return false;
 	}
 	
-	public function getDataPath($relative = false){
+	public function getDataPath($relative = false){		
 		
 		$relativeDataPath = Yii::app()->user->id;
-		$fullDataPath = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $relativeDataPath;
+		$fullDataPath = Yii::getPathOfAlias($this->dataAlias) . DIRECTORY_SEPARATOR . $relativeDataPath;
 		
 		if (!is_dir($fullDataPath)) {
 			mkdir($fullDataPath);
@@ -51,8 +52,8 @@ class P3MediaModule extends CWebModule
 	}*/
 	
 	public function resolveFilePath($fileName) {
-		$filePath = realpath(Yii::getPathOfAlias($this->module->importAlias) . DIRECTORY_SEPARATOR . $fileName);
-		if (is_file($filePath) && strstr($filePath, realpath(Yii::getPathOfAlias($this->module->importAlias)))) {
+		$filePath = realpath(Yii::getPathOfAlias($this->importAlias) . DIRECTORY_SEPARATOR . $fileName);
+		if (is_file($filePath) && strstr($filePath, realpath(Yii::getPathOfAlias($this->importAlias)))) {
 			return $filePath;
 		} else {
 			return false;

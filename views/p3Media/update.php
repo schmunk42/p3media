@@ -1,5 +1,5 @@
 <?php
-if(!isset($this->breadcrumbs))
+if(!isset($this->breadcrumbs) || ($this->breadcrumbs === array()))
 
 $this->breadcrumbs=array(
 	'P3 Medias'=>array('index'),
@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 	Yii::t('app', 'Update'),
 );
 
-if(!isset($this->menu))
+if(!isset($this->menu) || $this->menu === array())
 $this->menu=array(
 	array('label'=>Yii::t('app', 'List') . ' ' . Yii::t('app','P3Media'), 'url'=>array('index')),
 	array('label'=>Yii::t('app', 'Create') . ' ' . Yii::t('app','P3Media'), 'url'=>array('create')),
