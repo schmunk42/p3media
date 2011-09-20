@@ -2,27 +2,42 @@
 
 class FileController extends Controller {
 
-	public function actionIndex() {
-		#$this->render('index');
+	public function actions() {
+		return array(
+			'image' => array(
+				'class' => 'p3media.actions.P3MediaImageAction',
+			),
+		);
+	}
+
+	public function beforeAction($action) {
+		parent::beforeAction($action);
 		if (isset($_GET['path']) && Yii::app()->user->checkAccess('Admin')) {
 			$model = P3Media::model()->findByAttributes(array('path' => $_GET['path']));
-		} else {
-			if (!$_GET['id']) {
-				throw new CException('No file specified.');
+			if ($model !== null) {
+				$_GET['id'] = $model->id;
 			} else {
-				$model = P3Media::model()->findByPk($_GET['id']);
+				#return false;
 			}
 		}
+		return true;
+	}
 
-
-		$filename = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $model->path;
-		if (!is_file($filename)) {
-			throw new CException('File not found.');
+	public function actionIndex() {
+		#$this->render('index');
+		if (!$_GET['id']) {
+			throw new CException('No file specified.');
 		} else {
-			header('Content-Disposition: attachment; filename="'.$model->title.'"');
-			header('Content-type: ' . $model->mimeType);
-			readfile($filename);
-			exit;
+			$model = P3Media::model()->findByPk($_GET['id']);
+			$filename = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $model->path;
+			if (!is_file($filename)) {
+				throw new CException('File not found.');
+			} else {
+				header('Content-Disposition: attachment; filename="' . $model->title . '"');
+				header('Content-type: ' . $model->mimeType);
+				readfile($filename);
+				exit;
+			}
 		}
 	}
 
