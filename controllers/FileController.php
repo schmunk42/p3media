@@ -17,6 +17,7 @@ class FileController extends Controller {
 			if ($model !== null) {
 				$_GET['id'] = $model->id;
 			} else {
+				$_GET['id'] = 0;
 				#return false;
 			}
 		}

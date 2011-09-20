@@ -9,6 +9,7 @@ return array(
 			'class' => 'application.modules.p3media.P3MediaModule',
 			'params' => array(
 				'publicRuntimePath' => '../runtime',
+				'publicRuntimeUrl' => '/runtime',
 				'protectedRuntimePath' => 'runtime/p3media',
 				'presets' => array(
 					'default' => array(

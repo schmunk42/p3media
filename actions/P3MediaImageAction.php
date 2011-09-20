@@ -43,11 +43,11 @@ class P3MediaImageAction extends CAction {
                     self::sendImage($result['data'], $model, $preset);
                     break;
                 default:
-                    self::sendErrorImage();
+                    self::sendErrorImage($preset);
             }
         } else {
             #throw new Exception('No id specified!');
-            self::sendErrorImage();
+            self::sendErrorImage($preset);
         }
 
         #exit;
@@ -97,14 +97,16 @@ class P3MediaImageAction extends CAction {
                 if (!self::generateImage($inFile, $outFile, $preset)) {
                     Yii::log('Error while rendering ' . $inFile, CLogger::LEVEL_INFO, 'p2.file');
                     
-					$mimeImageDir = 'TODO HACK HERE' . 'assets' . DIRECTORY_SEPARATOR . 'p2File' . DIRECTORY_SEPARATOR . 'mimetypes' . DIRECTORY_SEPARATOR;
-                    $mimeImageFile = $mimeImageDir . CFileHelper::getMimeTypeByExtension($inFile) . '.png';
+					$mimeImageDir = Yii::getPathOfAlias('p3media.images.mimetypes');
+                    $mimeImageFile = $mimeImageDir . DIRECTORY_SEPARATOR . CFileHelper::getMimeTypeByExtension($inFile) . '.png';
+					#echo $mimeImageFile;exit;
 					
                     if (!is_file($mimeImageFile)) {
                         Yii::log('Missing mime type image ' . $mimeImageFile, CLogger::LEVEL_WARNING, 'p2.file');
-                        $mimeImageFile = $mimeImageDir . "mime-empty.png";
+                        $mimeImageFile = $mimeImageDir . DIRECTORY_SEPARATOR . "mime-empty.png";
                     }
                     self::generateImage($mimeImageFile, $outFile, $preset);
+					
                 }
             }
         } else {
@@ -226,10 +228,13 @@ class P3MediaImageAction extends CAction {
         #exit;
     }
 
-    private static function sendErrorImage() {
+    private static function sendErrorImage($preset) {
        #Yii::log("Sending error image ...", CLogger::LEVEL_TRACE, 'p2.file');
        header('Content-Type: png');
-       #readfile(P2Helper::findModule()->basePath . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'p2File' . DIRECTORY_SEPARATOR . 'missing.png');
+	   $path = self::prepareRenderPath($preset['savePublic']);
+	   $outFile = $path.DIRECTORY_SEPARATOR."missing-".sha1(serialize($preset));
+	   self::generateImage(Yii::getPathOfAlias('p3media.images') . DIRECTORY_SEPARATOR . 'missing.png', $outFile, $preset);	   
+       readfile($outFile);
        #P2Helper::writeFileLogs();
        #exit();
     }
