@@ -58,13 +58,28 @@ class ImportController extends Controller {
 		#$script_dir_url = Yii::app()->baseUrl;
 		$options = array(
 			'upload_dir' => $this->module->getDataPath() . DIRECTORY_SEPARATOR,
-			#'upload_url' => $script_dir_url . '/files/',
-			#'thumbnails_dir' => $script_dir . '/thumbnails/',
-			#'thumbnails_url' => $script_dir_url . '/thumbnails/',
-			#'thumbnail_max_width' => 80,
-			#'thumbnail_max_height' => 80,
+			'upload_url' => $this->createUrl("/p3media/p3Media/update",array('preset'=>'raw','path'=>urlencode(Yii::app()->user->id."/"))),
 			'field_name' => 'files',
-			'image_versions' => array('thumbnail') // thumbnails disbaled
+			'image_versions' => array(
+                // Uncomment the following version to restrict the size of
+                // uploaded images. You can also add additional versions with
+                // their own upload directories:
+                /*
+                'large' => array(
+                    'upload_dir' => dirname(__FILE__).'/files/',
+                    'upload_url' => dirname($_SERVER['PHP_SELF']).'/files/',
+                    'max_width' => 1920,
+                    'max_height' => 1200
+                ),
+                */
+                'thumbnail' => array(
+                    #'upload_dir' => dirname(__FILE__).'/thumbnails/',
+                    'upload_url' => $this->createUrl("/p3media/file/",array('preset'=>'thumb','path'=>Yii::app()->user->id."/")),
+                    'max_width' => 80,
+                    'max_height' => 80
+                )
+            )
+
 		);
 
 		// wrapper for jQuery-file-upload/upload.php
@@ -151,9 +166,11 @@ class ImportController extends Controller {
 			$result['md5'] = $md5;
 			if (P3Media::model()->findByAttributes(array('md5' => $md5)) !== null) {
 				$message .= $warnings[] = "Identical file exists";
+				$message .= "<br/>";
 			}
 			if (P3Media::model()->findByAttributes(array('originalName' => $fileName)) !== null) {
 				$message .= $warnings[] = "File with same name exists";
+				$message .= "<br/>";
 			}
 
 			if (count($warnings) == 0)
@@ -169,12 +186,12 @@ class ImportController extends Controller {
 
 	public function actionLocalFile() {
 
-		if ($this->resolveFilePath($_GET['fileName'])) {
+		if ($this->module->resolveFilePath($_GET['fileName'])) {
 
 			$fileName = $_GET['fileName'];
-			$importFilePath = $this->resolveFilePath($_GET['fileName']);
+			$importFilePath = $this->module->resolveFilePath($_GET['fileName']);
 
-			$dataFilePath = $this->generateFileName($fileName);
+			$dataFilePath = Yii::app()->user->id.DIRECTORY_SEPARATOR.$fileName;
 			copy($importFilePath, Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $dataFilePath);
 
 			echo CJSON::encode($this->createMedia($fileName, $dataFilePath));

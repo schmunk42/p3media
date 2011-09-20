@@ -17,7 +17,7 @@
 				'success' => 'function(result){
 					$("#md5-' . $file->id . '").html(result.md5);
 					$("#status-' . $file->id . '").html(result.message);
-					if (result.warnings == null) $("#button-' . $file->id . ' INPUT").attr("disabled", "");
+					if (result.errors == null) $("#button-' . $file->id . ' INPUT").attr("disabled", false);
 				}',
 				'error' => 'function(jqXHR, textStatus, errorThrown){
 					$("#status-' . $file->id . '").html(textStatus);

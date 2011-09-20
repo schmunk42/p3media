@@ -125,5 +125,20 @@ public function accessRules()
 			'model'=>$model,
 		));
 	}
+	
+	
+	public function loadModel($model = false) {
+		//jquery-file-upload HACK
+		if (Yii::app()->user->checkAccess('admin')) {
+			#var_dump($_GET);exit;
+			if(isset($_GET['path'])) {
+				#echo urldecode($_GET['path']);exit;
+				$this->_model = P3Media::model()->findbyAttributes(array('path'=>urldecode($_GET['path'])));
+				#var_dump($this->_model);exit;
+				return $this->_model;
+			}
+		}
+		return parent::loadModel($model);		
+	}
 
 }
