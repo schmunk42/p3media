@@ -37,6 +37,15 @@ echo CHtml::link('Upload',array('/p3media/import/upload'),array('target'=>'_blan
 	?>
 </div>
 
+<div>
+	<?php
+		foreach($this->module->params['presets'] AS $key => $preset) {
+			$data[$key] = (isset($preset['name']))?$preset['name']:$key;
+		}
+		echo Chtml::dropDownList("preset", null, $data);
+	?>
+</div>
+
 <?php
 $locale = CLocale::getInstance(Yii::app()->language);
 $this->widget('zii.widgets.grid.CGridView', array(
@@ -79,12 +88,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	function select(id){
 		if (confirm('Select #'+id+'?')) {		
 			//alert(id+'-'+preset);
-			//if($('#preset').val() == '') {
-			//    alert('Please choose an image preset.');
-			//    return false;
-			//}
-			url = '<?php echo CController::createUrl('/p3media/file', array('id' => '__ID__', 'preset' => '__PRESET__')) ?>';
-			//url = url.replace('__PRESET__', preset);
+			if($('#preset').val() == '') {
+			    alert('Please choose an image preset.');
+			    return false;
+			} else {
+				var preset = $('#preset').val();
+			}
+			url = '<?php echo CController::createUrl('/p3media/file/image', array('id' => '__ID__', 'preset' => '__PRESET__')) ?>';
+			url = url.replace('__PRESET__', preset);
 			url = url.replace('__ID__', id);
 			//alert (url);
 			window.opener.CKEDITOR.tools.callFunction(<?php echo $_REQUEST['CKEditorFuncNum'] ?>,url);
