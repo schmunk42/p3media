@@ -12,11 +12,12 @@ class FileController extends Controller {
 
 	public function beforeAction($action) {
 		parent::beforeAction($action);
-		if (isset($_GET['path']) && Yii::app()->user->checkAccess('Admin')) {
-			$model = P3Media::model()->findByAttributes(array('path' => $_GET['path']));
+		if (isset($_GET['path']) && Yii::app()->user->checkAccess('P3Media.User')) {
+			$model = P3Media::model()->findByAttributes(array('path' => urldecode($_GET['path'])));
 			if ($model !== null) {
 				$_GET['id'] = $model->id;
 			} else {
+				$_GET['id'] = 0;
 				#return false;
 			}
 		}

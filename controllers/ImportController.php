@@ -74,7 +74,7 @@ class ImportController extends Controller {
                 */
                 'thumbnail' => array(
                     #'upload_dir' => dirname(__FILE__).'/thumbnails/',
-                    'upload_url' => $this->createUrl("/p3media/file/image",array('preset'=>'thumb','path'=>Yii::app()->user->id."/")),
+                    'upload_url' => $this->createUrl("/p3media/file/image",array('preset'=>'thumb','path'=>urlencode(Yii::app()->user->id."/"))),
                     'max_width' => 80,
                     'max_height' => 80
                 )

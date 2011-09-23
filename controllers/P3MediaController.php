@@ -129,7 +129,7 @@ public function accessRules()
 	
 	public function loadModel($model = false) {
 		//jquery-file-upload HACK
-		if (Yii::app()->user->checkAccess('admin')) {
+		if (Yii::app()->user->checkAccess('P3Media.User')) {
 			#var_dump($_GET);exit;
 			if(isset($_GET['path'])) {
 				#echo urldecode($_GET['path']);exit;
