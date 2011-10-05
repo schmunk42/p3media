@@ -119,7 +119,7 @@ class P3MediaImageAction extends CAction {
 		if ($preset['savePublic'] === true) {
 			return array(
 				'type' => 'public',
-				'data' => Yii::app()->baseUrl . Yii::app()->params['publicRuntimeUrl'] . '/p2File/' . $hash,
+				'data' => Yii::app()->baseUrl . Yii::app()->controller->module->params['publicRuntimeUrl'] . '/p2File/' . $hash,
 				'info' => $info);
 		} else {
 			return array(
