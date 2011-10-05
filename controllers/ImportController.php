@@ -57,8 +57,10 @@ class ImportController extends Controller {
 		#$script_dir = Yii::app()->basePath.'/data/p3media';
 		#$script_dir_url = Yii::app()->baseUrl;
 		$options = array(
+			'url' => $this->createUrl("/p3media/p3Media/update",array('path'=>Yii::app()->user->id."/")),
 			'upload_dir' => $this->module->getDataPath() . DIRECTORY_SEPARATOR,
-			'upload_url' => $this->createUrl("/p3media/p3Media/update",array('preset'=>'raw','path'=>urlencode(Yii::app()->user->id."/"))),
+			'upload_url' => $this->createUrl("/p3media/p3Media/update",array('preset'=>'raw','path'=>Yii::app()->user->id."/")),
+			'script_url' => $this->createUrl("/p3media/import/uploadFile",array('path'=>Yii::app()->user->id."/")),
 			'field_name' => 'files',
 			'image_versions' => array(
                 // Uncomment the following version to restrict the size of
@@ -122,7 +124,7 @@ class ImportController extends Controller {
 			case 'DELETE':
 				$upload_handler->delete();
 				$contents = ob_get_contents();
-				$result = $this->deleteMedia($_GET['file']);
+				$result = $this->deleteMedia($_GET['path']);
 				break;
 			default:
 				header('HTTP/1.0 405 Method Not Allowed');
@@ -232,8 +234,8 @@ class ImportController extends Controller {
 		}
 	}
 	
-	private function deleteMedia($fileName) {
-		$attributes['path'] = $this->module->getDataPath(true) . DIRECTORY_SEPARATOR . $fileName;
+	private function deleteMedia($filePath) {
+		$attributes['path'] = $filePath;
 		$model = P3Media::model()->findByAttributes($attributes);
 		#unlink($this->getDataPath(true) . DIRECTORY_SEPARATOR . $fileName);
 		$model->delete();

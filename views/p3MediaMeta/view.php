@@ -6,27 +6,18 @@ $this->breadcrumbs=array(
 	$model->id,
 	);
 
-if(!isset($this->menu) || $this->menu === array())
+if(!isset($this->menu) || $this->menu === array()) {
 $this->menu=array(
-	array(
-		'label' => Yii::t('app', 'Record'), 
-		'items' => array(
-			array('label'=>Yii::t('app', 'Update') , 'url'=>array('update', 'id'=>$model->id)),
-			array('label'=>Yii::t('app', 'Delete') , 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-		)
-	),
-	array(
-		'label' => Yii::t('app', 'Administration'), 
-		'items' => array(
-			/*array('label'=>Yii::t('app', 'List') , 'url'=>array('index')),*/
-			array('label'=>Yii::t('app', 'Create') , 'url'=>array('create')),
-			array('label'=>Yii::t('app', 'Manage') , 'url'=>array('admin')),
-		)
-	)
+	array('label'=>Yii::t('app', 'Update') , 'url'=>array('update', 'id'=>$model->id)),
+	array('label'=>Yii::t('app', 'Delete') , 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>Yii::t('app', 'Create') , 'url'=>array('create')),
+	array('label'=>Yii::t('app', 'Manage') , 'url'=>array('admin')),
+	/*array('label'=>Yii::t('app', 'List') , 'url'=>array('index')),*/
 );
+}
 ?>
 
-<h1><?php echo Yii::t('app', 'View').' '.Yii::t('app', 'P3MediaMeta') . ' #' .$model->id; ?></h1>
+<h1><?php echo Yii::t('app', 'View');?> P3MediaMeta #<?php echo $model->id; ?></h1>
 
 <?php
 $locale = CLocale::getInstance(Yii::app()->language);
@@ -36,7 +27,7 @@ $locale = CLocale::getInstance(Yii::app()->language);
 	'attributes'=>array(
 					array(
 			'name'=>'id',
-			'value'=>($model->id0 !== null)?CHtml::link($model->id0->recordTitle, array('p3Media/view','id'=>$model->id0->id)).' '.CHtml::link(Yii::t('app','Update'), array('p3Media/update','id'=>$model->id0->id), array('class'=>'edit')):'n/a',
+			'value'=>($model->id0 !== null)?CHtml::link($model->id0->recordTitle, array('/p3media/p3Media/view','id'=>$model->id0->id)).' '.CHtml::link(Yii::t('app','Update'), array('/p3media/p3Media/update','id'=>$model->id0->id), array('class'=>'edit')):'n/a',
 			'type'=>'html',
 		),
 		'status',
@@ -44,7 +35,7 @@ $locale = CLocale::getInstance(Yii::app()->language);
 		'language',
 		array(
 			'name'=>'treeParent_id',
-			'value'=>($model->treeParent !== null)?CHtml::link($model->treeParent->recordTitle, array('p3MediaMeta/view','id'=>$model->treeParent->id)).' '.CHtml::link(Yii::t('app','Update'), array('p3MediaMeta/update','id'=>$model->treeParent->id), array('class'=>'edit')):'n/a',
+			'value'=>($model->treeParent !== null)?CHtml::link($model->treeParent->recordTitle, array('/p3media/p3MediaMeta/view','id'=>$model->treeParent->id)).' '.CHtml::link(Yii::t('app','Update'), array('/p3media/p3MediaMeta/update','id'=>$model->treeParent->id), array('class'=>'edit')):'n/a',
 			'type'=>'html',
 		),
 		'treePosition',

@@ -39,8 +39,9 @@
 				'fileName' => $file->name,
 			),
 			array(
+				'dataType' => 'json',
 				'success' => 'function(data){
-					$("#status-' . $file->id . '").html("Imported as \'"+data+"\'");
+					$("#status-' . $file->id . '").html("Imported as \'"+data.title+"\'");
 				}',
 				'error' => 'function(data){
 					$("#status-' . $file->id . '").html("Error");

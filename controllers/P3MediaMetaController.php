@@ -1,41 +1,42 @@
 <?php
 
-class P3MediaMetaController extends GController
+class P3MediaMetaController extends Controller
 {
 	public $layout='//layouts/column2';
 
 	public function filters()
-{
-	return array(
+	{
+		return array(
 			'accessControl', 
-			);
-}
+		);
+	}	
 
-public function accessRules()
-{
-	return array(
+	public function accessRules()
+	{
+		return array(
 			array('allow',  
 				'actions'=>array('index','view'),
 				'users'=>array('*'),
-				),
+			),
 			array('allow', 
-				'actions'=>array('getOptions', 'create','update'),
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
-				),
+			),
 			array('allow', 
 				'actions'=>array('admin','delete'),
 				'users'=>array('admin'),
-				),
-			array('deny', 
+			),
+			array('deny',  
 				'users'=>array('*'),
-				),
-			);
-}
+			),
+		);
+	}
 
-		public function actionView()
+	public function actionView($id)
 	{
+		$model = $this->loadModel($id);
 		$this->render('view',array(
-			'model' => $this->loadModel(),
+			'model' => $model,
 		));
 	}
 
@@ -48,25 +49,24 @@ public function accessRules()
 		if(isset($_POST['P3MediaMeta'])) {
 			$model->attributes = $_POST['P3MediaMeta'];
 
-
-			if($model->save()) {
-				$this->redirect(array('view','id'=>$model->id));
-			}			
+			try {
+    			if($model->save()) {
+        			$this->redirect(array('view','id'=>$model->id));
+				}
+			} catch (Exception $e) {
+				throw new CHttpException(500,$e->getMessage());
+			}
 		} elseif(isset($_GET['P3MediaMeta'])) {
 				$model->attributes = $_GET['P3MediaMeta'];
 		}
 
-
-		if(Yii::app()->request->isAjaxRequest)
-			$this->renderPartial('_miniform',array( 'model'=>$model, 'relation' => $_GET['relation']));
-		else
-			$this->render('create',array( 'model'=>$model));
+		$this->render('create',array( 'model'=>$model));
 	}
 
 
-	public function actionUpdate()
+	public function actionUpdate($id)
 	{
-		$model = $this->loadModel();
+		$model = $this->loadModel($id);
 
 				$this->performAjaxValidation($model, 'p3-media-meta-form');
 		
@@ -75,10 +75,13 @@ public function accessRules()
 			$model->attributes = $_POST['P3MediaMeta'];
 
 
-			if($model->save()) {
-
-      $this->redirect(array('view','id'=>$model->id));
-			}
+			try {
+    			if($model->save()) {
+        			$this->redirect(array('view','id'=>$model->id));
+        		}
+			} catch (Exception $e) {
+				throw new CHttpException(500,$e->getMessage());
+			}	
 		}
 
 		$this->render('update',array(
@@ -86,17 +89,18 @@ public function accessRules()
 					));
 	}
 
-	public function actionDelete()
+	public function actionDelete($id)
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
-			$this->loadModel()->delete();
+			try {
+				$this->loadModel($id)->delete();
+			} catch (Exception $e) {
+				throw new CHttpException(500,$e->getMessage());
+			}
 
 			if(!isset($_GET['ajax']))
 			{
-				if(isset($_POST['returnUrl']))
-					$this->redirect($_POST['returnUrl']); 
-				else
 					$this->redirect(array('admin'));
 			}
 		}
@@ -126,4 +130,26 @@ public function accessRules()
 		));
 	}
 
+	public function loadModel($id)
+	{
+		// TODO: is_numeric is for backward compatibility ... if the value is a number it's treated as the PK
+		if (is_numeric($id)) {
+			$model=P3MediaMeta::model()->findByPk($id);
+		} else {
+			$model=P3MediaMeta::model()->find('id = :id', array(
+			':id' => $id));
+		}
+		if($model===null)
+			throw new CHttpException(404,Yii::t('The requested page does not exist.'));
+		return $model;
+	}
+
+	protected function performAjaxValidation($model)
+	{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='p3-media-meta-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+	}
 }

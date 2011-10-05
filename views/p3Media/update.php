@@ -3,20 +3,20 @@ if(!isset($this->breadcrumbs) || ($this->breadcrumbs === array()))
 
 $this->breadcrumbs=array(
 	'P3 Medias'=>array('index'),
-	$model->title=>array('view','id'=>$model->id),
+	$model->path=>array('view','path'=>$model->path),
 	Yii::t('app', 'Update'),
 );
 
-if(!isset($this->menu) || $this->menu === array())
+/*if(!isset($this->menu) || $this->menu === array())
 $this->menu=array(
-	array('label'=>Yii::t('app', 'List') . ' ' . Yii::t('app','P3Media'), 'url'=>array('index')),
-	array('label'=>Yii::t('app', 'Create') . ' ' . Yii::t('app','P3Media'), 'url'=>array('create')),
-	array('label'=>Yii::t('app', 'View') . ' ' . Yii::t('app','P3Media'), 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>Yii::t('app', 'Manage') . ' ' . Yii::t('app','P3Media'), 'url'=>array('admin')),
-);
+	array('label'=>Yii::t('app', 'Manage') , 'url'=>array('admin')),
+	array('label'=>Yii::t('app', 'Create') , 'url'=>array('create')),
+	array('label'=>Yii::t('app', 'View') , 'url'=>array('view', 'id'=>$model->id)),
+	array('label'=>Yii::t('app', 'List') , 'url'=>array('index')),
+);*/
 ?>
 
-<h1> <?php echo Yii::t('app', 'Update');?> <?php echo Yii::t('app', 'P3Media');?> #<?php echo $model->id; ?> </h1>
+<h1> <?php echo Yii::t('app', 'Update');?> <?php echo Yii::t('app', 'P3Media');?> #<?php echo $model->path; ?> </h1>
 <?php
 $this->renderPartial('_form', array(
 			'model'=>$model));

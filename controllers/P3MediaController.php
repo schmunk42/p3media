@@ -1,41 +1,42 @@
 <?php
 
-class P3MediaController extends GController
+class P3MediaController extends Controller
 {
 	public $layout='//layouts/column2';
 
 	public function filters()
-{
-	return array(
+	{
+		return array(
 			'accessControl', 
-			);
-}
+		);
+	}	
 
-public function accessRules()
-{
-	return array(
+	public function accessRules()
+	{
+		return array(
 			array('allow',  
 				'actions'=>array('index','view'),
 				'users'=>array('*'),
-				),
+			),
 			array('allow', 
-				'actions'=>array('getOptions', 'create','update'),
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
-				),
+			),
 			array('allow', 
 				'actions'=>array('admin','delete'),
 				'users'=>array('admin'),
-				),
-			array('deny', 
+			),
+			array('deny',  
 				'users'=>array('*'),
-				),
-			);
-}
+			),
+		);
+	}
 
-		public function actionView()
+	public function actionView($path)
 	{
+		$model = $this->loadModel($path);
 		$this->render('view',array(
-			'model' => $this->loadModel(),
+			'model' => $model,
 		));
 	}
 
@@ -48,25 +49,24 @@ public function accessRules()
 		if(isset($_POST['P3Media'])) {
 			$model->attributes = $_POST['P3Media'];
 
-
-			if($model->save()) {
-				$this->redirect(array('view','id'=>$model->id));
-			}			
+			try {
+    			if($model->save()) {
+        			$this->redirect(array('view','path'=>$model->path));
+				}
+			} catch (Exception $e) {
+				throw new CHttpException(500,$e->getMessage());
+			}
 		} elseif(isset($_GET['P3Media'])) {
 				$model->attributes = $_GET['P3Media'];
 		}
 
-
-		if(Yii::app()->request->isAjaxRequest)
-			$this->renderPartial('_miniform',array( 'model'=>$model, 'relation' => $_GET['relation']));
-		else
-			$this->render('create',array( 'model'=>$model));
+		$this->render('create',array( 'model'=>$model));
 	}
 
 
-	public function actionUpdate()
+	public function actionUpdate($path)
 	{
-		$model = $this->loadModel();
+		$model = $this->loadModel($path);
 
 				$this->performAjaxValidation($model, 'p3-media-form');
 		
@@ -75,10 +75,13 @@ public function accessRules()
 			$model->attributes = $_POST['P3Media'];
 
 
-			if($model->save()) {
-
-      $this->redirect(array('view','id'=>$model->id));
-			}
+			try {
+    			if($model->save()) {
+        			$this->redirect(array('view','path'=>$model->path));
+        		}
+			} catch (Exception $e) {
+				throw new CHttpException(500,$e->getMessage());
+			}	
 		}
 
 		$this->render('update',array(
@@ -86,17 +89,18 @@ public function accessRules()
 					));
 	}
 
-	public function actionDelete()
+	public function actionDelete($path)
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
-			$this->loadModel()->delete();
+			try {
+				$this->loadModel($path)->delete();
+			} catch (Exception $e) {
+				throw new CHttpException(500,$e->getMessage());
+			}
 
 			if(!isset($_GET['ajax']))
 			{
-				if(isset($_POST['returnUrl']))
-					$this->redirect($_POST['returnUrl']); 
-				else
 					$this->redirect(array('admin'));
 			}
 		}
@@ -125,20 +129,27 @@ public function accessRules()
 			'model'=>$model,
 		));
 	}
-	
-	
-	public function loadModel($model = false) {
-		//jquery-file-upload HACK
-		if (Yii::app()->user->checkAccess('admin')) {
-			#var_dump($_GET);exit;
-			if(isset($_GET['path'])) {
-				#echo urldecode($_GET['path']);exit;
-				$this->_model = P3Media::model()->findbyAttributes(array('path'=>urldecode($_GET['path'])));
-				#var_dump($this->_model);exit;
-				return $this->_model;
-			}
+
+	public function loadModel($path)
+	{
+		// TODO: is_numeric is for backward compatibility ... if the value is a number it's treated as the PK
+		if (is_numeric($path)) {
+			$model=P3Media::model()->findByPk($path);
+		} else {
+			$model=P3Media::model()->find('path = :path', array(
+			':path' => $path));
 		}
-		return parent::loadModel($model);		
+		if($model===null)
+			throw new CHttpException(404,Yii::t('app','The requested page does not exist.'));
+		return $model;
 	}
 
+	protected function performAjaxValidation($model)
+	{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='p3-media-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+	}
 }

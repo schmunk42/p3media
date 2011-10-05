@@ -8,18 +8,8 @@ $this->breadcrumbs=array(
 
 if(!isset($this->menu) || $this->menu === array())
 $this->menu=array(
-	array(
-		'label' => Yii::t('app', 'Administration'), 
-		'items' => array(
-			array('label'=>Yii::t('app', 'Create') , 'url'=>array('create')),
-		)
-	),
-	/*array(
-		'label' => Yii::t('app', 'View'), 
-		'items' => array(
-			array('label'=>Yii::t('app', 'List') , 'url'=>array('index')),
-		)
-	)*/
+	array('label'=>Yii::t('app', 'Create') , 'url'=>array('create')),
+	array('label'=>Yii::t('app', 'List') , 'url'=>array('index')),
 );
 
 
@@ -45,7 +35,7 @@ foreach ($model->relations() AS $key => $relation)
 {
 	echo  "<li>".
 		Yii::t("app",substr(str_replace("Relation","",$relation[0]),1))." ".
-		CHtml::link(Yii::t("app",$relation[1]), array($this->resolveRelationController($relation)."/admin")).
+		CHtml::link(Yii::t("app",$relation[1]), array(GHelper::resolveController($relation)."/admin")).
 		" </li>";
 }
 echo "</ul>";
@@ -79,6 +69,10 @@ $locale = CLocale::getInstance(Yii::app()->language);
 		*/
 		array(
 			'class'=>'CButtonColumn',
+			'viewButtonUrl' => "Yii::app()->controller->createUrl('view', array('path' => \$data->path))",
+			'updateButtonUrl' => "Yii::app()->controller->createUrl('update', array('path' => \$data->path))",
+			'deleteButtonUrl' => "Yii::app()->controller->createUrl('delete', array('path' => \$data->path))",
+
 		),
 	),
 )); ?>
