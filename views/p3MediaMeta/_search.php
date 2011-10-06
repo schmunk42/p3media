@@ -7,7 +7,7 @@
 
         <div class="row">
                 <?php echo $form->label($model,'id'); ?>
-                <?php echo $form->dropDownList($model,'id',CHtml::listData(P3Media::model()->findAll(), 'id', 'recordTitle'),array('prompt'=>Yii::t('app', 'All'))); ?>
+                <?php echo $form->dropDownList($model,'id',CHtml::listData(P3Media::model()->findAll(), 'id', '_label'),array('prompt'=>Yii::t('app', 'All'))); ?>
         </div>
     
         <div class="row">
@@ -27,7 +27,7 @@
     
         <div class="row">
                 <?php echo $form->label($model,'treeParent_id'); ?>
-                <?php echo $form->dropDownList($model,'treeParent_id',CHtml::listData(P3MediaMeta::model()->findAll(), 'id', 'recordTitle'),array('prompt'=>Yii::t('app', 'All'))); ?>
+                <?php echo $form->dropDownList($model,'treeParent_id',CHtml::listData(P3MediaMeta::model()->findAll(), 'id', '_label'),array('prompt'=>Yii::t('app', 'All'))); ?>
         </div>
     
         <div class="row">

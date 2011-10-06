@@ -31,10 +31,25 @@ class P3MediaController extends Controller
 			),
 		);
 	}
-
-	public function actionView($path)
+	
+	public function beforeAction($action){
+		parent::beforeAction($action);
+		// map identifcationColumn to id
+		if (!isset($_GET['id']) && isset($_GET['path'])) {
+			$model=P3Media::model()->find('path = :path', array(
+			':path' => $_GET['path']));
+			if ($model !== null) {
+				$_GET['id'] = $model->id;
+			} else {
+				throw new CHttpException(400);
+			}
+		}
+		return true;
+	}
+	
+	public function actionView($id)
 	{
-		$model = $this->loadModel($path);
+		$model = $this->loadModel($id);
 		$this->render('view',array(
 			'model' => $model,
 		));
@@ -51,10 +66,10 @@ class P3MediaController extends Controller
 
 			try {
     			if($model->save()) {
-        			$this->redirect(array('view','path'=>$model->path));
+        			$this->redirect(array('view','id'=>$model->id));
 				}
 			} catch (Exception $e) {
-				throw new CHttpException(500,$e->getMessage());
+				$model->addError('path', $e->getMessage());
 			}
 		} elseif(isset($_GET['P3Media'])) {
 				$model->attributes = $_GET['P3Media'];
@@ -64,9 +79,9 @@ class P3MediaController extends Controller
 	}
 
 
-	public function actionUpdate($path)
+	public function actionUpdate($id)
 	{
-		$model = $this->loadModel($path);
+		$model = $this->loadModel($id);
 
 				$this->performAjaxValidation($model, 'p3-media-form');
 		
@@ -77,10 +92,10 @@ class P3MediaController extends Controller
 
 			try {
     			if($model->save()) {
-        			$this->redirect(array('view','path'=>$model->path));
+        			$this->redirect(array('view','id'=>$model->id));
         		}
 			} catch (Exception $e) {
-				throw new CHttpException(500,$e->getMessage());
+				$model->addError('path', $e->getMessage());
 			}	
 		}
 
@@ -89,12 +104,12 @@ class P3MediaController extends Controller
 					));
 	}
 
-	public function actionDelete($path)
+	public function actionDelete($id)
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
 			try {
-				$this->loadModel($path)->delete();
+				$this->loadModel($id)->delete();
 			} catch (Exception $e) {
 				throw new CHttpException(500,$e->getMessage());
 			}
@@ -130,17 +145,11 @@ class P3MediaController extends Controller
 		));
 	}
 
-	public function loadModel($path)
+	public function loadModel($id)
 	{
-		// TODO: is_numeric is for backward compatibility ... if the value is a number it's treated as the PK
-		if (is_numeric($path)) {
-			$model=P3Media::model()->findByPk($path);
-		} else {
-			$model=P3Media::model()->find('path = :path', array(
-			':path' => $path));
-		}
+		$model=P3Media::model()->findByPk($id);
 		if($model===null)
-			throw new CHttpException(404,Yii::t('app','The requested page does not exist.'));
+			throw new CHttpException(404,Yii::t('app', 'The requested page does not exist.'));
 		return $model;
 	}
 

@@ -23,13 +23,20 @@
 			<?php
 			echo CHtml::fileField('fileUpload', null, array(
 				'style' => 'width: 100%',
-				#'onchange'=>'$("#P2File_name").val($("#fileUpload").val());'
+				'onchange'=>'if (!$("#P3Media_title").val()) $("#P3Media_title").val($("#fileUpload").val());'
 				)
 			);
 			?>
 		</div>
 		<p class="hint">Maximum size: <?php echo min(ini_get('upload_max_filesize'), ini_get('post_max_size')) ?></p>
 	</div>
+<div class="row">
+	<?php echo CHtml::image(
+			Yii::app()->controller->createUrl("/p3media/file",array("id"=>$model->id)), 
+			$model->title, 
+			array("class"=>"ckeditor")
+		); ?>
+</div>
 
 	<div class="row">
 <?php echo $form->labelEx($model,'title'); ?>
@@ -96,7 +103,7 @@
 
 <div class="row">
 <label for="metaData"><?php echo Yii::t('app', 'MetaData'); ?></label>
-<?php if ($model->metaData !== null) echo $model->metaData->recordTitle;; ?><br />
+<?php if ($model->metaData !== null) echo $model->metaData->_label;; ?><br />
 </div>
 
 

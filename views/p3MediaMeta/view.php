@@ -3,7 +3,7 @@ if(!isset($this->breadcrumbs) || ($this->breadcrumbs === array()))
 
 $this->breadcrumbs=array(
 'P3 Media Metas'=>array('index'),
-	$model->id,
+	$model->_label,
 	);
 
 if(!isset($this->menu) || $this->menu === array()) {
@@ -27,7 +27,7 @@ $locale = CLocale::getInstance(Yii::app()->language);
 	'attributes'=>array(
 					array(
 			'name'=>'id',
-			'value'=>($model->id0 !== null)?CHtml::link($model->id0->recordTitle, array('/p3media/p3Media/view','id'=>$model->id0->id)).' '.CHtml::link(Yii::t('app','Update'), array('/p3media/p3Media/update','id'=>$model->id0->id), array('class'=>'edit')):'n/a',
+			'value'=>($model->id0 !== null)?CHtml::link($model->id0->_label, array('/p3media/p3Media/view','id'=>$model->id0->id)).' '.CHtml::link(Yii::t('app','Update'), array('/p3media/p3Media/update','id'=>$model->id0->id), array('class'=>'edit')):'n/a',
 			'type'=>'html',
 		),
 		'status',
@@ -35,7 +35,7 @@ $locale = CLocale::getInstance(Yii::app()->language);
 		'language',
 		array(
 			'name'=>'treeParent_id',
-			'value'=>($model->treeParent !== null)?CHtml::link($model->treeParent->recordTitle, array('/p3media/p3MediaMeta/view','id'=>$model->treeParent->id)).' '.CHtml::link(Yii::t('app','Update'), array('/p3media/p3MediaMeta/update','id'=>$model->treeParent->id), array('class'=>'edit')):'n/a',
+			'value'=>($model->treeParent !== null)?CHtml::link($model->treeParent->_label, array('/p3media/p3MediaMeta/view','id'=>$model->treeParent->id)).' '.CHtml::link(Yii::t('app','Update'), array('/p3media/p3MediaMeta/update','id'=>$model->treeParent->id), array('class'=>'edit')):'n/a',
 			'type'=>'html',
 		),
 		'treePosition',
@@ -65,7 +65,7 @@ $locale = CLocale::getInstance(Yii::app()->language);
 			<?php if (is_array($model->p3MediaMetas)) foreach($model->p3MediaMetas as $foreignobj) { 
 
 					echo '<li>';
-					echo CHtml::link($foreignobj->recordTitle, array('/p3media/p3MediaMeta/view','id'=>$foreignobj->id));
+					echo CHtml::link($foreignobj->_label, array('/p3media/p3MediaMeta/view','id'=>$foreignobj->id));
 							
 					echo ' '.CHtml::link(Yii::t('app','Update'), array('/p3media/p3MediaMeta/update','id'=>$foreignobj->id), array('class'=>'edit'));
 

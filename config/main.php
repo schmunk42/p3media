@@ -8,8 +8,8 @@ return array(
 		'p3media' => array(
 			'class' => 'application.modules.p3media.P3MediaModule',
 			'params' => array(
-				'publicRuntimePath' => '../runtime',
-				'publicRuntimeUrl' => '/runtime',
+				'publicRuntimePath' => '../runtime/p3media',
+				'publicRuntimeUrl' => '/runtime/p3media',
 				'protectedRuntimePath' => 'runtime/p3media',
 				'presets' => array(
 					'default' => array(

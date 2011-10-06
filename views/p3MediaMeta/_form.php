@@ -167,7 +167,7 @@ echo $form->errorSummary($model);
 					array(
 							'model' => $model,
 							'relation' => 'id0',
-							'fields' => 'title',
+							'fields' => '_label',
 							'allowEmpty' => false,
 							'style' => 'dropdownlist',
 							'htmlOptions' => array(
@@ -183,7 +183,7 @@ echo $form->errorSummary($model);
 					array(
 							'model' => $model,
 							'relation' => 'treeParent',
-							'fields' => 'status',
+							'fields' => '_label',
 							'allowEmpty' => true,
 							'style' => 'dropdownlist',
 							'htmlOptions' => array(

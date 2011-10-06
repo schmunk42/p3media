@@ -14,32 +14,28 @@ class P3MediaMeta extends BaseP3MediaMeta
 	}
 
 	public function __toString() {
-		return (string) $this->language;
+		return (string) $this->type;
 
 	}
+
+	public function behaviors() 
+	{
+		return array_merge(parent::behaviors(),array(
+		));
+	}
+
+
 
 
 	public function rules() 
 	{
 		return array_merge(
-			/*array('column1, column2', 'rule'),*/
-			parent::rules()
-		);
+				/*array('column1, column2', 'rule'),*/
+				parent::rules()
+				);
 	}
-
-	public function behaviors()
-	{
-		return array_merge(
-			/*array(
-				'BehaviourName' => array(
-					'class' => 'CWhateverBehavior'
-				)
-			),*/
-			parent::behaviors()
-		);
+	
+	public function get_label() {
+		return $this->id0->title;
 	}
-
-		public function getName()
-	{
-		return $this->language;	}
-	}
+}

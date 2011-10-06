@@ -18,7 +18,7 @@
  * Relations of table "p3_media" available as properties of the model:
  * @property P3MediaMeta $p3MediaMeta
  */
-abstract class BaseP3Media extends GActiveRecord{
+abstract class BaseP3Media extends CActiveRecord{
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -32,8 +32,9 @@ abstract class BaseP3Media extends GActiveRecord{
 	public function rules()
 	{
 		return array(
-			array('title', 'required'),
 			array('title', 'unique'),
+			array('title', 'identificationColumnValidator'),
+			array('title', 'required'),
 			array('description, type, path, md5, originalName, mimeType, size, info', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('type, size', 'numerical', 'integerOnly'=>true),
 			array('title, md5', 'length', 'max'=>32),
@@ -47,7 +48,7 @@ abstract class BaseP3Media extends GActiveRecord{
 	public function relations()
 	{
 		return array(
-			'metaData' => array(self::HAS_ONE, 'P3MediaMeta', 'id'),
+			'p3MediaMeta' => array(self::HAS_ONE, 'P3MediaMeta', 'id'),
 		);
 	}
 
@@ -87,4 +88,11 @@ abstract class BaseP3Media extends GActiveRecord{
 			'criteria'=>$criteria,
 		));
 	}
+	
+	public function get_label()
+	{
+		return '#'.$this->id;
+		
+			}
+	
 }

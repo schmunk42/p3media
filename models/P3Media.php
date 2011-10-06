@@ -22,6 +22,17 @@ class P3Media extends BaseP3Media {
 		);
 	}
 
+	public function relations()
+	{
+		return array(
+			'metaData' => array(self::HAS_ONE, 'P3MediaMeta', 'id'),
+		);
+	}
+	public function getP3MediaMeta(){
+		return $this->metaData;
+	}
+
+	
 	public function behaviors() {
 		return array_merge(
 			array(
@@ -40,10 +51,7 @@ class P3Media extends BaseP3Media {
 			), parent::behaviors()
 		);
 	}
-
-	public function getName() {
-		return $this->title;
-	}
+	
 
 	public function search() {
 		$criteria = new CDbCriteria;

@@ -29,24 +29,14 @@ data: $(this).serialize()
 
 <h1> <?php echo Yii::t('app', 'Manage'); ?> <?php echo Yii::t('app', 'P3 Media Metas'); ?> </h1>
 
-<?php
-echo "<ul>";
-foreach ($model->relations() AS $key => $relation)
-{
-	echo  "<li>".
-		Yii::t("app",substr(str_replace("Relation","",$relation[0]),1))." ".
-		CHtml::link(Yii::t("app",$relation[1]), array(GHelper::resolveController($relation)."/admin")).
-		" </li>";
-}
-echo "</ul>";
-?>
-<?php echo CHtml::link(Yii::t('app', 'Advanced Search'),'#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
+
+<ul><li>BelongsTo <a href="/NetBeans/p3-git/p3media/p3Media/admin">P3Media</a> </li><li>BelongsTo <a href="/NetBeans/p3-git/p3media/p3MediaMeta/admin">P3MediaMeta</a> </li><li>HasMany <a href="/NetBeans/p3-git/p3media/p3MediaMeta/admin">P3MediaMeta</a> </li></ul>
+
+<?php echo CHtml::link(Yii::t('app', 'Advanced Search'),'#',array('class'=>'search-button')); ?><div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
 )); ?>
 </div>
-
 <?php
 $locale = CLocale::getInstance(Yii::app()->language);
 
@@ -55,18 +45,20 @@ $locale = CLocale::getInstance(Yii::app()->language);
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
+
+	
 		array(
 					'name'=>'id',
-					'value'=>'CHtml::value($data,\'id0.recordTitle\')',
-							'filter'=>CHtml::listData(P3Media::model()->findAll(), 'id', 'recordTitle'),
+					'value'=>'CHtml::value($data,\'id0._label\')',
+							'filter'=>CHtml::listData(P3Media::model()->findAll(), 'id', '_label'),
 							),
 		'status',
 		'type',
 		'language',
 		array(
 					'name'=>'treeParent_id',
-					'value'=>'CHtml::value($data,\'p3MediaMetas.recordTitle\')',
-							'filter'=>CHtml::listData(P3MediaMeta::model()->findAll(), 'id', 'recordTitle'),
+					'value'=>'CHtml::value($data,\'p3MediaMetas._label\')',
+							'filter'=>CHtml::listData(P3MediaMeta::model()->findAll(), 'id', '_label'),
 							),
 		'treePosition',
 		/*

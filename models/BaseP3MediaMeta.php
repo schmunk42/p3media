@@ -33,7 +33,7 @@
  * @property P3MediaMeta $treeParent
  * @property P3MediaMeta[] $p3MediaMetas
  */
-abstract class BaseP3MediaMeta extends GActiveRecord{
+abstract class BaseP3MediaMeta extends CActiveRecord{
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -47,6 +47,8 @@ abstract class BaseP3MediaMeta extends GActiveRecord{
 	public function rules()
 	{
 		return array(
+			array('type', 'unique'),
+			array('type', 'identificationColumnValidator'),
 			array('id', 'required'),
 			array('status, type, language, treeParent_id, treePosition, begin, end, keywords, customData, label, owner, checkAccessCreate, checkAccessRead, checkAccessUpdate, checkAccessDelete, createdAt, createdBy, modifiedAt, modifiedBy, guid, ancestor_guid, model', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('id, status, treeParent_id, treePosition, label', 'numerical', 'integerOnly'=>true),
@@ -130,4 +132,11 @@ abstract class BaseP3MediaMeta extends GActiveRecord{
 			'criteria'=>$criteria,
 		));
 	}
+	
+	public function get_label()
+	{
+		return '#'.$this->id;
+		
+			}
+	
 }

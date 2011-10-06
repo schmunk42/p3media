@@ -31,7 +31,22 @@ class P3MediaMetaController extends Controller
 			),
 		);
 	}
-
+	
+	public function beforeAction($action){
+		parent::beforeAction($action);
+		// map identifcationColumn to id
+		if (!isset($_GET['id']) && isset($_GET['id'])) {
+			$model=P3MediaMeta::model()->find('id = :id', array(
+			':id' => $_GET['id']));
+			if ($model !== null) {
+				$_GET['id'] = $model->id;
+			} else {
+				throw new CHttpException(400);
+			}
+		}
+		return true;
+	}
+	
 	public function actionView($id)
 	{
 		$model = $this->loadModel($id);
@@ -54,7 +69,7 @@ class P3MediaMetaController extends Controller
         			$this->redirect(array('view','id'=>$model->id));
 				}
 			} catch (Exception $e) {
-				throw new CHttpException(500,$e->getMessage());
+				$model->addError('id', $e->getMessage());
 			}
 		} elseif(isset($_GET['P3MediaMeta'])) {
 				$model->attributes = $_GET['P3MediaMeta'];
@@ -80,7 +95,7 @@ class P3MediaMetaController extends Controller
         			$this->redirect(array('view','id'=>$model->id));
         		}
 			} catch (Exception $e) {
-				throw new CHttpException(500,$e->getMessage());
+				$model->addError('id', $e->getMessage());
 			}	
 		}
 
@@ -132,15 +147,9 @@ class P3MediaMetaController extends Controller
 
 	public function loadModel($id)
 	{
-		// TODO: is_numeric is for backward compatibility ... if the value is a number it's treated as the PK
-		if (is_numeric($id)) {
-			$model=P3MediaMeta::model()->findByPk($id);
-		} else {
-			$model=P3MediaMeta::model()->find('id = :id', array(
-			':id' => $id));
-		}
+		$model=P3MediaMeta::model()->findByPk($id);
 		if($model===null)
-			throw new CHttpException(404,Yii::t('The requested page does not exist.'));
+			throw new CHttpException(404,Yii::t('app', 'The requested page does not exist.'));
 		return $model;
 	}
 

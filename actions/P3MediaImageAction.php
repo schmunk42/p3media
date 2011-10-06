@@ -29,7 +29,7 @@ class P3MediaImageAction extends CAction {
 			$preset = new CMap($this->controller->module->params['presets'][$_GET['preset']]);
 		} else {
 			#self::sendErrorImage();
-			throw new Exception('No preset specified!');
+			throw new Exception("Invalid preset '{$_GET['preset']}' specified!");
 		}
 
 		if (is_numeric($_GET['id'])) {
@@ -119,7 +119,7 @@ class P3MediaImageAction extends CAction {
 		if ($preset['savePublic'] === true) {
 			return array(
 				'type' => 'public',
-				'data' => Yii::app()->baseUrl . Yii::app()->controller->module->params['publicRuntimeUrl'] . '/p2File/' . $hash,
+				'data' => Yii::app()->baseUrl . Yii::app()->controller->module->params['publicRuntimeUrl'] . "/" . $hash,
 				'info' => $info);
 		} else {
 			return array(
@@ -134,13 +134,15 @@ class P3MediaImageAction extends CAction {
 
 		// set render path
 		if ($public === true) {
-			$path = $basePath . DIRECTORY_SEPARATOR . Yii::app()->controller->module->params['publicRuntimePath'] . DIRECTORY_SEPARATOR . 'p2File';
+			$path = $basePath . DIRECTORY_SEPARATOR . Yii::app()->controller->module->params['publicRuntimePath'];
 		} else {
-			$path = $basePath . DIRECTORY_SEPARATOR . Yii::app()->controller->module->params['protectedRuntimePath'] . DIRECTORY_SEPARATOR . 'p2File';
+			$path = $basePath . DIRECTORY_SEPARATOR . Yii::app()->controller->module->params['protectedRuntimePath'];
 		}
 		if (!is_dir($path)) {
 			Yii::log('Creating render path in ' . $path, CLogger::LEVEL_INFO, 'p2.file');
-			mkdir($path, 0777, true);
+			if (!@mkdir($path, 0777, true)) {
+				throw new CException("Unable to create render path in '{$path}'");
+			}
 		}
 
 		if (!is_writable($path)) {
@@ -156,7 +158,7 @@ class P3MediaImageAction extends CAction {
 
 	private static function generateHash($model, $preset) {
 		$pathInfo = pathinfo($model->path);
-		$hash = md5($model->md5 . CJSON::encode($preset->toArray()));
+		$hash = $model->title."-".substr(sha1($model->md5 . CJSON::encode($preset->toArray())),0,10)."-".$model->id;
 		if (isset($preset['type'])) {
 			$hash = $hash . '.' . $preset['type'];
 		} else {

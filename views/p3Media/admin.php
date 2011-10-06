@@ -29,24 +29,14 @@ data: $(this).serialize()
 
 <h1> <?php echo Yii::t('app', 'Manage'); ?> <?php echo Yii::t('app', 'P3 Medias'); ?> </h1>
 
-<?php
-echo "<ul>";
-foreach ($model->relations() AS $key => $relation)
-{
-	echo  "<li>".
-		Yii::t("app",substr(str_replace("Relation","",$relation[0]),1))." ".
-		CHtml::link(Yii::t("app",$relation[1]), array(GHelper::resolveController($relation)."/admin")).
-		" </li>";
-}
-echo "</ul>";
-?>
-<?php echo CHtml::link(Yii::t('app', 'Advanced Search'),'#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
+
+<ul><li>HasOne <a href="/NetBeans/p3-git/p3media/p3MediaMeta/admin">P3MediaMeta</a> </li></ul>
+
+<?php echo CHtml::link(Yii::t('app', 'Advanced Search'),'#',array('class'=>'search-button')); ?><div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
 )); ?>
 </div>
-
 <?php
 $locale = CLocale::getInstance(Yii::app()->language);
 
@@ -56,6 +46,15 @@ $locale = CLocale::getInstance(Yii::app()->language);
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
+		array(
+			'type' => 'raw',
+			'value' => 'CHtml::link(
+							CHtml::image(Yii::app()->controller->createUrl("/p3media/file/image",array("id"=>$data->id,"preset"=>"thumb")),	$data->title, array("class"=>"ckeditor")),
+							Yii::app()->controller->createUrl("/p3media/p3Media/update",array("id"=>$data->id)), 
+							array("onclick"=>"select(".$data->id.");")
+						)
+				',
+		),
 		'title',
 #		'description',
 		'type',
@@ -69,9 +68,9 @@ $locale = CLocale::getInstance(Yii::app()->language);
 		*/
 		array(
 			'class'=>'CButtonColumn',
-			'viewButtonUrl' => "Yii::app()->controller->createUrl('view', array('path' => \$data->path))",
-			'updateButtonUrl' => "Yii::app()->controller->createUrl('update', array('path' => \$data->path))",
-			'deleteButtonUrl' => "Yii::app()->controller->createUrl('delete', array('path' => \$data->path))",
+			'viewButtonUrl' => "Yii::app()->controller->createUrl('view', array('id' => \$data->id))",
+			'updateButtonUrl' => "Yii::app()->controller->createUrl('update', array('id' => \$data->id))",
+			'deleteButtonUrl' => "Yii::app()->controller->createUrl('delete', array('id' => \$data->id))",
 
 		),
 	),

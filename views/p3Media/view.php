@@ -3,7 +3,7 @@ if(!isset($this->breadcrumbs) || ($this->breadcrumbs === array()))
 
 $this->breadcrumbs=array(
 'P3 Medias'=>array('index'),
-	$model->title,
+	$model->_label,
 	);
 
 if(!isset($this->menu) || $this->menu === array()) {
@@ -17,7 +17,7 @@ $this->menu=array(
 }
 ?>
 
-<h1><?php echo Yii::t('app', 'View');?> P3Media #<?php echo $model->path; ?></h1>
+<h1><?php echo Yii::t('app', 'View');?> P3Media #<?php echo $model->id; ?></h1>
 
 <?php
 $locale = CLocale::getInstance(Yii::app()->language);
@@ -45,7 +45,7 @@ $locale = CLocale::getInstance(Yii::app()->language);
 					if ($foreignobj !== null) {
 					echo '<li>';
 					echo '#'.$model->metaData->id.' ';
-					echo CHtml::link($model->metaData->recordTitle, array('/p3media/p3MediaMeta/view','id'=>$model->metaData->id));
+					echo CHtml::link($model->metaData->_label, array('/p3media/p3MediaMeta/view','id'=>$model->metaData->id));
 							
 					echo ' '.CHtml::link(Yii::t('app','Update'), array('/p3media/p3MediaMeta/update','id'=>$model->metaData->id), array('class'=>'edit'));
 
