@@ -30,7 +30,7 @@ class ImportController extends Controller {
 	}
 
 	public $breadcrumbs = array(
-		'P3 Media' => array('/p3media')
+		'p3media' => array('/p3media')
 	);
 
 	public function init() {

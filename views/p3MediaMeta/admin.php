@@ -1,11 +1,5 @@
 <?php
-if(!isset($this->breadcrumbs) || ($this->breadcrumbs === array()))
-
-$this->breadcrumbs=array(
-	'P3 Media Metas'=>array(Yii::t('app', 'index')),
-	Yii::t('app', 'Manage'),
-);
-
+$this->breadcrumbs['P3 Media Metas'] = array('index');$this->breadcrumbs[] = Yii::t('app', 'Admin');
 if(!isset($this->menu) || $this->menu === array())
 $this->menu=array(
 	array('label'=>Yii::t('app', 'Create') , 'url'=>array('create')),

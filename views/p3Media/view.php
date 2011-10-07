@@ -1,11 +1,5 @@
 <?php
-if(!isset($this->breadcrumbs) || ($this->breadcrumbs === array()))
-
-$this->breadcrumbs=array(
-'P3 Medias'=>array('index'),
-	$model->_label,
-	);
-
+$this->breadcrumbs['P3 Medias'] = array('index');$this->breadcrumbs[] = $model->_label;
 if(!isset($this->menu) || $this->menu === array()) {
 $this->menu=array(
 	array('label'=>Yii::t('app', 'Update') , 'url'=>array('update', 'id'=>$model->id)),

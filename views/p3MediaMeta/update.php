@@ -1,12 +1,5 @@
 <?php
-if(!isset($this->breadcrumbs) || ($this->breadcrumbs === array()))
-
-$this->breadcrumbs=array(
-	'P3 Media Metas'=>array('index'),
-	$model->id=>array('view','id'=>$model->id),
-	Yii::t('app', 'Update'),
-);
-
+$this->breadcrumbs['P3 Media Metas'] = array('index');$this->breadcrumbs[$model->id] = array('view','id'=>$model->id);$this->breadcrumbs[] = Yii::t('app', 'Update');
 if(!isset($this->menu) || $this->menu === array())
 $this->menu=array(
 	array('label'=>Yii::t('app', 'Delete') , 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),

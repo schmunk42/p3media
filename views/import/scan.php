@@ -22,7 +22,7 @@
 				'error' => 'function(jqXHR, textStatus, errorThrown){
 					$("#status-' . $file->id . '").html(textStatus);
 					$("#status-' . $file->id . '").addClass("error");
-						alert("err");
+					//alert("err");
 				}',
 				)
 			)
