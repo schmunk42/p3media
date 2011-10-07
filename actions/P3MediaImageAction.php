@@ -235,7 +235,7 @@ class P3MediaImageAction extends CAction {
 		#Yii::log("Sending error image ...", CLogger::LEVEL_TRACE, 'p2.file');
 		header('Content-Type: png');
 		$path = self::prepareRenderPath($preset['savePublic']);
-		$outFile = $path . DIRECTORY_SEPARATOR . "missing-" . sha1(serialize($preset));
+		$outFile = $path . DIRECTORY_SEPARATOR . "missing-" . substr(sha1(serialize($preset)),0,10).".png";
 		self::generateImage(Yii::getPathOfAlias('p3media.images') . DIRECTORY_SEPARATOR . 'missing.png', $outFile, $preset);
 		readfile($outFile);
 		#P2Helper::writeFileLogs();
