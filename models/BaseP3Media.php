@@ -19,6 +19,9 @@
  * @property P3MediaMeta $p3MediaMeta
  */
 abstract class BaseP3Media extends CActiveRecord{
+	
+	public $type = 1;
+	
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
