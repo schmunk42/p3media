@@ -3,10 +3,19 @@
 class m110719_000000_init extends CDbMigration {
 
 	public function up() {
+// Schema for table 'p3_media'
+
+		if (Yii::app()->db->schema instanceof CMysqlSchema)
+			$options = 'ENGINE=InnoDB DEFAULT CHARSET=utf8';
+		else
+			$options = '';
+
+
 
 // Schema for table 'p3_media'
 
-		$this->createTable("p3_media", array(
+		$this->createTable(
+			"p3_media", array(
 			"id" => "pk",
 			"title" => "varchar(32) NOT NULL",
 			"description" => "text",
@@ -17,12 +26,9 @@ class m110719_000000_init extends CDbMigration {
 			"mimeType" => "varchar(128)",
 			"size" => "int(11)",
 			"info" => "text",
-			), "ENGINE=InnoDB DEFAULT CHARSET=utf8");
+			), $options);
 
 
-// Foreign Keys for table 'p3_media'
-// Data for table 'p3_media'
-// Schema for table 'p3_media_meta'
 
 		$this->createTable("p3_media_meta", array(
 			"id" => "int(11) NOT NULL",
@@ -48,12 +54,11 @@ class m110719_000000_init extends CDbMigration {
 			"guid" => "varchar(64)",
 			"ancestor_guid" => "varchar(64)",
 			"model" => "varchar(128)",
-			), "ENGINE=InnoDB DEFAULT CHARSET=utf8");
+			"PRIMARY KEY (id)"
+			), $options);
 
 
-// Foreign Keys for table 'p3_media_meta'
-
-
+		// Foreign Keys for table 'p3_media_meta'
 		$this->addForeignKey('fk_p3_media_id', 'p3_media_meta', 'id', 'p3_media', 'id', 'CASCADE', 'CASCADE'); // update 'null' for ON DELTE and ON UPDATE
 		$this->addForeignKey('fk_p3_media_meta_treeParent_id', 'p3_media_meta', 'treeParent_id', 'p3_media_meta', 'id', null, null); // update 'null' for ON DELTE and ON UPDATE
 	}
