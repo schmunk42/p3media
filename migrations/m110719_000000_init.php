@@ -58,9 +58,15 @@ class m110719_000000_init extends CDbMigration {
 			), $options);
 
 
-		// Foreign Keys for table 'p3_media_meta'
-		$this->addForeignKey('fk_p3_media_id', 'p3_media_meta', 'id', 'p3_media', 'id', 'CASCADE', 'CASCADE'); // update 'null' for ON DELTE and ON UPDATE
+// Foreign Keys for table 'p3_media_meta'
+
+		if ((Yii::app()->db->schema instanceof CSqliteSchema) == false):
+
+		$this->addForeignKey('fk_p3_media_id', 'p3_media_meta', 'id', 'p3_media', 'id', null, null); // update 'null' for ON DELTE and ON UPDATE
+
 		$this->addForeignKey('fk_p3_media_meta_treeParent_id', 'p3_media_meta', 'treeParent_id', 'p3_media_meta', 'id', null, null); // update 'null' for ON DELTE and ON UPDATE
+
+		endif;
 	}
 
 	public function down() {
