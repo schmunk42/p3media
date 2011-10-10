@@ -16,6 +16,10 @@ class P3MediaModule extends CWebModule
 			'p3media.components.*',
 			'ext.p3extensions.helpers.*',
 		));
+		
+		if (!is_writable(Yii::getPathOfAlias($this->dataAlias))) {
+			throw new CHttpException(500, "Directory with alias '{$this->dataAlias}' not writable.");
+		} 
 	}
 
 	public function beforeControllerAction($controller, $action)
