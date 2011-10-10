@@ -4,52 +4,58 @@ class m110719_000000_init extends CDbMigration {
 
 	public function up() {
 
+// Schema for table 'p3_media'
+
 		$this->createTable("p3_media", array(
 			"id" => "pk",
-			"parent_id" => "int(11) NOT NULL DEFAULT '1'",
-			"title" => "varchar(32) NOT NULL DEFAULT '-'",
+			"title" => "varchar(32) NOT NULL",
 			"description" => "text",
-			"type" => "varchar(45)",
-			"path" => "varchar(255) NOT NULL",
-			"md5" => "varchar(32) NOT NULL",
+			"type" => "int(11) NOT NULL",
+			"path" => "varchar(255)",
+			"md5" => "varchar(32)",
 			"originalName" => "varchar(128)",
-			"mimeType" => "varchar(64)",
+			"mimeType" => "varchar(128)",
 			"size" => "int(11)",
 			"info" => "text",
-			), "");
+			), "ENGINE=InnoDB DEFAULT CHARSET=utf8");
 
-		$this->insert("p3_media", array(
-			"id" => "1",
-			"parent_id" => "1",
-			"title" => "root",
-			"description" => "Root folder",
-			"type" => 2,
-			"path" => "",
-			"md5" => "",
-			"originalName" => "root",
-			"mimeType" => null,
-			"size" => null,
-			"info" => null,
-			));
+
+// Foreign Keys for table 'p3_media'
+// Data for table 'p3_media'
+// Schema for table 'p3_media_meta'
 
 		$this->createTable("p3_media_meta", array(
 			"id" => "int(11) NOT NULL",
-			"parent_id" => "int(11) NOT NULL",
-			"p3_media_id" => "int(11) NOT NULL",
-			"owner" => "int(11)",
-			"language" => "varchar(8)",
 			"status" => "int(11)",
-			"type" => "varchar(45)",
-			"checkAccess" => "varchar(128)",
-			"begin" => "date",
-			"end" => "date",
-			"createdAt" => "time",
-			"createdBy" => "varchar(32)",
-			"modifiedAt" => "timestamp",
-			"modifiedBy" => "varchar(32)",
-			"keywords" => "varchar(255)",
+			"type" => "varchar(64)",
+			"language" => "varchar(8)",
+			"treeParent_id" => "int(11)",
+			"treePosition" => "int(11)",
+			"begin" => "datetime",
+			"end" => "datetime",
+			"keywords" => "text",
 			"customData" => "text",
-			), "");
+			"label" => "int(11)",
+			"owner" => "varchar(64)",
+			"checkAccessCreate" => "varchar(256)",
+			"checkAccessRead" => "varchar(256)",
+			"checkAccessUpdate" => "varchar(256)",
+			"checkAccessDelete" => "varchar(256)",
+			"createdAt" => "timestamp",
+			"createdBy" => "varchar(64)",
+			"modifiedAt" => "timestamp",
+			"modifiedBy" => "varchar(64)",
+			"guid" => "varchar(64)",
+			"ancestor_guid" => "varchar(64)",
+			"model" => "varchar(128)",
+			), "ENGINE=InnoDB DEFAULT CHARSET=utf8");
+
+
+// Foreign Keys for table 'p3_media_meta'
+
+
+		$this->addForeignKey('fk_p3_media_id', 'p3_media_meta', 'id', 'p3_media', 'id', 'CASCADE', 'CASCADE'); // update 'null' for ON DELTE and ON UPDATE
+		$this->addForeignKey('fk_p3_media_meta_treeParent_id', 'p3_media_meta', 'treeParent_id', 'p3_media_meta', 'id', null, null); // update 'null' for ON DELTE and ON UPDATE
 	}
 
 	public function down() {
