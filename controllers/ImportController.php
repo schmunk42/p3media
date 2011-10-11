@@ -216,7 +216,7 @@ class ImportController extends Controller {
 		$model->type = 1; //P3Media::TYPE_FILE;
 		$model->path = $filePath;
 		$model->md5 = $md5;
-		if (!$mime = exec("file -bI " . escapeshellarg($fullFilePath))) {
+		if (!$mime = mime_content_type($fullFilePath)) {
 			$mime = $getimagesize['mime'];
 		}
 		$model->mimeType = $mime;
