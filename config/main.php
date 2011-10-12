@@ -13,16 +13,16 @@ return array(
 				'protectedRuntimePath' => 'runtime/p3media',
 				'presets' => array(
 					'default' => array(
-						'name' => 'Default 300x300',
+						'name' => 'Default 300x300,PNG',
 						'commands' => array(
 							'resize' => array(300, 300),
 							'quality' => 85
 						),
 						'savePublic' => true,
-						'type' => 'jpg'
+						'type' => 'png'
 					),
 					'original' => array(
-						'name' => 'Original File & Size',
+						'name' => 'Original File',
 						'originalFile' => true,
 					),
 					'fckbrowse' => array(
