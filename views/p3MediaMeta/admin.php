@@ -24,7 +24,10 @@ data: $(this).serialize()
 <h1> <?php echo Yii::t('app', 'Manage'); ?> <?php echo Yii::t('app', 'P3 Media Metas'); ?> </h1>
 
 
-<ul><li>BelongsTo <a href="/NetBeans/p3-git/p3media/p3Media/admin">P3Media</a> </li><li>BelongsTo <a href="/NetBeans/p3-git/p3media/p3MediaMeta/admin">P3MediaMeta</a> </li><li>HasMany <a href="/NetBeans/p3-git/p3media/p3MediaMeta/admin">P3MediaMeta</a> </li></ul>
+<ul>
+	<li>Data <?php echo CHtml::link("P3Media",array("/p3media/p3Media/admin")); ?> </li>	
+	<li>Parent-Child Relationship <?php echo CHtml::link("P3MediaMeta",array("/p3media/p3MediaMeta/admin")); ?> </li>
+</ul>
 
 <?php echo CHtml::link(Yii::t('app', 'Advanced Search'),'#',array('class'=>'search-button')); ?><div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
