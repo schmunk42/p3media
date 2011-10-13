@@ -26,7 +26,7 @@ return array(
 					),
 					'fckbrowse' => array(
 						'commands' => array(
-							'resize' => array(150, 150),
+							'resize' => array(150, 120),
 							'quality' => 75,
 						),
 						'type' => 'png'
