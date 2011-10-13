@@ -23,13 +23,18 @@
 class P3MediaImageAction extends CAction {
 
 	public function run() {
+		if (!isset(Yii::app()->image)) {
+			throw new CException("Application component 'image' not found.");
+		}
+		
 		Yii::trace("Starting file image action ...", "p2.file");
 		// check preset
 		if (isset($_GET['preset']) && isset($this->controller->module->params['presets'][$_GET['preset']])) {
 			$preset = new CMap($this->controller->module->params['presets'][$_GET['preset']]);
 		} else {
 			#self::sendErrorImage();
-			throw new Exception("Invalid preset '{$_GET['preset']}' specified!");
+			//throw new Exception("Invalid preset '{$_GET['preset']}' specified!");
+			$preset = new CMap($this->controller->module->params['presets']['default']);
 		}
 
 		if (is_numeric($_GET['id'])) {

@@ -32,7 +32,7 @@
 	</div>
 <div class="row">
 	<?php echo CHtml::image(
-			Yii::app()->controller->createUrl("/p3media/file",array("id"=>$model->id)), 
+			Yii::app()->controller->createUrl("/p3media/file/image",array("id"=>$model->id)), 
 			$model->title, 
 			array("class"=>"ckeditor")
 		); ?>

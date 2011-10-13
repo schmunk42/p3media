@@ -16,6 +16,8 @@ $this->menu=array(
 <?php
 $locale = CLocale::getInstance(Yii::app()->language);
 
+echo $model->image();
+
  $this->widget('zii.widgets.CDetailView', array(
 'data'=>$model,
 	'attributes'=>array(

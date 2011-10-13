@@ -18,7 +18,6 @@ return array(
 							'resize' => array(300, 300),
 							'quality' => 85
 						),
-						'savePublic' => true,
 						'type' => 'png'
 					),
 					'original' => array(

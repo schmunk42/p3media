@@ -1,7 +1,7 @@
 <?php
 
 class P3Media extends BaseP3Media {
-	
+
 	// Add your model-specific methods here. This file will not be overriden by gtc except you force it.
 	public static function model($className=__CLASS__) {
 		return parent::model($className);
@@ -17,41 +17,38 @@ class P3Media extends BaseP3Media {
 
 	public function rules() {
 		return array_merge(
-			/* array('column1, column2', 'rule'), */
-			parent::rules()
+				/* array('column1, column2', 'rule'), */
+				parent::rules()
 		);
 	}
 
-	public function relations()
-	{
+	public function relations() {
 		return array(
 			'metaData' => array(self::HAS_ONE, 'P3MediaMeta', 'id'),
 		);
 	}
-	public function getP3MediaMeta(){
+
+	public function getP3MediaMeta() {
 		return $this->metaData;
 	}
 
-	
 	public function behaviors() {
 		return array_merge(
-			array(
-			'Upload' => array(
-				'class' => 'ext.p3extensions.behaviors.P3FileUploadBehavior',
-				'dataAlias' => Yii::app()->getModule('p3media')->dataAlias,
-				'trashAlias' => Yii::app()->getModule('p3media')->dataAlias.".trash",
-				'dataSubdirectory' => Yii::app()->user->id,
-				'uploadInstance' => 'fileUpload',
+				array(
+				'Upload' => array(
+					'class' => 'ext.p3extensions.behaviors.P3FileUploadBehavior',
+					'dataAlias' => Yii::app()->getModule('p3media')->dataAlias,
+					'trashAlias' => Yii::app()->getModule('p3media')->dataAlias . ".trash",
+					'dataSubdirectory' => Yii::app()->user->id,
+					'uploadInstance' => 'fileUpload',
 				),
-			'MetaData' => array(
-				'class' => 'ext.p3extensions.behaviors.P3MetaDataBehavior',
-				'metaDataRelation' => 'metaData',
-			)
-				
-			), parent::behaviors()
+				'MetaData' => array(
+					'class' => 'ext.p3extensions.behaviors.P3MetaDataBehavior',
+					'metaDataRelation' => 'metaData',
+				)
+				), parent::behaviors()
 		);
 	}
-	
 
 	public function search() {
 		$criteria = new CDbCriteria;
@@ -67,14 +64,20 @@ class P3Media extends BaseP3Media {
 		$criteria->compare('size', $this->size);
 		$criteria->compare('info', $this->info, true);
 		return new CActiveDataProvider(get_class($this), array(
-			'criteria' => $criteria,
-			'sort' => array(
-				'defaultOrder' => 't.id DESC',
-			),
-			'pagination' => array(
-				'pageSize' => 4
-			),
-		));
+				'criteria' => $criteria,
+				'sort' => array(
+					'defaultOrder' => 't.id DESC',
+				),
+				'pagination' => array(
+					'pageSize' => 4
+				),
+			));
+	}
+
+	public function image($preset = null) {
+		return CHtml::image(
+			Yii::app()->controller->createUrl('/p3media/file/image', array('id' => $this->id, 'preset' => $preset)), 
+			$this->title);
 	}
 
 }
