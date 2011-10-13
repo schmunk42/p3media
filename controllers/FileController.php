@@ -12,7 +12,7 @@ class FileController extends Controller {
 
 	public function beforeAction($action) {
 		parent::beforeAction($action);
-		if (isset($_GET['path']) && Yii::app()->user->checkAccess('P3Media.User')) {
+		if (isset($_GET['path'])) { // TODO MetaData Access Check
 			$model = P3Media::model()->findByAttributes(array('path' => urldecode($_GET['path'])));
 			if ($model !== null) {
 				$_GET['id'] = $model->id;
