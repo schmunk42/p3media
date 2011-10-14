@@ -16,7 +16,7 @@ class P3MediaMetaController extends Controller
 		return array(
 			array('allow', 
 				'actions'=>array('admin','delete','index','view','create','update'),
-				'expression' => 'Yii::app()->user->checkAccess("P3media.Import.*")',
+				'expression' => 'Yii::app()->user->checkAccess("P3media.P3MediaMeta.*")',
 			),
 			array('deny',  
 				'users'=>array('*'),
