@@ -105,10 +105,23 @@ class ImportController extends Controller {
 				if (is_array($tmp_name))
 				foreach ($tmp_name AS $index => $value){
 					$model = P3Media::model()->findByAttributes(array('path' => Yii::app()->user->id.DIRECTORY_SEPARATOR.$upload['name'][$index]));
-					if ($model !== null) {
+					$model = new P3Media;
+					
+					$attributes['path'] = Yii::app()->user->id.DIRECTORY_SEPARATOR.$upload['name'][$index];
+					$attributes['title'] = $upload['name'][$index]; // TODO: fix title unique check
+					
+					#var_dump($attributes['title']);exit;
+					
+					$model->attributes = $attributes;
+					$model->validate();
+					
+					if ($model->hasErrors()) {
 						#throw new CHttpException(500, 'File exists.');
 						$file = new stdClass();
-						$file->error = "File with same name already exists.";
+						$file->error = "";
+						foreach($model->getErrors() AS $error) {						
+    						$file->error .= $error[0];
+    					}
 						$info[] = $file;
 						echo CJSON::encode($info);
 						exit;

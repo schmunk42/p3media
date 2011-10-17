@@ -231,6 +231,8 @@ class P3MediaImageAction extends CAction {
 			header("Pragma: public_no_cache");
 		}
 
+		header('Content-type: '.mime_content_type($image));
+
 		readfile($image);
 		#P2Helper::writeFileLogs();
 		#exit;
