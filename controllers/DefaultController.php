@@ -14,8 +14,8 @@ public function accessRules()
 {
 	return array(
 			array('allow',
-				'actions'=>array('index'),
-				'expression' => 'Yii::app()->user->checkAccess("P3media.Default.*")',
+				'actions'=>array('index','ckeditortest'),
+				'expression' => 'Yii::app()->user->checkAccess("P3media.Default.*")||YII_DEBUG',
 				),
 			array('deny',
 				'users'=>array('*'),
@@ -26,6 +26,10 @@ public function accessRules()
 	{
 		$this->render('index');
 	}
-
+	
+	public function actionCkeditortest()
+	{
+		$this->render('Ckeditortest');
+	}
 
 }

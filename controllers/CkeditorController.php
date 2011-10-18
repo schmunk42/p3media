@@ -15,7 +15,7 @@ class CkeditorController extends Controller {
 		return array(
 			array('allow',
 				'actions' => array('index','image','flash'),
-				'expression' => 'Yii::app()->user->checkAccess("P3media.Ckeditor.*")',
+				'expression' => 'Yii::app()->user->checkAccess("P3media.Ckeditor.*")||YII_DEBUG',
 			),
 			array('deny',
 				'users' => array('*'),
