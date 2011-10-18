@@ -2,7 +2,8 @@
 
 return array(
 	'import' => array(
-		'application.modules.p3media.models.*',
+		#'application.modules.p3media.models.*',
+		'ext.gtc.components.*'
 	),
 	'modules' => array(
 		'p3media' => array(
@@ -41,6 +42,13 @@ return array(
 				)
 			),
 		),
+	),
+	'components' => array(
+		'image' => array(
+			'class' => 'ext.p3extensions.components.image.CImageComponent',
+			// GD or ImageMagick
+			'driver' => 'GD',
+		),
 	)
-	)
+)
 ?>
