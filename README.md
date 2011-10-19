@@ -4,8 +4,8 @@ p3media 0.1.0
 
 ##Requirements
 
-Yii 1.1.8
-PHP 5.3
+ *  Yii 1.1.8
+ *  PHP 5.3
 
 ## Download
 
