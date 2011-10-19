@@ -17,76 +17,92 @@ Note: You can also place the module and extensions from the download package
 into your app, run the migration, create the directory and adjust 
 the config manually.
 
+**If YII_DEBUG is set to true, user->checkAccess() is disabled.**
+
 If you prefer to test this module with a blank Yii web application skeletion
 follow these steps:
 
 ### Extract & create webapp
-```
+~~~
 tar -xzf p3media-<SHA1>.tar.gz p3media-demo
-```
+~~~
 
-```
-cd p3media-demo  
-/path/to/yiic webapp .  
-```
+For the demo, we'll setup an app skeleton
+
+~~~
+cd p3media-demo
+/path/to/yiic webapp .
+~~~
 
 ### Database Migration
-```
-protected/yiic migrate \  
-  --migrationPath=application.modules.p3media.migrations \  
+Run migration to setup database schema
+
+~~~
+protected/yiic migrate \
+  --migrationPath=application.modules.p3media.migrations \
   --migrationTable=migration_module_p3media
-```
+~~~
 
 ### Directory permissions
 
 P3Media will store its files here:
-```
-mkdir protected/data/p3media  
-chmod 777 protected/data/p3media/  
-```
+
+~~~
+mkdir protected/data/p3media
+chmod 777 protected/data/p3media/
+~~~
 
 If you want to import local files (e.g. FTP uploads) your should also create the import directory
 
-```
-mkdir protected/data/p3media-import  
-chmod 777 protected/data/p3media-import/  
-```
+~~~
+mkdir protected/data/p3media-import
+chmod 777 protected/data/p3media-import/
+~~~
 
 
 ### Configuration
 
 Include the [configuration file](https://github.com/schmunk42/p3media/blob/master/config/main.php) provided along with p3media.
-```
-return CMap::mergeArray(  
-    require(dirname(__FILE__).'/../modules/p3media/config/main.php'),  
-    ...  
-```
+
+~~~
+[php]
+return CMap::mergeArray(
+    require(dirname(__FILE__).'/../modules/p3media/config/main.php'),
+    ...
+~~~
 
 
 ## Usage
-Go to the index page of the module  
+Go to the index page of the module
 
+~~~
 http://localhost/webapp/index.php?r=p3media
+~~~
 
 ### Upload files
 
 Upload your files by selecting 'Add files...' or by drag & drop  
 
+~~~
 http://localhost/webapp/index.php?r=p3media/import/upload
+~~~
 
 ### Ckeditor Test
 
 Open the ckeditor test page and click on the image icon and then 'Browse server'. Select an image and confirm, the image should be added in your editor.
 
+~~~
 http://localhost/webapp/index.php?r=p3media/default/ckeditortest
-
+~~~
 
 # API
 **Under construction**
 
 You can retrieve a resized version (see presets in config) of an image by using the 'ID' and the 'PRESET' as URL params  
 
+~~~
 /index.php?r=p3media/file/image&id={ID}&preset={PRESET}
+~~~
 
 ## Features
 
@@ -98,17 +114,17 @@ You can retrieve a resized version (see presets in config) of an image by using 
 
 ## Developer Checkout
 
-```
-git clone --recursive git://github.com/schmunk42/p3media.git \  
-  protected/modules/p3media  
-git clone --recursive git://github.com/schmunk42/p3extensions.git \   
-  protected/extensions/p3extensions  
-git clone --recursive https://github.com/schmunk42/gii-template-collection  \
+~~~
+git clone --recursive git://github.com/schmunk42/p3media.git \
+  protected/modules/p3media
+git clone --recursive git://github.com/schmunk42/p3extensions.git \
+  protected/extensions/p3extensions
+git clone --recursive https://github.com/schmunk42/gii-template-collection \
   protected/extensions/gtc
-```
+~~~
 
 
 ##Resources
 
  *  [Project page on github](https://github.com/schmunk42/p3media)
- *  [Phundament 3](http://www.yiiframework.com/extension/phundament)
+ *  Core module of [Phundament 3](http://www.yiiframework.com/extension/phundament)
