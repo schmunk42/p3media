@@ -110,5 +110,5 @@ git clone --recursive https://github.com/schmunk42/gii-template-collection  \
 
 ##Resources
 
- *  [Project page on github](https://github.com/schmunk42/p3media/downloads)
+ *  [Project page on github](https://github.com/schmunk42/p3media)
  *  [Phundament 3](http://www.yiiframework.com/extension/phundament)
