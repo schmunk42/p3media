@@ -2,6 +2,11 @@
 
 p3media 0.1.0
 
+##Requirements
+
+Yii 1.1.8
+PHP 5.3
+
 ## Download
 
 Via [github](https://github.com/schmunk42/p3media/downloads).
@@ -85,10 +90,10 @@ You can retrieve a resized version (see presets in config) of an image by using 
 
 ## Features
 
- *  Ckfinder replacement for integration with Ckeditor
- *  Multi-file upload
- *  Media presets for easy usage of [image]()
- *  CRUDs build with gtc
+ *  Ckfinder replacement for integration with [ckeditor](http://ckeditor.com/)
+ *  Multi-file upload with [jquery-file-upload](https://github.com/blueimp/jQuery-File-Upload)
+ *  Media presets for easy usage of [image](http://www.yiiframework.com/extension/image)
+ *  CRUDs build with [gtc](http://www.yiiframework.com/extension/gii-template-collection/)
  *  Meta-data enabled (hierarchy, permissions)
 
 ## Developer Checkout
@@ -101,3 +106,9 @@ git clone --recursive git://github.com/schmunk42/p3extensions.git \
 git clone --recursive https://github.com/schmunk42/gii-template-collection  \
   protected/extensions/gtc
 ```
+
+
+##Resources
+
+ *  [Project page on github](https://github.com/schmunk42/p3media/downloads)
+ *  [Phundament 3](http://www.yiiframework.com/extension/phundament)
