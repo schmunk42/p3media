@@ -103,7 +103,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		var preset = $('#preset').val();
 		if (confirm('Select #'+id+' as \''+preset+'\'?')) {		
 			//alert(id+'-'+preset);
-			url = '<?php echo CController::createUrl('/p3media/file/image', array('id' => '__ID__', 'preset' => '__PRESET__')) ?>';
+			var extension = '.png'; // TODO: retrieve type from PHP preset
+			var title = 'p3media'; // TODO
+			url = '<?php echo CController::createUrl('/p3media/file/image', array('title' => '__TITLE__','id' => '__ID__', 'preset' => '__PRESET__', 'extension'=>'__EXT__')) ?>';
+			url = url.replace('__TITLE__', title);
+			url = url.replace('__EXT__', extension);
 			url = url.replace('__PRESET__', preset);
 			url = url.replace('__ID__', id);
 			//alert (url);
