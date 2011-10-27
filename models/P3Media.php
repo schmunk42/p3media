@@ -76,8 +76,10 @@ class P3Media extends BaseP3Media {
 
 	public function image($preset = null) {
 		return CHtml::image(
-			Yii::app()->controller->createUrl('/p3media/file/image', array('id' => $this->id, 'preset' => $preset)), 
-			$this->title);
+				Yii::app()->controller->createUrl(
+					'/p3media/file/image', 
+					array('id' => $this->id, 'preset' => $preset)), 
+					$this->title);
 	}
 
 }
