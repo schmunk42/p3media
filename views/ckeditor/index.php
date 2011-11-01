@@ -67,7 +67,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			#'name' => 'path',
 			'type' => 'raw',
 			'value' => 'CHtml::link(
-				CHtml::image(Yii::app()->controller->createUrl("/p3media/file/image",array("id"=>$data->id,"preset"=>"fckbrowse")), $data->title, array("class"=>"ckeditor")),
+				CHtml::image(Yii::app()->controller->createUrl("/p3media/file/image",array("id"=>$data->id,"preset"=>"ckbrowse")), $data->title, array("class"=>"ckeditor")),
 				"#", 
 				array("onclick"=>"select(".$data->id.");")
 				)

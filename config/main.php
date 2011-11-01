@@ -13,31 +13,17 @@ return array(
 				'publicRuntimeUrl' => '/runtime/p3media',
 				'protectedRuntimePath' => 'runtime/p3media',
 				'presets' => array(
-					'default' => array(
-						'name' => 'Default 300x300,PNG',
+					'ckbrowse' => array(
+						'name' => 'Ckeditor',
 						'commands' => array(
-							'resize' => array(300, 300),
-							'quality' => 85
+							'resize' => array(150, 120), // use third parameter for master setting, see Image constants
+							#'quality' => 80, // for jpegs
 						),
 						'type' => 'png'
 					),
 					'original' => array(
 						'name' => 'Original File',
 						'originalFile' => true,
-					),
-					'fckbrowse' => array(
-						'commands' => array(
-							'resize' => array(150, 120),
-							'quality' => 75,
-						),
-						'type' => 'png'
-					),
-					'thumb' => array(
-						'commands' => array(
-							'resize' => array(64, 64),
-							'quality' => 75,
-						),
-						'type' => 'png'
 					),
 				)
 			),
