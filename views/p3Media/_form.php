@@ -23,7 +23,7 @@
 			<?php
 			echo CHtml::fileField('fileUpload', null, array(
 				'style' => 'width: 100%',
-				'onchange'=>'if (!$("#P3Media_title").val()) $("#P3Media_title").val($("#fileUpload").val());'
+				'onchange'=>'if (!$("#P3Media_title").val()) $("#P3Media_title").val($("#fileUpload").val().substr(0,25)+"-"+Math.round((Math.random()*1000000)));'
 				)
 			);
 			?>
