@@ -46,7 +46,7 @@ $locale = CLocale::getInstance(Yii::app()->language);
 		array(
 			'type' => 'raw',
 			'value' => 'CHtml::link(
-							CHtml::image(Yii::app()->controller->createUrl("/p3media/file/image",array("id"=>$data->id,"preset"=>"thumb")),	$data->title, array("class"=>"ckeditor")),
+							CHtml::image(Yii::app()->controller->createUrl("/p3media/file/image",array("id"=>$data->id,"preset"=>"p3media-ckbrowse")),	$data->title, array("class"=>"ckeditor")),
 							Yii::app()->controller->createUrl("/p3media/p3Media/update",array("id"=>$data->id)), 
 							array("onclick"=>"select(".$data->id.");")
 						)

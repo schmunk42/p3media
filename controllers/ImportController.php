@@ -75,7 +75,7 @@ class ImportController extends Controller {
                 */
                 'thumbnail' => array(
                     #'upload_dir' => dirname(__FILE__).'/thumbnails/',
-                    'upload_url' => $this->createUrl("/p3media/file/image",array('preset'=>'thumb','path'=>urlencode(Yii::app()->user->id."/"))),
+                    'upload_url' => $this->createUrl("/p3media/file/image",array('preset'=>'p3media-upload','path'=>urlencode(Yii::app()->user->id."/"))),
                     'max_width' => 80,
                     'max_height' => 80
                 )
@@ -107,12 +107,12 @@ class ImportController extends Controller {
 					$model = new P3Media;
 					
 					$attributes['path'] = Yii::app()->user->id.DIRECTORY_SEPARATOR.$upload['name'][$index];
-					$attributes['title'] = $upload['name'][$index]; // TODO: fix title unique check
+					#$attributes['title'] = $upload['name'][$index]; // TODO: fix title unique check
 					
 					#var_dump($attributes['title']);exit;
 					
 					$model->attributes = $attributes;
-					$model->validate();
+					$model->validate(array('path'));
 					
 					if ($model->hasErrors()) {
 						#throw new CHttpException(500, 'File exists.');
@@ -222,7 +222,7 @@ class ImportController extends Controller {
 		$model = new P3Media;
 		$model->detachBehavior('Upload');
 		
-		$model->title = P3StringHelper::cleanName($fileName, 32); // TODO: Add uniqid for title, so there's no unique conflict
+		$model->title = substr($fileName,0,25).'-'.substr(uniqid(),-6);#P3StringHelper::cleanName($fileName, 32); // TODO: Add uniqid for title, so there's no unique conflict
 		$model->originalName = $fileName;
 
 		$model->type = 1; //P3Media::TYPE_FILE;

@@ -33,8 +33,8 @@ class P3MediaImageAction extends CAction {
 			$preset = new CMap($this->controller->module->params['presets'][$_GET['preset']]);
 		} else {
 			#self::sendErrorImage();
-			//throw new Exception("Invalid preset '{$_GET['preset']}' specified!");
-			$preset = new CMap($this->controller->module->params['presets']['default']);
+			throw new Exception("Invalid preset '{$_GET['preset']}' specified!");
+			//$preset = new CMap($this->controller->module->params['presets']['default']);
 		}
 
 		if (is_numeric($_GET['id'])) {

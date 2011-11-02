@@ -35,7 +35,7 @@ abstract class BaseP3Media extends CActiveRecord{
 	public function rules()
 	{
 		return array(
-			array('title', 'unique'),
+			array('path, title', 'unique'),
 			array('title', 'identificationColumnValidator'),
 			array('title', 'required'),
 			array('description, type, path, md5, originalName, mimeType, size, info', 'default', 'setOnEmpty' => true, 'value' => null),
