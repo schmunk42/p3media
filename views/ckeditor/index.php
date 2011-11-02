@@ -49,7 +49,8 @@ data: $(this).serialize()
 	<p>
 		<?php
 		foreach ($this->module->params['presets'] AS $key => $preset) {
-			$data[$key] = (isset($preset['name'])) ? $preset['name'] : $key;
+			$identifier = $key . ((isset($preset['type'])) ?'|'.$preset['type']:'');
+			$data[$identifier] = (isset($preset['name'])) ? $preset['name'] : $key;
 		}
 		echo Chtml::dropDownList("preset", null, $data);
 		?>
@@ -69,7 +70,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'value' => 'CHtml::link(
 				CHtml::image(Yii::app()->controller->createUrl("/p3media/file/image",array("id"=>$data->id,"preset"=>"p3media-ckbrowse")), $data->title, array("class"=>"ckeditor")),
 				"#", 
-				array("onclick"=>"select(".$data->id.");")
+				array("onclick"=>"select(".$data->id.",\'".$data->title."\');")
 				)
 				',
 		),
@@ -95,16 +96,19 @@ $this->widget('zii.widgets.grid.CGridView', array(
 ?>
 
 <script type="text/javascript">
-	function select(id){
+	function select(id,title){
 		if($('#preset').val() == '') {
 			alert('Please choose an image preset.');
 			return false;
 		}
-		var preset = $('#preset').val();
-		if (confirm('Select #'+id+' as \''+preset+'\'?')) {		
+		var identifier = $('#preset').val();
+		if (confirm('Select #'+id+' as \''+identifier+'\'?')) {		
 			//alert(id+'-'+preset);
-			var extension = '.png'; // TODO: retrieve type from PHP preset
-			var title = 'p3media'; // TODO
+			var split;
+			split = identifier.split('|')
+			var preset = split[0];
+			var extension = '.'+split[1]; // TODO: retrieve type from PHP preset
+			//var title = 'p3media'; // TODO
 			url = '<?php echo CController::createUrl('/p3media/file/image', array('title' => '__TITLE__','id' => '__ID__', 'preset' => '__PRESET__', 'extension'=>'__EXT__')) ?>';
 			url = url.replace('__TITLE__', title);
 			url = url.replace('__EXT__', extension);
