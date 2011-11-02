@@ -16,7 +16,9 @@ $this->menu=array(
 <?php
 $locale = CLocale::getInstance(Yii::app()->language);
 
-echo $model->image();
+echo $model->image('p3media-ckbrowse');
+
+echo "<br/>".CHtml::link('Download', $this->createUrl('/p3media/file/',array('id'=>$model->id)))."<br/>";
 
  $this->widget('zii.widgets.CDetailView', array(
 'data'=>$model,

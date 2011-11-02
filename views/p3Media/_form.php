@@ -30,12 +30,9 @@
 		</div>
 		<p class="hint">Maximum size: <?php echo min(ini_get('upload_max_filesize'), ini_get('post_max_size')) ?></p>
 	</div>
+
 <div class="row">
-	<?php echo CHtml::image(
-			Yii::app()->controller->createUrl("/p3media/file/image",array("id"=>$model->id)), 
-			$model->title, 
-			array("class"=>"ckeditor")
-		); ?>
+	<?php echo $model->image("p3media-ckbrowse"); ?>
 </div>
 
 	<div class="row">
