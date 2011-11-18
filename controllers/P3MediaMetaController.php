@@ -1,5 +1,22 @@
 <?php
+/**
+ * Class file.
+ *
+ * @author Tobias Munk <schmunk@usrbin.de>
+ * @link http://www.phundament.com/
+ * @copyright Copyright &copy; 2005-2011 diemeisterei GmbH
+ * @license http://www.phundament.com/license/
+ */
 
+/**
+ * Controller handling P3MetaData CRUDs
+ *
+ * Detail description
+ *
+ * @author Tobias Munk <schmunk@usrbin.de>
+ * @package p3media.controllers
+ * @since 3.0.1
+ */
 class P3MediaMetaController extends Controller
 {
 	public $layout='//layouts/column2';

@@ -1,11 +1,28 @@
 <?php
 
+/**
+ * Class file.
+ *
+ * @author Tobias Munk <schmunk@usrbin.de>
+ * @link http://www.phundament.com/
+ * @copyright Copyright &copy; 2005-2011 diemeisterei GmbH
+ * @license http://www.phundament.com/license/
+ */
+
 Yii::import('ext.p3extensions.widgets.jquery-file-upload.*');
 
+/**
+ * Controller handling file import
+ *
+ * Detail description
+ *
+ * @author Tobias Munk <schmunk@usrbin.de>
+ * @package p3media.controllers
+ * @since 3.0.1
+ */
+
 class ImportController extends Controller {
-	
-	
-	
+
 	public function filters() {
 		return array(
 			'accessControl',
@@ -51,36 +68,35 @@ class ImportController extends Controller {
 		exit;
 		#echo CJSON::encode($result);
 	}
-	
-	private function uploadHandler(){
+
+	private function uploadHandler() {
 		#$script_dir = Yii::app()->basePath.'/data/p3media';
 		#$script_dir_url = Yii::app()->baseUrl;
 		$options = array(
-			'url' => $this->createUrl("/p3media/p3Media/update",array('path'=>Yii::app()->user->id."/")),
+			'url' => $this->createUrl("/p3media/p3Media/update", array('path' => Yii::app()->user->id . "/")),
 			'upload_dir' => $this->module->getDataPath() . DIRECTORY_SEPARATOR,
-			'upload_url' => $this->createUrl("/p3media/p3Media/update",array('preset'=>'raw','path'=>Yii::app()->user->id."/")),
-			'script_url' => $this->createUrl("/p3media/import/uploadFile",array('path'=>Yii::app()->user->id."/")),
+			'upload_url' => $this->createUrl("/p3media/p3Media/update", array('preset' => 'raw', 'path' => Yii::app()->user->id . "/")),
+			'script_url' => $this->createUrl("/p3media/import/uploadFile", array('path' => Yii::app()->user->id . "/")),
 			'field_name' => 'files',
 			'image_versions' => array(
-                // Uncomment the following version to restrict the size of
-                // uploaded images. You can also add additional versions with
-                // their own upload directories:
-                /*
-                'large' => array(
-                    'upload_dir' => dirname(__FILE__).'/files/',
-                    'upload_url' => dirname($_SERVER['PHP_SELF']).'/files/',
-                    'max_width' => 1920,
-                    'max_height' => 1200
-                ),
-                */
-                'thumbnail' => array(
-                    #'upload_dir' => dirname(__FILE__).'/thumbnails/',
-                    'upload_url' => $this->createUrl("/p3media/file/image",array('preset'=>'p3media-upload','path'=>urlencode(Yii::app()->user->id."/"))),
-                    'max_width' => 80,
-                    'max_height' => 80
-                )
-            )
-
+				// Uncomment the following version to restrict the size of
+				// uploaded images. You can also add additional versions with
+				// their own upload directories:
+				/*
+				  'large' => array(
+				  'upload_dir' => dirname(__FILE__).'/files/',
+				  'upload_url' => dirname($_SERVER['PHP_SELF']).'/files/',
+				  'max_width' => 1920,
+				  'max_height' => 1200
+				  ),
+				 */
+				'thumbnail' => array(
+					#'upload_dir' => dirname(__FILE__).'/thumbnails/',
+					'upload_url' => $this->createUrl("/p3media/file/image", array('preset' => 'p3media-upload', 'path' => urlencode(Yii::app()->user->id . "/"))),
+					'max_width' => 80,
+					'max_height' => 80
+				)
+			)
 		);
 
 		// wrapper for jQuery-file-upload/upload.php
@@ -102,36 +118,35 @@ class ImportController extends Controller {
 				$upload = $_FILES[$options['field_name']];
 				$tmp_name = $_FILES[$options['field_name']]['tmp_name'];
 				if (is_array($tmp_name))
-				foreach ($tmp_name AS $index => $value){
-					$model = P3Media::model()->findByAttributes(array('path' => Yii::app()->user->id.DIRECTORY_SEPARATOR.$upload['name'][$index]));
-					$model = new P3Media;
-					
-					$attributes['path'] = Yii::app()->user->id.DIRECTORY_SEPARATOR.$upload['name'][$index];
-					#$attributes['title'] = $upload['name'][$index]; // TODO: fix title unique check
-					
-					#var_dump($attributes['title']);exit;
-					
-					$model->attributes = $attributes;
-					$model->validate(array('path'));
-					
-					if ($model->hasErrors()) {
-						#throw new CHttpException(500, 'File exists.');
-						$file = new stdClass();
-						$file->error = "";
-						foreach($model->getErrors() AS $error) {						
-    						$file->error .= $error[0];
-    					}
-						$info[] = $file;
-						echo CJSON::encode($info);
-						exit;
+					foreach ($tmp_name AS $index => $value) {
+						$model = P3Media::model()->findByAttributes(array('path' => Yii::app()->user->id . DIRECTORY_SEPARATOR . $upload['name'][$index]));
+						$model = new P3Media;
+
+						$attributes['path'] = Yii::app()->user->id . DIRECTORY_SEPARATOR . $upload['name'][$index];
+						#$attributes['title'] = $upload['name'][$index]; // TODO: fix title unique check
+						#var_dump($attributes['title']);exit;
+
+						$model->attributes = $attributes;
+						$model->validate(array('path'));
+
+						if ($model->hasErrors()) {
+							#throw new CHttpException(500, 'File exists.');
+							$file = new stdClass();
+							$file->error = "";
+							foreach ($model->getErrors() AS $error) {
+								$file->error .= $error[0];
+							}
+							$info[] = $file;
+							echo CJSON::encode($info);
+							exit;
+						}
 					}
-				}
-				
+
 				$upload_handler->post();
 				$contents = ob_get_contents();
 				$result = CJSON::decode($contents);
 				#var_dump($result);exit;
-				$this->createMedia($result[0]['name'], $this->module->getDataPath(true).DIRECTORY_SEPARATOR.$result[0]['name']);
+				$this->createMedia($result[0]['name'], $this->module->getDataPath(true) . DIRECTORY_SEPARATOR . $result[0]['name']);
 				break;
 			case 'DELETE':
 				$upload_handler->delete();
@@ -143,7 +158,7 @@ class ImportController extends Controller {
 				$contents = ob_get_contents();
 		}
 		ob_end_clean();
-		
+
 		return $contents;
 	}
 
@@ -205,7 +220,7 @@ class ImportController extends Controller {
 			$fileName = $_GET['fileName'];
 			$importFilePath = $this->module->resolveFilePath($_GET['fileName']);
 
-			$dataFilePath = Yii::app()->user->id.DIRECTORY_SEPARATOR.$fileName;
+			$dataFilePath = Yii::app()->user->id . DIRECTORY_SEPARATOR . $fileName;
 			copy($importFilePath, Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $dataFilePath);
 
 			echo CJSON::encode($this->createMedia($fileName, $dataFilePath));
@@ -221,8 +236,8 @@ class ImportController extends Controller {
 
 		$model = new P3Media;
 		$model->detachBehavior('Upload');
-		
-		$model->title = substr($fileName,0,25).'-'.substr(uniqid(),-6);#P3StringHelper::cleanName($fileName, 32); // TODO: Add uniqid for title, so there's no unique conflict
+
+		$model->title = substr($fileName, 0, 25) . '-' . substr(uniqid(), -6); #P3StringHelper::cleanName($fileName, 32); // TODO: Add uniqid for title, so there's no unique conflict
 		$model->originalName = $fileName;
 
 		$model->type = 1; //P3Media::TYPE_FILE;
@@ -245,7 +260,7 @@ class ImportController extends Controller {
 			throw new CHttpException(500, $errorMessage);
 		}
 	}
-	
+
 	private function deleteMedia($filePath) {
 		$attributes['path'] = $filePath;
 		$model = P3Media::model()->findByAttributes($attributes);
@@ -253,7 +268,7 @@ class ImportController extends Controller {
 		$model->delete();
 		return true;
 	}
-	
+
 	private function findMd5($md5) {
 		$model = P3Media::model()->findByAttributes(array('md5' => $md5));
 		if ($model === null)
@@ -261,10 +276,6 @@ class ImportController extends Controller {
 		else
 			return true;
 	}
-
-
-	
-
 
 	// -----------------------------------------------------------
 	// Uncomment the following methods and override them if needed

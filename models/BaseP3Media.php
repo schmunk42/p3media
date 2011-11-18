@@ -1,4 +1,12 @@
 <?php
+/**
+ * Class file.
+ *
+ * @author Tobias Munk <schmunk@usrbin.de>
+ * @link http://www.phundament.com/
+ * @copyright Copyright &copy; 2005-2011 diemeisterei GmbH
+ * @license http://www.phundament.com/license/
+ */
 
 /**
  * This is the model base class for the table "p3_media".
@@ -17,6 +25,10 @@
  *
  * Relations of table "p3_media" available as properties of the model:
  * @property P3MediaMeta $p3MediaMeta
+ * 
+ * @author Tobias Munk <schmunk@usrbin.de>
+ * @package p3media.models
+ * @since 3.0.1
  */
 abstract class BaseP3Media extends CActiveRecord{
 	

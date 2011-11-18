@@ -1,24 +1,23 @@
 <?php
 
 /**
- * Class File
+ * Class file.
  *
  * @author Tobias Munk <schmunk@usrbin.de>
  * @link http://www.phundament.com/
- * @copyright Copyright &copy; 2005-2010 diemeisterei GmbH
+ * @copyright Copyright &copy; 2005-2011 diemeisterei GmbH
  * @license http://www.phundament.com/license/
  */
 
+
 /**
- * Action, displays rendered images
+ * Main description
  *
- * Config Options:
- * - p2.file.imagePresets
+ * Detail description
  *
  * @author Tobias Munk <schmunk@usrbin.de>
- * @version $Id: P2FileImageAction.php 521 2010-03-24 13:20:13Z schmunk $
- * @package p2.actions
- * @since 2.0
+ * @package p3media.actions
+ * @since 3.0.1
  */
 class P3MediaImageAction extends CAction {
 

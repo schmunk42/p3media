@@ -1,7 +1,29 @@
 <?php
 
+/**
+ * Class file.
+ *
+ * @author Tobias Munk <schmunk@usrbin.de>
+ * @link http://www.phundament.com/
+ * @copyright Copyright &copy; 2005-2011 diemeisterei GmbH
+ * @license http://www.phundament.com/license/
+ */
+/**
+ * Controller handling file output
+ *
+ * Detail description
+ *
+ * @author Tobias Munk <schmunk@usrbin.de>
+ * @package p3media.controllers
+ * @since 3.0.1
+ */
 class FileController extends Controller {
-
+	
+	/**
+	 * Imports {@link P3MediaImageAction}, available as /p3media/file/image.
+	 * 
+	 * @return array
+	 */
 	public function actions() {
 		return array(
 			'image' => array(
@@ -9,7 +31,7 @@ class FileController extends Controller {
 			),
 		);
 	}
-
+	
 	public function beforeAction($action) {
 		parent::beforeAction($action);
 		if (isset($_GET['path'])) { // TODO MetaData Access Check
@@ -23,7 +45,10 @@ class FileController extends Controller {
 		}
 		return true;
 	}
-
+	
+	/**
+	 * Return file as inline attachment, uses $_GET['id'] as input param.
+	 */
 	public function actionIndex() {
 		#$this->render('index');
 		if (!$_GET['id']) {
@@ -41,32 +66,4 @@ class FileController extends Controller {
 			}
 		}
 	}
-
-	// -----------------------------------------------------------
-	// Uncomment the following methods and override them if needed
-	/*
-	  public function filters()
-	  {
-	  // return the filter configuration for this controller, e.g.:
-	  return array(
-	  'inlineFilterName',
-	  array(
-	  'class'=>'path.to.FilterClass',
-	  'propertyName'=>'propertyValue',
-	  ),
-	  );
-	  }
-
-	  public function actions()
-	  {
-	  // return external action classes, e.g.:
-	  return array(
-	  'action1'=>'path.to.ActionClass',
-	  'action2'=>array(
-	  'class'=>'path.to.AnotherActionClass',
-	  'propertyName'=>'propertyValue',
-	  ),
-	  );
-	  }
-	 */
 }

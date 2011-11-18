@@ -1,4 +1,12 @@
 <?php
+/**
+ * Class file.
+ *
+ * @author Tobias Munk <schmunk@usrbin.de>
+ * @link http://www.phundament.com/
+ * @copyright Copyright &copy; 2005-2011 diemeisterei GmbH
+ * @license http://www.phundament.com/license/
+ */
 
 /**
  * This is the model base class for the table "p3_media_meta".
@@ -32,6 +40,9 @@
  * @property P3Media $id0
  * @property P3MediaMeta $treeParent
  * @property P3MediaMeta[] $p3MediaMetas
+ * @author Tobias Munk <schmunk@usrbin.de>
+ * @package p3media.models
+ * @since 3.0.1
  */
 abstract class BaseP3MediaMeta extends CActiveRecord{
 	public static function model($className=__CLASS__)
