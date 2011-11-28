@@ -51,7 +51,7 @@ class P3MediaController extends Controller
 			if ($model !== null) {
 				$_GET['id'] = $model->id;
 			} else {
-				throw new CHttpException(400);
+				throw new CHttpException(400, 'UIC not found');
 			}
 		}
 		if ($this->module !== null) {
