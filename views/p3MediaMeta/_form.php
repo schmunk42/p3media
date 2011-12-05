@@ -186,6 +186,7 @@ echo $form->errorSummary($model);
 							'fields' => '_label',
 							'allowEmpty' => true,
 							'style' => 'dropdownlist',
+							'criteria' => new CDbCriteria(array('with'=>array('id0'),'condition'=>'id0.type = :type','params'=>array(':type'=>P3Media::TYPE_FOLDER))),
 							'htmlOptions' => array(
 								'checkAll' => Yii::t('app', 'Choose all'),
 								),)

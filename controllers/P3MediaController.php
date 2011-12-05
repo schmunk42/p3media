@@ -153,6 +153,9 @@ class P3MediaController extends Controller
 		if(isset($_GET['P3Media']))
 			$model->attributes = $_GET['P3Media'];
 
+		if(isset($_GET['P3Media']['treeParent']))
+			$model->treeParent = $_GET['P3Media']['treeParent'];
+
 		$this->render('admin',array(
 			'model'=>$model,
 		));

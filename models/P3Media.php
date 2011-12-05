@@ -16,7 +16,12 @@
  */
 	 
 class P3Media extends BaseP3Media {
-
+	
+	const TYPE_FILE = 1;
+	const TYPE_FOLDER = 2;
+	
+	public $treeParent;
+	
 	// Add your model-specific methods here. This file will not be overriden by gtc except you force it.
 	public static function model($className=__CLASS__) {
 		return parent::model($className);
@@ -67,17 +72,24 @@ class P3Media extends BaseP3Media {
 
 	public function search() {
 		$criteria = new CDbCriteria;
-		#$criteria->with = array('metaData');
-		$criteria->compare('id', $this->id);
+		
+		$criteria->with[] = 'metaData';
+			
+		$criteria->compare('metaData.treeParent_id', $this->treeParent, true);
+
+		$criteria->compare('t.id', $this->id);
 		$criteria->compare('title', $this->title, true);
 		$criteria->compare('description', $this->description, true);
-		$criteria->compare('type', $this->type);
+		$criteria->compare('t.type', $this->type);
 		$criteria->compare('path', $this->path, true);
 		$criteria->compare('md5', $this->md5, true);
 		$criteria->compare('originalName', $this->originalName, true);
 		$criteria->compare('mimeType', $this->mimeType, true);
 		$criteria->compare('size', $this->size);
-		$criteria->compare('info', $this->info, true);
+
+		#var_dump($this->treeParent);exit;
+		
+		#$criteria->compare('info', $this->info, true);
 		return new CActiveDataProvider(get_class($this), array(
 				'criteria' => $criteria,
 				'sort' => array(
