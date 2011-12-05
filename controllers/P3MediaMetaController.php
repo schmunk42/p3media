@@ -139,10 +139,11 @@ class P3MediaMetaController extends Controller
 
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('P3MediaMeta');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		$this->redirect(array('admin'));
+		#$dataProvider=new CActiveDataProvider('P3MediaMeta');
+		#$this->render('index',array(
+		#	'dataProvider'=>$dataProvider,
+		#));
 	}
 
 	public function actionAdmin()
