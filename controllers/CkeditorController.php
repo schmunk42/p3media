@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class file.
  *
@@ -7,7 +8,6 @@
  * @copyright Copyright &copy; 2005-2011 diemeisterei GmbH
  * @license http://www.phundament.com/license/
  */
-
 
 /**
  * Controller handling the views for ckeditor
@@ -32,7 +32,7 @@ class CkeditorController extends Controller {
 	public function accessRules() {
 		return array(
 			array('allow',
-				'actions' => array('index','image','flash'),
+				'actions' => array('index', 'image', 'flash'),
 				'expression' => 'Yii::app()->user->checkAccess("P3media.Ckeditor.*")||YII_DEBUG',
 			),
 			array('deny',
@@ -48,6 +48,7 @@ class CkeditorController extends Controller {
 		if (isset($_GET['P3Media']))
 			$model->attributes = $_GET['P3Media'];
 
+
 		$this->render('index', array('model' => $model));
 	}
 
@@ -58,6 +59,11 @@ class CkeditorController extends Controller {
 
 		if (isset($_GET['P3Media']))
 			$model->attributes = $_GET['P3Media'];
+
+		// TODO - remove public property?, see also P3MediaController
+		if (isset($_GET['P3Media']['treeParent'])) {
+			$model->treeParent = $_GET['P3Media']['treeParent'];
+		}
 
 		$model->dbCriteria->order = "id DESC";
 

@@ -89,6 +89,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		  'value' => 'CHtml::value($data,\'metaData.treeParent_id\')',
 		  'filter' => CHtml::listData(P3Media::model()->with('metaData')->findAll(), 'metaData.id', 'recordTitle'),
 		  ), */
+		array(
+                'name'=>'treeParent',   
+                'value'=>'(isset($data->metaData->treeParent->_label))?$data->metaData->treeParent->_label:null',
+                'filter' => CHtml::listData(P3Media::model()->findAllByAttributes(array('type' => P3Media::TYPE_FOLDER)),'id','title'),
+        ),
 		'title',
 		'description',
 		'mimeType',
