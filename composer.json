@@ -1,0 +1,15 @@
+{
+    "name": "phundament/p3media",
+    "description": "Media Manager",
+    "keywords": ["package", "dependency", "autoload"],
+    "homepage": "http://phundament.com/",
+    "type": "library",
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "Tobias Munk",
+            "email": "schmunk@usrbin.de",
+            "homepage": "http://www.usrbin.de"
+        }
+    ],
+}
