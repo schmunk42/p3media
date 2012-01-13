@@ -11,5 +11,16 @@
             "email": "schmunk@usrbin.de",
             "homepage": "http://www.usrbin.de"
         }
-    ]
+    ],
+    "repositories": {
+        "p3extensions": {
+            "vcs": {
+                "url": "git://github.com/schmunk42/p3extensions.git"
+            }
+        }
+    },
+    "require": {
+        "php": ">=5.3.0",
+        "phundament/p3extensions": "master"
+    }
 }
