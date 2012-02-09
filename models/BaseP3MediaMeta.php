@@ -58,8 +58,6 @@ abstract class BaseP3MediaMeta extends CActiveRecord{
 	public function rules()
 	{
 		return array(
-			array('type', 'unique'),
-			array('type', 'identificationColumnValidator'),
 			array('id', 'required'),
 			array('status, type, language, treeParent_id, treePosition, begin, end, keywords, customData, label, owner, checkAccessCreate, checkAccessRead, checkAccessUpdate, checkAccessDelete, createdAt, createdBy, modifiedAt, modifiedBy, guid, ancestor_guid, model', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('id, status, treeParent_id, treePosition, label', 'numerical', 'integerOnly'=>true),
