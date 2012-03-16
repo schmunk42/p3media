@@ -212,7 +212,7 @@ class P3MediaImageAction extends CAction {
 
 	private static function sendImage($image, $model, $preset) {
 		if ($model->metaData !== null) {
-			#header("Content-Length: {$this->_model->fileSize};\n"); // bugs with FF + Flash + ImageLoading
+            #	//DISABLED//  header("Content-Length: {$model->size};\n");  // bugs with FF + Flash + ImageLoading
 			header('Content-Type: ' . $model->mimeType);
 			header("Last-Modified: " . gmdate("D, d M Y H:i:s", strtotime($model->metaData->modifiedAt)) . " GMT");
 		}
@@ -230,7 +230,18 @@ class P3MediaImageAction extends CAction {
 			header("Pragma: public_no_cache");
 		}
 
-		header('Content-type: '.mime_content_type($image));
+        if (function_exists("mime_content_type")){    
+			$mime = mime_content_type($image);
+		} else if (function_exists("finfo_open")) {
+			$finfo = finfo_open($image); 
+            $m = finfo_file($finfo, $filename); // TDOD: $filename??
+            finfo_close($finfo);
+        } else {
+            $getimagesize = getimagesize($image);
+			$mime = $getimagesize['mime'];
+		}
+		header('Content-type: '.$mime);
+		
 
 		readfile($image);
 		#P2Helper::writeFileLogs();
