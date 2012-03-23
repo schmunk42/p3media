@@ -1,5 +1,12 @@
 <?php $this->breadcrumbs[] = 'Scan'; ?>
 
+<h1>Local File Scan</h1>
+
+<p>
+    Import alias: <?php echo $this->module->importAlias ?><br/>
+    Import path: <?php echo Yii::getPathOfAlias($this->module->importAlias) ?><br/>
+    </p>
+
 <table>
 
 	<?php

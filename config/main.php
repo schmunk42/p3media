@@ -15,7 +15,7 @@ return array(
 	),
 	'modules' => array(
 		'p3media' => array(
-			'class' => 'application.modules.p3media.P3MediaModule',
+			'class' => 'ext.p3media.P3MediaModule',
 			'params' => array(
 				'publicRuntimePath' => '../runtime/p3media',
 				'publicRuntimeUrl' => '/runtime/p3media',
