@@ -9,7 +9,7 @@
  * @license http://www.phundament.com/license/
  */
 
-Yii::import('ext.p3extensions.widgets.jquery-file-upload.*');
+Yii::import('ext.phundament.p3extensions.widgets.jquery-file-upload.*');
 
 /**
  * Controller handling file import

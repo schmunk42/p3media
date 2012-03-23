@@ -15,7 +15,7 @@ return array(
 	),
 	'modules' => array(
 		'p3media' => array(
-			'class' => 'ext.p3media.P3MediaModule',
+			'class' => 'ext.phundament.p3media.P3MediaModule',
 			'params' => array(
 				'publicRuntimePath' => '../runtime/p3media',
 				'publicRuntimeUrl' => '/runtime/p3media',
@@ -45,7 +45,7 @@ return array(
 	),
 	'components' => array(
 		'image' => array(
-			'class' => 'ext.p3extensions.components.image.CImageComponent',
+			'class' => 'ext.phundament.p3extensions.components.image.CImageComponent',
 			// GD or ImageMagick
 			'driver' => 'GD',
 		),

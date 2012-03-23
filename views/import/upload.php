@@ -26,5 +26,5 @@ $this->breadcrumbs[] = 'Upload';
 </ul>
 </p>
 <?php
-$this->widget('ext.p3extensions.widgets.jquery-file-upload.EFileUpload');
+$this->widget('ext.phundament.p3extensions.widgets.jquery-file-upload.EFileUpload');
 ?>

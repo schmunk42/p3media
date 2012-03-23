@@ -29,7 +29,7 @@ class P3MediaModule extends CWebModule
 		$this->setImport(array(
 			'p3media.models.*',
 			'p3media.components.*',
-			'ext.p3extensions.helpers.*',
+			'ext.phundament.p3extensions.helpers.*',
 		));
 		
 		if (!is_writable(Yii::getPathOfAlias($this->dataAlias))) {
