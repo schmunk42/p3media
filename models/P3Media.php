@@ -52,6 +52,10 @@ class P3Media extends BaseP3Media {
         return $this->metaData;
     }
 
+    public function get_label() {
+        return $this->title;
+    }
+
     public function behaviors() {
 
         // exist in console app - no upload behaviour (TODO - review)
