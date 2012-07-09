@@ -39,6 +39,11 @@ return array(
 						'name' => 'Original File',
 						'originalFile' => true,
 					),
+					'download' => array(
+						'name' => 'Download File',
+						'originalFile' => true,
+                        'attachment' => true,
+					),
 				)
 			),
 		),
