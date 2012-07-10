@@ -37,7 +37,7 @@
 
 	<div class="row">
 <?php echo $form->labelEx($model,'title'); ?>
-<?php echo $form->textField($model,'title',array('size'=>32,'maxlength'=>32)); ?>
+<?php echo $form->textField($model,'title',array('size'=>32,'maxlength'=>64)); ?>
 <?php echo $form->error($model,'title'); ?>
 <div class='hint'><?php if('hint.P3Media.title' != $hint = Yii::t('app', 'title')) echo $hint; ?></div>
 </div>
