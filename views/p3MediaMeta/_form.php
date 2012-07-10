@@ -8,7 +8,7 @@ $form=$this->beginWidget('CActiveForm', array(
 'id'=>'p3-media-meta-form',
 	'enableAjaxValidation'=>true,
 	'enableClientValidation'=>true,
-	)); 
+	));
 
 echo $form->errorSummary($model);
 ?>
@@ -32,6 +32,23 @@ echo $form->errorSummary($model);
 <?php echo $form->textField($model,'language',array('size'=>8,'maxlength'=>8)); ?>
 <?php echo $form->error($model,'language'); ?>
 <div class='hint'><?php if('hint.P3MediaMeta.language' != $hint = Yii::t('app', 'language')) echo $hint; ?></div>
+</div>
+
+<div class="row">
+<label for="treeParent"><?php echo Yii::t('app', 'TreeParent'); ?></label>
+<?php $this->widget(
+					'Relation',
+					array(
+							'model' => $model,
+							'relation' => 'treeParent',
+							'fields' => '_label',
+							'allowEmpty' => true,
+							'style' => 'dropdownlist',
+							'criteria' => new CDbCriteria(array('with'=>array('id0'),'condition'=>'id0.type = :type','params'=>array(':type'=>P3Media::TYPE_FOLDER))),
+							'htmlOptions' => array(
+								'checkAll' => Yii::t('app', 'Choose all'),
+								),)
+						); ?><br />
 </div>
 
 <div class="row">
@@ -176,27 +193,12 @@ echo $form->errorSummary($model);
 						); ?><br />
 </div>
 
-<div class="row">
-<label for="treeParent"><?php echo Yii::t('app', 'TreeParent'); ?></label>
-<?php $this->widget(
-					'Relation',
-					array(
-							'model' => $model,
-							'relation' => 'treeParent',
-							'fields' => '_label',
-							'allowEmpty' => true,
-							'style' => 'dropdownlist',
-							'criteria' => new CDbCriteria(array('with'=>array('id0'),'condition'=>'id0.type = :type','params'=>array(':type'=>P3Media::TYPE_FOLDER))),
-							'htmlOptions' => array(
-								'checkAll' => Yii::t('app', 'Choose all'),
-								),)
-						); ?><br />
-</div>
+
 
 
 <?php
 echo CHtml::Button(Yii::t('app', 'Cancel'), array(
-			'submit' => array('p3mediameta/admin'))); 
-echo CHtml::submitButton(Yii::t('app', 'Save')); 
+			'submit' => array('p3mediameta/admin')));
+echo CHtml::submitButton(Yii::t('app', 'Save'));
 $this->endWidget(); ?>
 </div> <!-- form -->
