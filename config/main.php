@@ -39,6 +39,11 @@ return array(
 						'name' => 'Original File',
 						'originalFile' => true,
 					),
+					'original-public' => array(
+						'name' => 'Original File Public',
+						'originalFile' => true,
+                        'savePublic' => true,
+					),
 					'download' => array(
 						'name' => 'Download File',
 						'originalFile' => true,

@@ -84,13 +84,22 @@ class P3MediaImageAction extends CAction {
 
         if (is_file($inFile)) {
 
-            if ($preset['originalFile'] === true) {
-                // return original file and exit
-                self::sendImage($inFile, $model, $preset);
-            }
-
             $hash = self::generateHash($model, $preset);
             $outFile = $path . DIRECTORY_SEPARATOR . $hash;
+
+            if ($preset['originalFile'] === true) {
+                // return original file and exit
+                if ($preset['savePublic'] === true) {
+                    copy($inFile, $outFile);
+                    //echo str_replace(Yii::app()->basePath, Yii::app()->baseUrl, $outFile);exit;
+                    $outUrl = str_replace(DIRECTORY_SEPARATOR, "/", $outFile);
+                    header('location: '. str_replace(Yii::app()->basePath, Yii::app()->baseUrl, $outUrl));
+                    //self::sendImage($outFile, $model, $preset);
+                } else {
+                    self::sendImage($inFile, $model, $preset);
+                }
+            }
+
 
             if (is_file($outFile)) {
                 // file exists
@@ -212,10 +221,8 @@ class P3MediaImageAction extends CAction {
     private static function sendImage($image, $model, $preset) {
         $offset = 60 * 60 * 24 * 365;
         header("Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT");
-        header('Cache-Control: max-age=' . $offset);
-        header("Pragma:");
         header("Last-Modified: " . gmdate("D, d M Y H:i:s", filemtime($image)) . " GMT");
-        header("Content-Length: " . filesize($image) . ";\n");  // bugs with FF + Flash + ImageLoading - REWORKED - size bug before?
+        header("Content-Length: " . filesize($image) . "");  // bugs with FF + Flash + ImageLoading - REWORKED - size bug before?
 
         if ($preset['contentDisposition'] === 'attachment') {
             header("Content-Disposition: attachment; filename=\"" . basename($model->title) . "\";\n\n");
@@ -227,6 +234,9 @@ class P3MediaImageAction extends CAction {
             header("Cache-Control: no-store,max-age=0,must-revalidate");
             header("Pragma: public");
             header("Pragma: public_no_cache");
+        } else {
+            header('Cache-Control: max-age=' . $offset);
+            header("Pragma:");
         }
 
         if (function_exists("mime_content_type")) {
