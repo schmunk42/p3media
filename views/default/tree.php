@@ -14,7 +14,7 @@ $this->breadcrumbs = array(
 
 <h2>Tree</h2>
 <?php
-$this->widget('ext.phundament.p3extensions.widgets.p3MetaTree.P3MetaTreeWidget', array(
+$this->widget('p3MetaTree.P3MetaTreeWidget', array(
     'model' => "P3MediaMeta",
     'view' => 'p3media.views.widgets.p3MetaTree.mediaTree',
     'routes' => array(

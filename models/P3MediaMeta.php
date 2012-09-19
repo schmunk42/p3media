@@ -36,7 +36,7 @@ class P3MediaMeta extends BaseP3MediaMeta {
         $return = array_merge(
             array(
             'MetaData' => array(
-                'class' => 'ext.phundament.p3extensions.behaviors.P3MetaDataBehavior',
+                'class' => 'P3MetaDataBehavior',
                 'metaDataRelation' => '_self_',
                 'childrenRelation' => 'p3MediaMetas',
                 'parentRelation' => 'treeParent',

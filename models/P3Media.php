@@ -63,7 +63,7 @@ class P3Media extends BaseP3Media {
             $return = array_merge(
                 array(
                 'MetaData' => array(
-                    'class' => 'ext.phundament.p3extensions.behaviors.P3MetaDataBehavior',
+                    'class' => 'P3MetaDataBehavior',
                     'metaDataRelation' => 'metaData',
                 )
                 ), parent::behaviors()
@@ -72,14 +72,14 @@ class P3Media extends BaseP3Media {
             $return = array_merge(
                 array(
                 'UploadBehaviour' => array(
-                    'class' => 'ext.phundament.p3extensions.behaviors.P3FileUploadBehavior',
+                    'class' => 'P3FileUploadBehavior',
                     'dataAlias' => Yii::app()->getModule('p3media')->dataAlias,
                     'trashAlias' => Yii::app()->getModule('p3media')->dataAlias . ".trash",
                     'dataSubdirectory' => Yii::app()->user->id,
                     'uploadInstance' => 'fileUpload',
                 ),
                 'MetaData' => array(
-                    'class' => 'ext.phundament.p3extensions.behaviors.P3MetaDataBehavior',
+                    'class' => 'P3MetaDataBehavior',
                     'metaDataRelation' => 'metaData',
                 )
                 ), parent::behaviors()

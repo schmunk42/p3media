@@ -9,7 +9,7 @@
  * @license http://www.phundament.com/license/
  */
 
-Yii::import('ext.phundament.p3extensions.widgets.jquery-file-upload.*');
+Yii::import('jquery-file-upload-widget.*'); // Upload Handler
 
 /**
  * Controller handling file import
@@ -243,12 +243,12 @@ class ImportController extends Controller {
 		$model->type = 1; //P3Media::TYPE_FILE;
 		$model->path = $filePath;
 		$model->md5 = $md5;
-		
-        if (function_exists("mime_content_type")){    
+
+        if (function_exists("mime_content_type")){
 			$mime = mime_content_type($fullFilePath);
 		} else if (function_exists("finfo_open")) {
-			$finfo = finfo_open($fullFilePath); 
-            $m = finfo_file($finfo, $filename); 
+			$finfo = finfo_open($fullFilePath);
+            $m = finfo_file($finfo, $filename);
             finfo_close($finfo);
         } else {
 			$mime = $getimagesize['mime'];
