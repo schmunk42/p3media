@@ -17,7 +17,7 @@
  * @package p3extensions.commands
  * @since 3.0.5
  */
-class ComposerPackageCommand extends CConsoleCommand {
+class P3MediaCommand extends CConsoleCommand {
 
     public function getHelp() {
         echo <<<EOS
