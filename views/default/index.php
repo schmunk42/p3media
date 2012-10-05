@@ -19,7 +19,7 @@ $this->breadcrumbs = array(
         <?php echo CHtml::link('Manage media files', array('/p3media/p3Media/admin')); ?>
     </li>
     <li>
-        <?php echo CHtml::link('Show media file tree', array('tree')); ?>
+        <?php echo CHtml::link('Show media manager', array('manager')); ?>
     </li>
 </ul>
 

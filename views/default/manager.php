@@ -15,7 +15,10 @@ $this->breadcrumbs = array(
 
     <style type="text/css">
         .files li.span3 {
-            height: 180px;
+            height: 210px;
+        }
+        .files .thumbnail img {
+            margin: 20px;
         }
     </style>
 
@@ -33,7 +36,7 @@ $this->breadcrumbs = array(
             $this->widget('bootstrap.widgets.TbThumbnails',
                           array(
                                'dataProvider' => $model->search(),
-                               'template' => "{pager}{sorter}\n{items}\n{pager}{summary}",
+                               'template' => "{pager}\n{sorter}\n{items}\n{pager}\n{summary}",
                                'sortableAttributes' => array('title' => 'Title', 'id' => 'ID'),
                                'pager' => array(
                                    'class' => 'TbPager',

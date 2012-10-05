@@ -114,7 +114,7 @@ class P3Media extends BaseP3Media {
                     'defaultOrder' => 't.id DESC',
                 ),
                 'pagination' => array(
-                    'pageSize' => 12
+                    'pageSize' => 9
                 ),
             ));
     }

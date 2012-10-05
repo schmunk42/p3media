@@ -29,7 +29,7 @@ class DefaultController extends Controller {
 	public function accessRules() {
 		return array(
 			array('allow',
-				'actions' => array('index', 'ckeditortest', 'tree', 'manager', 'ajaxDirectory'),
+				'actions' => array('index', 'ckeditortest', 'manager', 'ajaxDirectory'),
 				'expression' => 'Yii::app()->user->checkAccess("P3media.Default.*")||YII_DEBUG',
 			),
 			array('deny',
@@ -40,10 +40,6 @@ class DefaultController extends Controller {
 
 	public function actionIndex() {
 		$this->render('index');
-	}
-
-    public function actionTree() {
-		$this->render('tree');
 	}
 
     public function actionManager() {
