@@ -3,7 +3,7 @@ $this->breadcrumbs = array(
     $this->module->id,
 );
 ?>
-<h1>Phundament 3 Media</h1>
+<h1>Media</h1>
 
 <?php if (YII_DEBUG) { ?>
     <div class="flash-notice">
