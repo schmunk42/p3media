@@ -1,32 +1,3 @@
-<?php
-/**
- * View file.
- *
- * @author Tobias Munk <schmunk@usrbin.de>
- * @link http://www.phundament.com/
- * @copyright Copyright &copy; 2005-2011 diemeisterei GmbH
- * @license http://www.phundament.com/license/
- */
-/* if(!isset($this->breadcrumbs))
-
-  $this->breadcrumbs=array(
-  'P3 Medias'=>array(Yii::t('app', 'index')),
-  Yii::t('app', 'Manage'),
-  ); */
-
-Yii::app()->clientScript->registerScript('search', "
-			$('.search-button').click(function(){
-				$('.search-form').toggle();
-				return false;
-				});
-			$('.search-form form').submit(function(){
-				$.fn.yiiGridView.update('p3-media-grid', {
-data: $(this).serialize()
-});
-				return false;
-				});
-			");
-?>
 <div class="ckeditor">
 	<h1> <?php echo Yii::t('app', 'Ckeditor'); ?> P3 Medias</h1>
 	<div class="row">
@@ -84,13 +55,7 @@ data: $(this).serialize()
 
 
 	</div>
-	<div class="row">
-		<div class="search-form" style="display:nonex">
 
-
-
-		</div>
-	</div>
 	<div class="row">
 		<div class="span12">
 			<?php
