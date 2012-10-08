@@ -1,18 +1,22 @@
 <?php
 $this->breadcrumbs = array(
-    $this->module->id,
+    $this->module->id => array("/".$this->module->id),
+    'Manager'
 );
 ?>
 <h1>Media</h1>
+<?php
+$this->widget('zii.widgets.CBreadcrumbs',
+              array(
+                   'links' => $this->breadcrumbs
+              ));
+?>
 <h2>Filemanager</h2>
 
 <style type="text/css">
-    .files li.span3 {
+    .files li.span3 .thumbnail-wrapper {
         height: 210px;
-    }
-
-    .files .thumbnail img {
-        margin: 20px;
+        text-align: center;
     }
 </style>
 

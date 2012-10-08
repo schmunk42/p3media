@@ -15,7 +15,7 @@ public function filters() {
 public function accessRules() {
 	return array(
 			array('allow',
-				'actions'=>array('create','update','delete','admin','view'),
+				'actions'=>array('create','update','ajaxUpdate','delete','admin','view'),
 				'roles'=>array('P3media.P3MediaMeta.*'),
 				),
 			array('deny',
@@ -107,6 +107,13 @@ public function accessRules() {
         $this->render('update',array(
                     'model'=>$model,
                     ));
+    }
+
+    public function actionAjaxUpdate()
+    {
+        Yii::import('EditableSaver'); //or you can add import 'ext.editable.*' to config
+        $es = new EditableSaver('P3MediaMeta');  // 'User' is classname of model to be updated
+        $es->update();
     }
 
     public function actionDelete($id)

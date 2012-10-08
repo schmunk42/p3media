@@ -20,6 +20,7 @@
  */
 class DefaultController extends Controller
 {
+    public $directoriesList;
 
     public function filters()
     {
@@ -68,6 +69,12 @@ class DefaultController extends Controller
         $files->type = P3Media::TYPE_FILE;
 
         $directories = P3Media::model()->getFolderItems();
+
+        $criteria = new CDbCriteria();
+        $criteria->condition = "id0.type = ".P3Media::TYPE_FOLDER;
+        $criteria->with = 'id0';
+
+        $this->directoriesList = CHtml::listData(P3MediaMeta::model()->findAll($criteria), 'id', 'id0.title');
 
         $this->render('manager', array('files' => $files, 'directories' => $directories));
     }

@@ -4,14 +4,21 @@ $this->breadcrumbs = array(
 );
 ?>
 <h1>Media</h1>
+<?php
+$this->widget('zii.widgets.CBreadcrumbs',
+              array(
+                   'links' => $this->breadcrumbs
+
+              ));
+?>
 <h2>Manage</h2>
 <p>
 <ul>
     <li>
-        <?php echo CHtml::link('Manage media files', array('/p3media/p3Media/admin')); ?>
+        <?php echo CHtml::link('Media manager', array('manager')); ?>
     </li>
     <li>
-        <?php echo CHtml::link('Show media manager', array('manager')); ?>
+        <?php echo CHtml::link('CRUD', array('/p3media/p3Media/admin')); ?>
     </li>
 </ul>
 

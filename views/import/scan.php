@@ -1,7 +1,13 @@
 <?php $this->breadcrumbs[] = 'Scan'; ?>
 
-<h1>Local File Scan</h1>
-
+<h1>Media</h1>
+<?php
+$this->widget('zii.widgets.CBreadcrumbs',
+              array(
+                   'links' => $this->breadcrumbs
+              ));
+?>
+<h2>Scan</h2>
 <p>
     Import alias: <?php echo $this->module->importAlias ?><br/>
     Import path: <?php echo Yii::getPathOfAlias($this->module->importAlias) ?><br/>

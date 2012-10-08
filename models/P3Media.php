@@ -103,7 +103,7 @@ class P3Media extends BaseP3Media
     {
         $criteria = new CDbCriteria;
 
-        $criteria->with[] = 'metaData';
+        $criteria->with = 'metaData';
 
         if ($this->treeParent !== null) {
             $criteria->compare('metaData.treeParent_id', $this->treeParent, true);
