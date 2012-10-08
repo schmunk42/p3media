@@ -111,7 +111,7 @@ class ImportController extends Controller {
 			case 'HEAD':
 			case 'GET':
 				$upload_handler->get();
-				$contents = ob_get_contents();
+				// $contents = ob_get_contents();
 				break;
 			case 'POST':
 				// check if file exists
