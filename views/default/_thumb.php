@@ -6,15 +6,15 @@
                         array('buttons' => array(
                             array(
                                 'icon' => 'eye-open',
-                                'url' => array('p3Media/view', 'id' => $data->id)
+                                'url' => array('p3Media/view', 'id' => $data->id, 'returnUrl' => $this->createUrl("", $_GET))
                             ),
                             array(
                                 'icon' => 'pencil',
-                                'url' => array('p3Media/update', 'id' => $data->id)
+                                'url' => array('p3Media/update', 'id' => $data->id, 'returnUrl' => $this->createUrl("", $_GET))
                             ),
                             array(
                                 'icon' => 'info-sign',
-                                'url' => array('p3MediaMeta/update', 'id' => $data->id)
+                                'url' => array('p3MediaMeta/update', 'id' => $data->id, 'returnUrl' => $this->createUrl("", $_GET))
                             ))
                         )); ?>
 </div>

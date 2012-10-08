@@ -4,14 +4,6 @@ $this->breadcrumbs = array(
 );
 ?>
 <h1>Media</h1>
-
-<?php if (YII_DEBUG) { ?>
-    <div class="flash-notice">
-        Note: If <b>YII_DEBUG</b> is set to <i>true</i>, access is not restricted.
-    </div>
-<?php } ?>
-
-
 <h2>Manage</h2>
 <p>
 <ul>

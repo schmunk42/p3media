@@ -33,11 +33,11 @@ class ImportController extends Controller {
 		return array(
 			array('allow',
 				'actions' => array('upload', 'uploadFile'),
-				'expression' => 'Yii::app()->user->checkAccess("P3media.Import.*")||YII_DEBUG',
+				'expression' => 'Yii::app()->user->checkAccess("P3media.Import.*")',
 			),
 			array('allow',
 				'actions' => array('index', 'check', 'localFile', 'scan'),
-				'expression' => 'Yii::app()->user->checkAccess("P3media.Import.scan")||YII_DEBUG',
+				'expression' => 'Yii::app()->user->checkAccess("P3media.Import.scan")',
 			),
 			array('deny',
 				'users' => array('*'),

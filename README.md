@@ -17,7 +17,7 @@ Note: You can also place the module and extensions from the download package
 into your app, run the migration, create the directory and adjust 
 the config manually.
 
-**If YII_DEBUG is set to true, user->checkAccess() is disabled.**
+**Note: Setup RBAC items to allow access to controller actions.**
 
 If you prefer to test this module with a blank Yii web application skeletion
 follow these steps:

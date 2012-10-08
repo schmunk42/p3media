@@ -34,7 +34,7 @@ class P3MediaController extends Controller
 		return array(
 			array('allow', 
 				'actions'=>array('admin','delete','index','view','create','update'),
-				'expression' => 'Yii::app()->user->checkAccess("P3media.P3Media.*")||YII_DEBUG',
+				'expression' => 'Yii::app()->user->checkAccess("P3media.P3Media.*")',
 			),
 			array('deny',  
 				'users'=>array('*'),

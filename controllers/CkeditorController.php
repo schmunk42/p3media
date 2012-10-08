@@ -33,7 +33,7 @@ class CkeditorController extends Controller {
 		return array(
 			array('allow',
 				'actions' => array('index', 'image', 'flash'),
-				'expression' => 'Yii::app()->user->checkAccess("P3media.Ckeditor.*")||YII_DEBUG',
+				'expression' => 'Yii::app()->user->checkAccess("P3media.Ckeditor.*")',
 			),
 			array('deny',
 				'users' => array('*'),
@@ -48,7 +48,6 @@ class CkeditorController extends Controller {
 		if (isset($_GET['P3Media']))
 			$model->attributes = $_GET['P3Media'];
 
-
 		$this->render('index', array('model' => $model));
 	}
 
@@ -57,8 +56,10 @@ class CkeditorController extends Controller {
 		$model->unsetAttributes();
 		$model->attributes = array('mimeType' => 'image');
 
-		if (isset($_GET['P3Media']))
-			$model->attributes = $_GET['P3Media'];
+		if (isset($_GET['P3Media'])) {
+            $model->scenario = "search";
+            $model->attributes = $_GET['P3Media'];
+        }
 
 		// TODO - remove public property?, see also P3MediaController
 		if (isset($_GET['P3Media']['treeParent'])) {

@@ -1,178 +1,169 @@
 <?php
-/**
- * Class file.
- *
- * @author Tobias Munk <schmunk@usrbin.de>
- * @link http://www.phundament.com/
- * @copyright Copyright &copy; 2005-2011 diemeisterei GmbH
- * @license http://www.phundament.com/license/
- */
 
-/**
- * Controller handling P3MetaData CRUDs
- *
- * Detail description
- *
- * @author Tobias Munk <schmunk@usrbin.de>
- * @package p3media.controllers
- * @since 3.0.1
- */
 class P3MediaMetaController extends Controller
 {
-	public $layout='//layouts/column2';
+    #public $layout='//layouts/column2';
+    public $defaultAction = "admin";
+    public $scenario = "crud";
 
-	public function filters()
-	{
-		return array(
-			'accessControl', 
-		);
-	}	
+public function filters() {
+	return array(
+			'accessControl',
+			);
+}
 
-	public function accessRules()
-	{
-		return array(
-			array('allow', 
-				'actions'=>array('admin','delete','index','view','create','update'),
-				'expression' => 'Yii::app()->user->checkAccess("P3media.P3MediaMeta.*")||YII_DEBUG',
-			),
-			array('deny',  
+public function accessRules() {
+	return array(
+			array('allow',
+				'actions'=>array('create','update','delete','admin','view'),
+				'roles'=>array('P3media.P3MediaMeta.*'),
+				),
+			array('deny',
 				'users'=>array('*'),
-			),
+				),
+			);
+}
 
-		);
-	}
-	
-	public function beforeAction($action){
-		parent::beforeAction($action);
-		// map identifcationColumn to id
-		if (!isset($_GET['id']) && isset($_GET['id'])) {
-			$model=P3MediaMeta::model()->find('id = :id', array(
-			':id' => $_GET['id']));
-			if ($model !== null) {
-				$_GET['id'] = $model->id;
-			} else {
-				throw new CHttpException(400);
-			}
-		}
-		if ($this->module !== null) {
-			$this->breadcrumbs[$this->module->Id] = array('/'.$this->module->Id);
-		}
-		return true;
-	}
-	
-	public function actionView($id)
-	{
-		$model = $this->loadModel($id);
-		$this->render('view',array(
-			'model' => $model,
-		));
-	}
+    public function beforeAction($action){
+        parent::beforeAction($action);
+        // map identifcationColumn to id
+        if (!isset($_GET['id']) && isset($_GET['id'])) {
+            $model=P3MediaMeta::model()->find('id = :id', array(
+            ':id' => $_GET['id']));
+            if ($model !== null) {
+                $_GET['id'] = $model->id;
+            } else {
+                throw new CHttpException(400);
+            }
+        }
+        if ($this->module !== null) {
+            $this->breadcrumbs[$this->module->Id] = array('/'.$this->module->Id);
+        }
+        return true;
+    }
 
-	public function actionCreate()
-	{
-		$model = new P3MediaMeta;
+    public function actionView($id)
+    {
+        $model = $this->loadModel($id);
+        $this->render('view',array(
+            'model' => $model,
+        ));
+    }
 
-				$this->performAjaxValidation($model, 'p3-media-meta-form');
+    public function actionCreate()
+    {
+        $model = new P3MediaMeta;
+        $model->scenario = $this->scenario;
+
+                $this->performAjaxValidation($model, 'p3-media-meta-form');
     
-		if(isset($_POST['P3MediaMeta'])) {
-			$model->attributes = $_POST['P3MediaMeta'];
+        if(isset($_POST['P3MediaMeta'])) {
+            $model->attributes = $_POST['P3MediaMeta'];
 
-			try {
-    			if($model->save()) {
-        			$this->redirect(array('view','id'=>$model->id));
-				}
-			} catch (Exception $e) {
-				$model->addError('id', $e->getMessage());
-			}
-		} elseif(isset($_GET['P3MediaMeta'])) {
-				$model->attributes = $_GET['P3MediaMeta'];
-		}
+            try {
+                if($model->save()) {
+                    if (isset($_GET['returnUrl'])) {
+                        $this->redirect($_GET['returnUrl']);
+                    } else {
+                        $this->redirect(array('view','id'=>$model->id));
+                    }
+                }
+            } catch (Exception $e) {
+                $model->addError('id', $e->getMessage());
+            }
+        } elseif(isset($_GET['P3MediaMeta'])) {
+                $model->attributes = $_GET['P3MediaMeta'];
+        }
 
-		$this->render('create',array( 'model'=>$model));
-	}
-
-
-	public function actionUpdate($id)
-	{
-		$model = $this->loadModel($id);
-
-				$this->performAjaxValidation($model, 'p3-media-meta-form');
-		
-		if(isset($_POST['P3MediaMeta']))
-		{
-			$model->attributes = $_POST['P3MediaMeta'];
+        $this->render('create',array( 'model'=>$model));
+    }
 
 
-			try {
-    			if($model->save()) {
-        			$this->redirect(array('view','id'=>$model->id));
-        		}
-			} catch (Exception $e) {
-				$model->addError('id', $e->getMessage());
-			}	
-		}
+    public function actionUpdate($id)
+    {
+        $model = $this->loadModel($id);
+        $model->scenario = $this->scenario;
 
-		$this->render('update',array(
-					'model'=>$model,
-					));
-	}
+                $this->performAjaxValidation($model, 'p3-media-meta-form');
+        
+        if(isset($_POST['P3MediaMeta']))
+        {
+            $model->attributes = $_POST['P3MediaMeta'];
 
-	public function actionDelete($id)
-	{
-		if(Yii::app()->request->isPostRequest)
-		{
-			try {
-				$this->loadModel($id)->delete();
-			} catch (Exception $e) {
-				throw new CHttpException(500,$e->getMessage());
-			}
 
-			if(!isset($_GET['ajax']))
-			{
-					$this->redirect(array('admin'));
-			}
-		}
-		else
-			throw new CHttpException(400,
-					Yii::t('app', 'Invalid request. Please do not repeat this request again.'));
-	}
+            try {
+                if($model->save()) {
+                    if (isset($_GET['returnUrl'])) {
+                        $this->redirect($_GET['returnUrl']);
+                    } else {
+                        $this->redirect(array('view','id'=>$model->id));
+                    }
+                }
+            } catch (Exception $e) {
+                $model->addError('id', $e->getMessage());
+            }
+        }
 
-	public function actionIndex()
-	{
-		$this->redirect(array('admin'));
-		#$dataProvider=new CActiveDataProvider('P3MediaMeta');
-		#$this->render('index',array(
-		#	'dataProvider'=>$dataProvider,
-		#));
-	}
+        $this->render('update',array(
+                    'model'=>$model,
+                    ));
+    }
 
-	public function actionAdmin()
-	{
-		$model=new P3MediaMeta('search');
-		$model->unsetAttributes();
+    public function actionDelete($id)
+    {
+        if(Yii::app()->request->isPostRequest)
+        {
+            try {
+                $this->loadModel($id)->delete();
+            } catch (Exception $e) {
+                throw new CHttpException(500,$e->getMessage());
+            }
 
-		if(isset($_GET['P3MediaMeta']))
-			$model->attributes = $_GET['P3MediaMeta'];
+            if(!isset($_GET['ajax']))
+            {
+                    $this->redirect(array('admin'));
+            }
+        }
+        else
+            throw new CHttpException(400,
+                    Yii::t('app', 'Invalid request. Please do not repeat this request again.'));
+    }
 
-		$this->render('admin',array(
-			'model'=>$model,
-		));
-	}
+    public function actionIndex()
+    {
+        $dataProvider=new CActiveDataProvider('P3MediaMeta');
+        $this->render('index',array(
+            'dataProvider'=>$dataProvider,
+        ));
+    }
 
-	public function loadModel($id)
-	{
-		$model=P3MediaMeta::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,Yii::t('app', 'The requested page does not exist.'));
-		return $model;
-	}
+    public function actionAdmin()
+    {
+        $model=new P3MediaMeta('search');
+        $model->unsetAttributes();
 
-	protected function performAjaxValidation($model)
-	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='p3-media-meta-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-	}
+        if(isset($_GET['P3MediaMeta']))
+            $model->attributes = $_GET['P3MediaMeta'];
+
+        $this->render('admin',array(
+            'model'=>$model,
+        ));
+    }
+
+    public function loadModel($id)
+    {
+        $model=P3MediaMeta::model()->findByPk($id);
+        if($model===null)
+            throw new CHttpException(404,Yii::t('app', 'The requested page does not exist.'));
+        return $model;
+    }
+
+    protected function performAjaxValidation($model)
+    {
+        if(isset($_POST['ajax']) && $_POST['ajax']==='p3-media-meta-form')
+        {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    }
 }
