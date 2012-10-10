@@ -146,6 +146,7 @@ class P3Media extends BaseP3Media
     public function getFolderItems()
     {
         $criteria = new CDbCriteria();
+        $criteria->order = "title";
         if ($this->id === null) {
             $criteria->condition = "t.type = " . P3Media::TYPE_FOLDER . " AND metaData.treeParent_id IS NULL";
         }
