@@ -70,7 +70,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 #		'description',
 		'type',
 		'path',
-		'md5',
+		#'md5',
 		/*
 		  'originalName',
 		  'mimeType',
