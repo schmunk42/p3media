@@ -25,6 +25,12 @@ data: $(this).serialize()
 
 <h1> <?php echo Yii::t('app', 'Manage'); ?> <?php echo Yii::t('app', 'P3 Medias'); ?> </h1>
 
+<?php
+$this->widget('zii.widgets.CBreadcrumbs',
+              array(
+                   'links' => $this->breadcrumbs
+              ));
+?>
 
 <ul>
 	<li>Info <?php echo CHtml::link("P3MediaMeta", array("/p3media/p3MediaMeta/admin")); ?> </li>
@@ -64,7 +70,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 #		'description',
 		'type',
 		'path',
-		'md5',
+		#'md5',
 		/*
 		  'originalName',
 		  'mimeType',

@@ -18,36 +18,64 @@
  * @package p3media.controllers
  * @since 3.0.1
  */
-class DefaultController extends Controller {
+class DefaultController extends Controller
+{
+    public $directoriesList;
 
-	public function filters() {
-		return array(
-			'accessControl',
-		);
-	}
+    public function filters()
+    {
+        return array(
+            'accessControl',
+        );
+    }
 
-	public function accessRules() {
-		return array(
-			array('allow',
-				'actions' => array('index', 'ckeditortest', 'tree'),
-				'expression' => 'Yii::app()->user->checkAccess("P3media.Default.*")||YII_DEBUG',
-			),
-			array('deny',
-				'users' => array('*'),
-			),
-		);
-	}
+    public function accessRules()
+    {
+        return array(
+            array('allow',
+                  'actions' => array('index', 'ckeditortest', 'manager', 'ajaxDirectory'),
+                  'expression' => 'Yii::app()->user->checkAccess("P3media.Default.*")',
+            ),
+            array('deny',
+                  'users' => array('*'),
+            ),
+        );
+    }
 
-	public function actionIndex() {
-		$this->render('index');
-	}
+    public function actionIndex()
+    {
+        $this->render('index');
+    }
 
-    public function actionTree() {
-		$this->render('tree');
-	}
+    public function actionManager()
+    {
+        $files = new P3Media;
 
-	public function actionCkeditortest() {
-		$this->render('Ckeditortest');
-	}
+        // select files from folder
+        if (isset($_GET['id'])) {
+            $files->treeParent = $_GET['id'];
+        }
+        else {
+            $files->treeParent = null;
+        }
 
+        // apply search terms
+        if (isset($_GET['P3Media'])) {
+            $files->scenario = "search";
+            $files->attributes = $_GET['P3Media'];
+        }
+
+        // select only files
+        $files->type = P3Media::TYPE_FILE;
+
+        $directories = P3Media::model()->getFolderItems();
+
+        $criteria = new CDbCriteria();
+        $criteria->condition = "id0.type = ".P3Media::TYPE_FOLDER;
+        $criteria->with = 'id0';
+
+        $this->directoriesList = CHtml::listData(P3MediaMeta::model()->findAll($criteria), 'id', 'id0.title');
+
+        $this->render('manager', array('files' => $files, 'directories' => $directories));
+    }
 }

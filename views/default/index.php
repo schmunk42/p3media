@@ -3,23 +3,22 @@ $this->breadcrumbs = array(
     $this->module->id,
 );
 ?>
-<h1>Phundament 3 Media</h1>
+<h1>Media</h1>
+<?php
+$this->widget('zii.widgets.CBreadcrumbs',
+              array(
+                   'links' => $this->breadcrumbs
 
-<?php if (YII_DEBUG) { ?>
-    <div class="flash-notice">
-        Note: If <b>YII_DEBUG</b> is set to <i>true</i>, access is not restricted.
-    </div>
-<?php } ?>
-
-
+              ));
+?>
 <h2>Manage</h2>
 <p>
 <ul>
     <li>
-        <?php echo CHtml::link('Manage media files', array('/p3media/p3Media/admin')); ?>
+        <?php echo CHtml::link('Media manager', array('manager')); ?>
     </li>
     <li>
-        <?php echo CHtml::link('Show media file tree', array('tree')); ?>
+        <?php echo CHtml::link('CRUD', array('/p3media/p3Media/admin')); ?>
     </li>
 </ul>
 

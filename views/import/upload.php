@@ -14,7 +14,14 @@ $this->breadcrumbs[] = 'Upload';
  * http://creativecommons.org/licenses/MIT/
  */
 -->
-<h1>Phundament 3 Media Upload</h1>
+<h1>Media</h1>
+<?php
+$this->widget('zii.widgets.CBreadcrumbs',
+              array(
+                   'links' => $this->breadcrumbs
+              ));
+?>
+<h2>Upload</h2>
 <p>
 <ul>
 	<li>

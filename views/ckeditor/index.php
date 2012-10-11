@@ -1,113 +1,78 @@
-<?php
-/**
- * View file.
- *
- * @author Tobias Munk <schmunk@usrbin.de>
- * @link http://www.phundament.com/
- * @copyright Copyright &copy; 2005-2011 diemeisterei GmbH
- * @license http://www.phundament.com/license/
- */
+<div class="ckeditor">
+	<h1> <?php echo Yii::t('app', 'Ckeditor'); ?> P3 Medias</h1>
+	<div class="row">
+		<div class="span6">
+			<h3>Operations</h3>
+			<p>
+				<?php
+				foreach ($this->module->params['presets'] AS $key => $preset) {
+					$identifier = $key . ((isset($preset['type'])) ? '|' . $preset['type'] : '');
+					$data[$identifier] = (isset($preset['name'])) ? $preset['name'] : $key;
+				}
+				echo CHtml::dropDownList("preset", null, $data, array("class"=>"span3 btn"));
+				?>
 
-/* if(!isset($this->breadcrumbs))
+				<?php
+				#echo CHtml::link(Yii::t('app', 'Advanced Search'), '#', array('class' => 'search-button'));
+				#echo " ";
+				echo CHtml::link('Upload', array('/p3media/import/upload'), array('target' => '_blank', 'class' => 'btn'));
+				echo " ";
+				echo CHtml::link('Reload', null, array('target' => '_blank', 'class' => 'btn', 'onclick' => 'location.reload();'));
+				?>
+			</p>
 
-  $this->breadcrumbs=array(
-  'P3 Medias'=>array(Yii::t('app', 'index')),
-  Yii::t('app', 'Manage'),
-  ); */
+
+		</div>
+		<div class="span6">
+			<h3>Search</h3>
+			<div class="Xform form-inline">
+				<?php
+				$form = $this->beginWidget('CActiveForm', array(
+					//'action'=>Yii::app()->createUrl($this->route),
+					'method' => 'get',
+					));
+				?>
+
+				<?php echo $form->label($model, 'id'); ?>
+				<?php echo $form->textField($model, 'id', array('size' => 4, 'maxlength' => 32, 'class' => 'span1')); ?>
+
+				<?php echo $form->label($model, 'title'); ?>
+				<?php echo $form->textField($model, 'title', array('size' => 12, 'maxlength' => 32, 'class' => 'span2')); ?>
+<br/>
+				<?php #echo $form->label($model, 'description'); ?>
+				<?php #	echo $form->textField($model, 'description', array('size' => 12, 'maxlength' => 32, 'class' => 'span2')); ?>
+
+				<?php echo $form->label($model, 'type'); ?>
+				<?php echo $form->textField($model, 'type', array('size' => 12, 'maxlength' => 32, 'class' => 'span1')); ?>
 
 
-Yii::app()->clientScript->registerScript('search', "
-			$('.search-button').click(function(){
-				$('.search-form').toggle();
-				return false;
-				});
-			$('.search-form form').submit(function(){
-				$.fn.yiiGridView.update('p3-media-grid', {
-data: $(this).serialize()
-});
-				return false;
-				});
-			");
-?>
+				<?php echo CHtml::submitButton(Yii::t('app', 'Search')); ?>
 
-<h1> <?php echo Yii::t('app', 'Ckeditor'); ?> P3 Medias</h1>
+				<?php $this->endWidget(); ?>
 
-<div class="span-8">
-	<h2>Menu</h2>
-	<p>
-		<?php
-		echo CHtml::link(Yii::t('app', 'Advanced Search'), '#', array('class' => 'search-button'));
-		echo " ";
-		echo CHtml::link('Upload', array('/p3media/import/upload'), array('target' => '_blank'));
-		echo " ";
-		echo CHtml::link('Reload', null, array('target' => '_blank', 'onclick' => 'location.reload();'));
-		?>
-	</p>
+			</div><!-- search-form -->
+		</div>
 
-	<div class="search-form" style="display:none">
-		<?php
-		$this->renderPartial('/p3Media/_search', array(
-			'model' => $model,
-		));
-		?>
+
+	</div>
+
+	<div class="row">
+		<div class="span12">
+			<?php
+			$this->widget('bootstrap.widgets.TbThumbnails', array(
+				'dataProvider' => $model->search(),
+				'template' => "{pager}\n{items}",
+				'itemView' => '_thumb',
+				// Remove the existing tooltips and rebind the plugin after each ajax-call.
+				'afterAjaxUpdate' => "js:function() {
+        jQuery('.tooltip').remove();
+        jQuery('a[rel=tooltip]').tooltip();
+    }",
+			));
+			?>
+		</div>
 	</div>
 </div>
-
-<div class="span-8 last">
-	<h2>Preset</h2>
-	<p>
-		<?php
-		foreach ($this->module->params['presets'] AS $key => $preset) {
-			$identifier = $key . ((isset($preset['type'])) ?'|'.$preset['type']:'');
-			$data[$identifier] = (isset($preset['name'])) ? $preset['name'] : $key;
-		}
-		echo Chtml::dropDownList("preset", null, $data);
-		?>
-	</p>
-</div>
-
-<?php
-$locale = CLocale::getInstance(Yii::app()->language);
-$this->widget('zii.widgets.grid.CGridView', array(
-	'id' => 'p3-media-grid',
-	'dataProvider' => $model->search(),
-	'filter' => $model,
-	'columns' => array(
-		array(
-			#'name' => 'path',
-			'type' => 'raw',
-			'value' => 'CHtml::link(
-				CHtml::image(Yii::app()->controller->createUrl("/p3media/file/image",array("id"=>$data->id,"preset"=>"p3media-ckbrowse")), $data->title, array("class"=>"ckeditor")),
-				"#", 
-				array("onclick"=>"select(".$data->id.",\'".$data->title."\');")
-				)
-				',
-		),
-		'id',
-		/* array(
-		  'name' => 'metaData.treeParent_id',
-		  'value' => 'CHtml::value($data,\'metaData.treeParent_id\')',
-		  'filter' => CHtml::listData(P3Media::model()->with('metaData')->findAll(), 'metaData.id', 'recordTitle'),
-		  ), */
-		array(
-                'name'=>'treeParent',   
-                'value'=>'(isset($data->metaData->treeParent->_label))?$data->metaData->treeParent->_label:null',
-                'filter' => CHtml::listData(P3Media::model()->findAllByAttributes(array('type' => P3Media::TYPE_FOLDER)),'id','title'),
-        ),
-		'title',
-		'description',
-		'mimeType',
-		'path',
-	/*
-	  'md5',
-	  'originalName',
-	  'mimeType',
-	  'size',
-	  'info',
-	 */
-	),
-));
-?>
 
 <script type="text/javascript">
 	function select(id,title){
@@ -116,14 +81,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			return false;
 		}
 		var identifier = $('#preset').val();
-		if (confirm('Select #'+id+' as \''+identifier+'\'?')) {		
+		if (confirm('Select #'+id+' as \''+identifier+'\'?')) {
 			//alert(id+'-'+preset);
 			var split;
 			split = identifier.split('|')
 			var preset = split[0];
 			var extension = '.'+split[1]; // TODO: retrieve type from PHP preset
 			//var title = 'p3media'; // TODO
-			url = '<?php echo CController::createUrl('/p3media/file/image', array('title' => '__TITLE__','id' => '__ID__', 'preset' => '__PRESET__', 'extension'=>'__EXT__')) ?>';
+			url = '<?php echo CController::createUrl('/p3media/file/image', array('title' => '__TITLE__', 'id' => '__ID__', 'preset' => '__PRESET__', 'extension' => '__EXT__')) ?>';
 			url = url.replace('__TITLE__', title);
 			url = url.replace('__EXT__', extension);
 			url = url.replace('__PRESET__', preset);
@@ -134,3 +99,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		};
 	}
 </script>
+
+<?php
+// always use the backend theme for this view
+Yii::app()->theme = (Yii::app()->params['p3.backendTheme'])?Yii::app()->params['p3.backendTheme']:"backend";
+?>
