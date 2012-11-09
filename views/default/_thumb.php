@@ -1,6 +1,17 @@
 <li class="span3">
     <span class="thumbnail" rel="tooltip" data-title="<?php echo "#" . $data->id ?>">
-    <h5><?php echo $data->title ?></h5>
+    <h5>
+        <?php
+        $this->widget('EditableField',
+                      array(
+                           'type' => 'text',
+                           'model' => $data,
+                           'attribute' => 'title',
+                           'url' => $this->createUrl('/p3media/p3Media/ajaxUpdate'),
+                      ));
+
+        ?>
+    </h5>
 
     <p>
         <?php

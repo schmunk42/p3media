@@ -33,7 +33,7 @@ class P3MediaController extends Controller
 	{
 		return array(
 			array('allow', 
-				'actions'=>array('admin','delete','index','view','create','update'),
+				'actions'=>array('admin','delete','ajaxUpdate','index','view','create','update'),
 				'expression' => 'Yii::app()->user->checkAccess("P3media.P3Media.*")',
 			),
 			array('deny',  
@@ -116,6 +116,13 @@ class P3MediaController extends Controller
 					'model'=>$model,
 					));
 	}
+
+    public function actionAjaxUpdate()
+    {
+        Yii::import('EditableSaver'); //or you can add import 'ext.editable.*' to config
+        $es = new EditableSaver('P3Media');  // 'User' is classname of model to be updated
+        $es->update();
+    }
 
 	public function actionDelete($id)
 	{
