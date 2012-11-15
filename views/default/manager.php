@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    $this->module->id => array("/".$this->module->id),
+    $this->module->id => array("/" . $this->module->id),
     'Manager'
 );
 ?>
@@ -58,6 +58,7 @@ $this->widget('zii.widgets.CBreadcrumbs',
             <?php
             $this->widget('bootstrap.widgets.TbThumbnails',
                           array(
+                               'ajaxUpdate' => false, // TODO: ajax update not compatible with EditableField
                                'dataProvider' => $files->search(),
                                'template' => "{pager}\n{sorter}\n{items}\n{pager}\n{summary}",
                                'sortableAttributes' => array('title' => 'Title', 'id' => 'ID'),
