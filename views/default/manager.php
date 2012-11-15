@@ -56,10 +56,12 @@ $this->widget('zii.widgets.CBreadcrumbs',
         <div class="files">
 
             <?php
+            $dataProvider = $files->search();
+            $dataProvider->pagination->pageSize = 9;
             $this->widget('bootstrap.widgets.TbThumbnails',
                           array(
                                'ajaxUpdate' => false, // TODO: ajax update not compatible with EditableField
-                               'dataProvider' => $files->search(),
+                               'dataProvider' => $dataProvider,
                                'template' => "{pager}\n{sorter}\n{items}\n{pager}\n{summary}",
                                'sortableAttributes' => array('title' => 'Title', 'id' => 'ID'),
                                'pager' => array(
