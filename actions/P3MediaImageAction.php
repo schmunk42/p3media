@@ -240,7 +240,7 @@ class P3MediaImageAction extends CAction {
             header("Pragma: public");
             header("Pragma: public_no_cache");
         } else {
-            header('Cache-Control: max-age=' . $offset);
+            header('Cache-Control: max-age=0');// . $offset);
             header("Pragma:");
         }
 
