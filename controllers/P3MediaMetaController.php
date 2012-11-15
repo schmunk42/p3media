@@ -128,7 +128,11 @@ public function accessRules() {
 
             if(!isset($_GET['ajax']))
             {
+                if (isset($_GET['returnUrl'])) {
+                    $this->redirect($_GET['returnUrl']);
+                } else {
                     $this->redirect(array('admin'));
+                }
             }
         }
         else

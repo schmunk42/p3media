@@ -45,6 +45,20 @@ $this->breadcrumbs = array(
             );
             ?>
         </div>
+
+        <?php
+        $this->widget('bootstrap.widgets.TbButton',
+                      array(
+                           'label' => 'Create new folder',
+                           'icon' => 'plus',
+                           'url' => array(
+                               'p3media/create',
+                               'P3Media' => array('type' => 2),
+                               'returnUrl' => $this->createUrl("", $_GET)
+                           ),
+                           'htmlOptions' => array('class' => 'btn'))
+        );
+        ?>
     </div>
     <div class="span9">
         <div class="form-inline">

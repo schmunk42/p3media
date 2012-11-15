@@ -33,7 +33,7 @@ class DefaultController extends Controller
     {
         return array(
             array('allow',
-                  'actions' => array('index', 'ckeditortest', 'manager', 'ajaxDirectory'),
+                  'actions' => array('index', 'ckeditortest', 'browser', 'ajaxDirectory'),
                   'expression' => 'Yii::app()->user->checkAccess("P3media.Default.*")',
             ),
             array('deny',
@@ -47,7 +47,7 @@ class DefaultController extends Controller
         $this->render('index');
     }
 
-    public function actionManager()
+    public function actionBrowser()
     {
         $files = new P3Media;
 
@@ -76,6 +76,6 @@ class DefaultController extends Controller
 
         $this->directoriesList = CHtml::listData(P3MediaMeta::model()->findAll($criteria), 'id', 'id0.title');
 
-        $this->render('manager', array('files' => $files, 'directories' => $directories));
+        $this->render('browser', array('files' => $files, 'directories' => $directories));
     }
 }

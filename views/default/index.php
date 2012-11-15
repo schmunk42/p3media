@@ -22,7 +22,7 @@ $this->breadcrumbs = array(
 <p>
 <ul>
     <li>
-        <?php echo CHtml::link('Media manager', array('manager')); ?>
+        <?php echo CHtml::link('Media Browser', array('browser')); ?>
     </li>
     <li>
         <?php echo CHtml::link('CRUD', array('/p3media/p3Media/admin')); ?>

@@ -1,5 +1,5 @@
 <?php
-$this->breadcrumbs['P3 Media Metas'] = array('index');
+$this->breadcrumbs['P3 Media Metas'] = array('admin');
 $this->breadcrumbs[$model->{$model->tableSchema->primaryKey}] = array('view','id'=>$model->{$model->tableSchema->primaryKey});
 $this->breadcrumbs[] = Yii::t('app', 'Update');
 ?>

@@ -9,12 +9,18 @@ $this->breadcrumbs[] = $model->id;
 <?php $this->renderPartial("_toolbar", array("model"=>$model)); ?>
 
 <h2>
+    Image
+</h2>
+
+    <p>
+        <?php echo $model->image('p3media-ckbrowse')."<br/>" . CHtml::link('Download', $this->createUrl('/p3media/file/', array('id' => $model->id))) . "<br/>"; ?>
+    </p>
+
+<h2>
     Data
 </h2>
-<?php echo $model->image('p3media-ckbrowse');
 
-echo "<br/>".CHtml::link('Download', $this->createUrl('/p3media/file/',array('id'=>$model->id)))."<br/>";
-?>
+
 <p>
     <?php
     $this->widget('TbDetailView', array(
