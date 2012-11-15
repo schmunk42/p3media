@@ -1,12 +1,17 @@
 <?php $this->breadcrumbs[] = 'Scan'; ?>
 
+
 <h1>Media</h1>
-<?php
-$this->widget('zii.widgets.CBreadcrumbs',
-              array(
-                   'links' => $this->breadcrumbs
-              ));
-?>
+<p>
+    <?php
+    $this->widget('TbBreadcrumbs',
+                  array(
+                       'links' => $this->breadcrumbs
+                  ));
+    ?>
+</p>
+
+
 <h2>Scan</h2>
 <p>
     Import alias: <?php echo $this->module->importAlias ?><br/>

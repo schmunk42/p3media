@@ -36,7 +36,7 @@ class ImportController extends Controller {
 				'expression' => 'Yii::app()->user->checkAccess("P3media.Import.*")',
 			),
 			array('allow',
-				'actions' => array('index', 'check', 'localFile', 'scan'),
+				'actions' => array('check', 'localFile', 'scan'),
 				'expression' => 'Yii::app()->user->checkAccess("P3media.Import.scan")',
 			),
 			array('deny',
@@ -52,10 +52,6 @@ class ImportController extends Controller {
 	public function init() {
 		parent::init();
 		#$this->module->getDataPath(true);
-	}
-
-	public function actionIndex() {
-		$this->render('index');
 	}
 
 	public function actionUpload() {

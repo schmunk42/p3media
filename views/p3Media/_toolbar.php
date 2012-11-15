@@ -79,7 +79,7 @@
             <div class="btn-group">
             <?php $this->widget('bootstrap.widgets.TbButtonGroup', array(
         'buttons'=>array(
-                array('label'=>'Relations', 'icon'=>'icon-search', 'items'=>array(array('label'=>'id0 [P3Media]', 'url' =>array('p3Media/admin')),array('label'=>'treeParent [P3MediaMeta]', 'url' =>array('p3MediaMeta/admin')),array('label'=>'p3MediaMetas [P3MediaMeta]', 'url' =>array('p3MediaMeta/admin')),
+                array('label'=>'Relations', 'icon'=>'icon-search', 'items'=>array(array('label'=>'metaData [P3MediaMeta]', 'url' =>array('p3MediaMeta/admin')),
             )
           ),
         ),

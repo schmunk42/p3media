@@ -14,22 +14,27 @@ $this->breadcrumbs[] = 'Upload';
  * http://creativecommons.org/licenses/MIT/
  */
 -->
+
+
 <h1>Media</h1>
+<p>
 <?php
-$this->widget('zii.widgets.CBreadcrumbs',
-              array(
-                   'links' => $this->breadcrumbs
-              ));
-?>
+    $this->widget('TbBreadcrumbs',
+                  array(
+                       'links' => $this->breadcrumbs
+                  ));
+    ?>
+</p>
+
 <h2>Upload</h2>
 <p>
 <ul>
-	<li>
-		Add files by drag & drop or by clicking the button below.
-	</li>
-	<li>
-		Click 'Start upload'
-	</li>
+    <li>
+        Add files by drag & drop or by clicking the button below.
+    </li>
+    <li>
+        Click 'Start upload'
+    </li>
 </ul>
 </p>
 <?php

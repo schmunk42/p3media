@@ -1,56 +1,65 @@
 <?php
-$this->breadcrumbs['P3 Medias'] = array('index');$this->breadcrumbs[] = $model->_label;
-if(!isset($this->menu) || $this->menu === array()) {
-$this->menu=array(
-	array('label'=>Yii::t('app', 'Update') , 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>Yii::t('app', 'Delete') , 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>Yii::t('app', 'Create') , 'url'=>array('create')),
-	array('label'=>Yii::t('app', 'Manage') , 'url'=>array('admin')),
-	/*array('label'=>Yii::t('app', 'List') , 'url'=>array('index')),*/
-);
-}
+$this->breadcrumbs['P3 Medias'] = array('admin');
+$this->breadcrumbs[] = $model->id;
 ?>
+<h1>
+    View P3 Media #<?php echo $model->id ?></h1>
 
-<h1><?php echo Yii::t('app', 'View');?> P3Media #<?php echo $model->id; ?></h1>
 
-<?php
-$locale = CLocale::getInstance(Yii::app()->language);
+<?php $this->renderPartial("_toolbar", array("model"=>$model)); ?>
 
-echo $model->image('p3media-ckbrowse');
+<h2>
+    Data
+</h2>
+<?php echo $model->image('p3media-ckbrowse');
 
 echo "<br/>".CHtml::link('Download', $this->createUrl('/p3media/file/',array('id'=>$model->id)))."<br/>";
-
- $this->widget('zii.widgets.CDetailView', array(
-'data'=>$model,
-	'attributes'=>array(
-					'id',
-		'title',
-		'description',
-		'type',
-		'path',
-		'md5',
-		'originalName',
-		'mimeType',
-		'size',
-		'info',
+?>
+<p>
+    <?php
+    $this->widget('TbDetailView', array(
+    'data'=>$model,
+    'attributes'=>array(
+            'id',
+        'title',
+        'description',
+        'type',
+        'path',
+        'md5',
+        'originalName',
+        'mimeType',
+        'size',
+        'info',
 ),
-	)); ?>
+        )); ?></p>
 
 
-	<h2><?php echo CHtml::link(Yii::t('app','P3MediaMeta'), array('/p3media/p3MediaMeta/admin'));?></h2>
-<ul><?php $foreignobj = $model->metaData; 
+<h2>
+    Relations
+</h2>
 
-					if ($foreignobj !== null) {
-					echo '<li>';
-					echo '#'.$model->metaData->id.' ';
-					echo CHtml::link($model->metaData->_label, array('/p3media/p3MediaMeta/view','id'=>$model->metaData->id));
-							
-					echo ' '.CHtml::link(Yii::t('app','Update'), array('/p3media/p3MediaMeta/update','id'=>$model->metaData->id), array('class'=>'edit'));
+<div class='row'>
+<div class='span3'><?php $this->widget('bootstrap.widgets.TbButtonGroup', array(
+        'type'=>'', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+        'buttons'=>array(
+            array('label'=>'metaData', 'icon'=>'icon-list-alt', 'url'=> array('p3MediaMeta/admin')),
+                array('icon'=>'icon-plus', 'url'=>array('p3MediaMeta/create', 'P3MediaMeta' => array('id'=>$model->{$model->tableSchema->primaryKey}))),
+        ),
+    )); ?></div><div class='span8'>
+<?php
+    echo '<span class=label>CHasOneRelation</span>';
+    $relatedModel = $model->metaData; 
 
-					
-					
-					}
-					?></ul><p><?php if($model->metaData === null) echo CHtml::link(
-				Yii::t('app','Create'),
-				array('/p3media/p3MediaMeta/create', 'P3MediaMeta' => array('id'=>$model->{$model->tableSchema->primaryKey}))
-				);  ?></p>
+    if ($relatedModel !== null) {
+        echo CHtml::openTag('ul');
+        echo '<li>';
+        echo CHtml::link(
+            '#'.$model->metaData->id.' '.$model->metaData->status,
+            array('p3MediaMeta/view','id'=>$model->metaData->id),
+            array('class'=>''));
+
+        echo '</li>';
+
+        echo CHtml::closeTag('ul');
+    }
+?></div></div>
