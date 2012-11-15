@@ -56,7 +56,7 @@ class DefaultController extends Controller
             $files->treeParent = $_GET['id'];
         }
         else {
-            $files->treeParent = null;
+            $files->treeParent = '_ROOT';
         }
 
         // apply search terms

@@ -102,16 +102,14 @@ class P3Media extends BaseP3Media
     public function search()
     {
         $criteria = new CDbCriteria;
-
         $criteria->with = 'metaData';
 
-        if ($this->treeParent !== null) {
-            $criteria->compare('metaData.treeParent_id', $this->treeParent, true);
-        }
-        else {
+        if ($this->treeParent == "_ROOT") {
             $criteria->addCondition('metaData.treeParent_id IS NULL');
         }
-
+        elseif ($this->treeParent !== null) {
+            $criteria->compare('metaData.treeParent_id', $this->treeParent, true);
+        }
 
         $criteria->compare('t.id', $this->id);
         $criteria->compare('title', $this->title, true);
@@ -125,25 +123,29 @@ class P3Media extends BaseP3Media
 
         #var_dump($this->treeParent);exit;
         #$criteria->compare('info', $this->info, true);
-        return new CActiveDataProvider(get_class($this), array(
-                                                              'criteria' => $criteria,
-                                                              'sort' => array(
-                                                                  'defaultOrder' => 't.id DESC',
-                                                              ),
-                                                              'pagination' => array(
-                                                                  'pageSize' => 9
-                                                              ),
-                                                         ));
+        return new CActiveDataProvider(
+            get_class($this),
+            array(
+                 'criteria' => $criteria,
+                 'sort' => array(
+                     'defaultOrder' => 't.id DESC',
+                 ),
+                 'pagination' => array(
+                     'pageSize' => 9
+                 ),
+            ));
     }
 
-    public function image($preset = null)
+    public
+    function image($preset = null)
     {
         return CHtml::image(
             Yii::app()->controller->createUrl(
                 '/p3media/file/image', array('id' => $this->id, 'preset' => $preset)), $this->title);
     }
 
-    public function getFolderItems()
+    public
+    function getFolderItems()
     {
         $criteria = new CDbCriteria();
         $criteria->order = "title";

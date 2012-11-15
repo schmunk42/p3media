@@ -63,7 +63,7 @@ class CkeditorController extends Controller {
 
 		// TODO - remove public property?, see also P3MediaController
 		if (isset($_GET['P3Media']['treeParent'])) {
-			$model->treeParent = $_GET['P3Media']['treeParent'];
+            $model->treeParent = $_GET['P3Media']['treeParent'];
 		}
 
 		$model->dbCriteria->order = "id DESC";
