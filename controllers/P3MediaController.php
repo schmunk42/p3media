@@ -27,9 +27,9 @@ public function accessRules() {
     public function beforeAction($action){
         parent::beforeAction($action);
         // map identifcationColumn to id
-        if (!isset($_GET['id']) && isset($_GET['id'])) {
-            $model=P3Media::model()->find('id = :id', array(
-            ':id' => $_GET['id']));
+        if (!isset($_GET['id']) && isset($_GET['path'])) {
+            $model=P3Media::model()->find('path = :path', array(
+            ':path' => $_GET['path']));
             if ($model !== null) {
                 $_GET['id'] = $model->id;
             } else {
@@ -45,9 +45,7 @@ public function accessRules() {
     public function actionView($id)
     {
         $model = $this->loadModel($id);
-        $this->render('view',array(
-            'model' => $model,
-        ));
+        $this->render('view',array('model' => $model,));
     }
 
     public function actionCreate()
@@ -69,10 +67,10 @@ public function accessRules() {
                     }
                 }
             } catch (Exception $e) {
-                $model->addError('id', $e->getMessage());
+                $model->addError('path', $e->getMessage());
             }
         } elseif(isset($_GET['P3Media'])) {
-                $model->attributes = $_GET['P3Media'];
+            $model->attributes = $_GET['P3Media'];
         }
 
         $this->render('create',array( 'model'=>$model));
@@ -100,13 +98,11 @@ public function accessRules() {
                     }
                 }
             } catch (Exception $e) {
-                $model->addError('id', $e->getMessage());
+                $model->addError('path', $e->getMessage());
             }
         }
 
-        $this->render('update',array(
-                    'model'=>$model,
-                    ));
+        $this->render('update',array('model'=>$model,));
     }
 
     public function actionAjaxUpdate()
@@ -136,16 +132,13 @@ public function accessRules() {
             }
         }
         else
-            throw new CHttpException(400,
-                    Yii::t('app', 'Invalid request. Please do not repeat this request again.'));
+            throw new CHttpException(400,Yii::t('app', 'Invalid request. Please do not repeat this request again.'));
     }
 
     public function actionIndex()
     {
         $dataProvider=new CActiveDataProvider('P3Media');
-        $this->render('index',array(
-            'dataProvider'=>$dataProvider,
-        ));
+        $this->render('index',array('dataProvider'=>$dataProvider,));
     }
 
     public function actionAdmin()
@@ -153,12 +146,11 @@ public function accessRules() {
         $model=new P3Media('search');
         $model->unsetAttributes();
 
-        if(isset($_GET['P3Media']))
+        if(isset($_GET['P3Media'])) {
             $model->attributes = $_GET['P3Media'];
+        }
 
-        $this->render('admin',array(
-            'model'=>$model,
-        ));
+        $this->render('admin',array('model'=>$model,));
     }
 
     public function loadModel($id)
