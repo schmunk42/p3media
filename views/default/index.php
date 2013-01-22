@@ -12,8 +12,8 @@ $this->breadcrumbs = array(
     $this->widget('TbBreadcrumbs',
                   array(
                        'links' => $this->breadcrumbs
-
-                  ));
+                  )
+    );
     ?>
 </p>
 
