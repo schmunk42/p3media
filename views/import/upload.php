@@ -6,9 +6,8 @@ $this->widget('TbBreadcrumbs',
               ));
 ?>
 
-<h1>Media</h1>
+<h1>Media <small>Upload</small></h1>
 
-<h2>Upload</h2>
 <p>
 <ul>
     <li>

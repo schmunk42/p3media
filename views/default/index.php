@@ -12,7 +12,7 @@ $this->widget('TbBreadcrumbs',
 );
 ?>
 
-<h1>Media</h1>
+<h1>Media <small>Overview</small></h1>
 
 
 <h2>Manage</h2>

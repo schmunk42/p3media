@@ -13,10 +13,8 @@ $this->widget('TbBreadcrumbs',
 ?>
 
 
-<h1>Media</h1>
+<h1>Media <small>Browser</small></h1>
 
-
-<h2>Filemanager</h2>
 
 <style type="text/css">
     .files li.span3 .thumbnail-wrapper {
@@ -46,7 +44,7 @@ $this->widget('TbBreadcrumbs',
         <?php
         $this->widget('bootstrap.widgets.TbButton',
                       array(
-                           'label' => 'Create new folder',
+                           'label' => 'New Folder',
                            'icon' => 'plus',
                            'url' => array(
                                'p3media/create',
@@ -56,6 +54,21 @@ $this->widget('TbBreadcrumbs',
                            'htmlOptions' => array('class' => 'btn'))
         );
         ?>
+        <br/><br/>
+        <?php
+        $this->widget('bootstrap.widgets.TbButton',
+                      array(
+                           'label' => 'New File',
+                           'icon' => 'plus',
+                           'url' => array(
+                               'p3media/create',
+                               'P3Media' => array('type' => 1),
+                               'returnUrl' => $this->createUrl("", $_GET)
+                           ),
+                           'htmlOptions' => array('class' => 'btn'))
+        );
+        ?>
+
     </div>
     <div class="span9">
         <div class="form-inline">

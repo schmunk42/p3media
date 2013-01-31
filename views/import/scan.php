@@ -8,10 +8,8 @@ $this->widget('TbBreadcrumbs',
               ));
 ?>
 
-<h1>Media</h1>
+<h1>Media <small>Scan</small></h1>
 
-
-<h2>Scan</h2>
 <p>
     Import alias: <?php echo $this->module->importAlias ?><br/>
     Import path: <?php echo Yii::getPathOfAlias($this->module->importAlias) ?><br/>
