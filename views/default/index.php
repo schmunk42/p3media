@@ -4,18 +4,15 @@ $this->breadcrumbs = array(
 );
 ?>
 
-
+<?php
+$this->widget('TbBreadcrumbs',
+              array(
+                   'links' => $this->breadcrumbs
+              )
+);
+?>
 
 <h1>Media</h1>
-<p>
-    <?php
-    $this->widget('TbBreadcrumbs',
-                  array(
-                       'links' => $this->breadcrumbs
-                  )
-    );
-    ?>
-</p>
 
 
 <h2>Manage</h2>
