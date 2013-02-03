@@ -32,7 +32,7 @@ class ImportController extends Controller {
 	public function accessRules() {
 		return array(
 			array('allow',
-				'actions' => array('upload', 'uploadPopup', 'uploadFile'),
+				'actions' => array('upload', 'uploadPopup', 'uploadFile', 'ckeditorUpload'),
 				'expression' => 'Yii::app()->user->checkAccess("P3media.Import.*")',
 			),
 			array('allow',
@@ -224,11 +224,31 @@ class ImportController extends Controller {
 			$dataFilePath = Yii::app()->user->id . DIRECTORY_SEPARATOR . $fileName;
 			copy($importFilePath, Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $dataFilePath);
 
-			echo CJSON::encode($this->createMedia($fileName, $dataFilePath));
+            $moel = $this->createMedia($fileName, $dataFilePath);
+			echo CJSON::encode($model->attributes);
 		} else {
 			throw new CHttpException(500, 'File not found');
 		}
 	}
+
+    public function actionCkeditorUpload() {
+        if ($_FILES['upload']['tmp_name']) {
+
+            $fileName = $_FILES['upload']['name'];
+            $importFilePath = $_FILES['upload']['tmp_name'];
+
+            $dataFilePath = Yii::app()->user->id . DIRECTORY_SEPARATOR . $fileName;
+            copy($importFilePath, Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $dataFilePath);
+
+            $model = $this->createMedia($fileName, $dataFilePath);
+
+            echo "<script type='text/javascript'>
+window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$model->createUrl('large')."', '');
+        </script>";
+        } else {
+            throw new CHttpException(500, 'File not found');
+        }
+    }
 
 	private function createMedia($fileName, $filePath) {
 		$fullFilePath = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $filePath;
@@ -259,7 +279,7 @@ class ImportController extends Controller {
 		$model->size = filesize($fullFilePath);
 
 		if ($model->save()) {
-			return $model->attributes;
+			return $model;
 		} else {
 			$errorMessage = "";
 			foreach ($model->errors AS $attrErrors) {

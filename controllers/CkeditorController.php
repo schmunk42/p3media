@@ -32,7 +32,7 @@ class CkeditorController extends Controller {
 	public function accessRules() {
 		return array(
 			array('allow',
-				'actions' => array('index', 'image', 'flash'),
+				'actions' => array('index', 'image', 'flash', 'upload'),
 				'expression' => 'Yii::app()->user->checkAccess("P3media.Ckeditor.*")',
 			),
 			array('deny',
@@ -75,7 +75,7 @@ class CkeditorController extends Controller {
 		$this->render('index', array('model' => $model));
 	}
 
-	private function loadModel() {
+    private function loadModel() {
 		$criteria = new CDbCriteria();
 		$criteria->addSearchCondition('mime', 'image');
 
