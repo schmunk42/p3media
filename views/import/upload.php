@@ -1,12 +1,18 @@
 <?php
 $this->breadcrumbs[] = 'Upload';
-$this->widget('TbBreadcrumbs',
-              array(
-                   'links' => $this->breadcrumbs
-              ));
+
+
+if ($this->action->id !== 'uploadPopup') {
+    $this->widget('TbBreadcrumbs',
+                  array(
+                       'links' => $this->breadcrumbs
+                  ));
+}
 ?>
 
-<h1>Media <small>Upload</small></h1>
+<h1>Media
+    <small>Upload</small>
+</h1>
 
 <p>
 <ul>

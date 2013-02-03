@@ -32,7 +32,7 @@ class ImportController extends Controller {
 	public function accessRules() {
 		return array(
 			array('allow',
-				'actions' => array('upload', 'uploadFile'),
+				'actions' => array('upload', 'uploadPopup', 'uploadFile'),
 				'expression' => 'Yii::app()->user->checkAccess("P3media.Import.*")',
 			),
 			array('allow',
@@ -57,6 +57,11 @@ class ImportController extends Controller {
 	public function actionUpload() {
 		$this->render('upload');
 	}
+
+    public function actionUploadPopup() {
+        $this->layout = "//layouts/popup";
+        $this->render('upload');
+    }
 
 	public function actionUploadFile() {
 		$contents = $this->uploadHandler();
