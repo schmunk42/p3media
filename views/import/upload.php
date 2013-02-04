@@ -10,8 +10,8 @@ if ($this->action->id !== 'uploadPopup') {
 }
 ?>
 
-<h1>Media
-    <small>Upload</small>
+<h1>
+    Media <small>Upload Session</small>
 </h1>
 
 <p>

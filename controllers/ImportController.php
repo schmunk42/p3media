@@ -147,7 +147,7 @@ class ImportController extends Controller {
 				$contents = ob_get_contents();
 				$result = CJSON::decode($contents);
 				#var_dump($result);exit;
-				$this->createMedia($result[0]['name'], $this->module->getDataPath(true) . DIRECTORY_SEPARATOR . $result[0]['name']);
+				$this->createMedia($result[0]['name'], $this->module->getDataPath() . DIRECTORY_SEPARATOR . $result[0]['name']);
 				break;
 			case 'DELETE':
 				$upload_handler->delete();
@@ -221,10 +221,10 @@ class ImportController extends Controller {
 			$fileName = $_GET['fileName'];
 			$importFilePath = $this->module->resolveFilePath($_GET['fileName']);
 
-			$dataFilePath = Yii::app()->user->id . DIRECTORY_SEPARATOR . $fileName;
-			copy($importFilePath, Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $dataFilePath);
+			$dataFilePath = $this->module->getDataPath() . DIRECTORY_SEPARATOR . $fileName;
+			copy($importFilePath, $dataFilePath);
 
-            $moel = $this->createMedia($fileName, $dataFilePath);
+            $model = $this->createMedia($fileName, $dataFilePath);
 			echo CJSON::encode($model->attributes);
 		} else {
 			throw new CHttpException(500, 'File not found');
@@ -237,8 +237,8 @@ class ImportController extends Controller {
             $fileName = $_FILES['upload']['name'];
             $importFilePath = $_FILES['upload']['tmp_name'];
 
-            $dataFilePath = Yii::app()->user->id . DIRECTORY_SEPARATOR . $fileName;
-            copy($importFilePath, Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $dataFilePath);
+            $dataFilePath = $this->module->getDataPath() . DIRECTORY_SEPARATOR . $fileName;
+            copy($importFilePath, $dataFilePath);
 
             $model = $this->createMedia($fileName, $dataFilePath);
 
@@ -250,8 +250,9 @@ window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$mode
         }
     }
 
-	private function createMedia($fileName, $filePath) {
-		$fullFilePath = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $filePath;
+	private function createMedia($fileName, $fullFilePath) {
+		$filePath = str_replace(Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR,"", $fullFilePath);
+
 		$md5 = md5_file($fullFilePath);
 		$getimagesize = getimagesize($fullFilePath);
 
