@@ -47,7 +47,7 @@ $this->widget('TbBreadcrumbs',
                            'label' => 'New Folder',
                            'icon' => 'plus',
                            'url' => array(
-                               'p3media/create',
+                               'p3Media/create',
                                'P3Media' => array('type' => 2),
                                'returnUrl' => $this->createUrl("", $_GET)
                            ),
@@ -61,7 +61,7 @@ $this->widget('TbBreadcrumbs',
                            'label' => 'New File',
                            'icon' => 'plus',
                            'url' => array(
-                               'p3media/create',
+                               'p3Media/create',
                                'P3Media' => array('type' => 1),
                                'returnUrl' => $this->createUrl("", $_GET)
                            ),
