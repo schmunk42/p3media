@@ -32,7 +32,7 @@ class ImportController extends Controller {
 	public function accessRules() {
 		return array(
 			array('allow',
-				'actions' => array('upload', 'uploadFile'),
+				'actions' => array('upload', 'uploadPopup', 'uploadFile', 'ckeditorUpload'),
 				'expression' => 'Yii::app()->user->checkAccess("P3media.Import.*")',
 			),
 			array('allow',
@@ -57,6 +57,11 @@ class ImportController extends Controller {
 	public function actionUpload() {
 		$this->render('upload');
 	}
+
+    public function actionUploadPopup() {
+        $this->layout = "//layouts/popup";
+        $this->render('upload');
+    }
 
 	public function actionUploadFile() {
 		$contents = $this->uploadHandler();
@@ -142,7 +147,7 @@ class ImportController extends Controller {
 				$contents = ob_get_contents();
 				$result = CJSON::decode($contents);
 				#var_dump($result);exit;
-				$this->createMedia($result[0]['name'], $this->module->getDataPath(true) . DIRECTORY_SEPARATOR . $result[0]['name']);
+				$this->createMedia($result[0]['name'], $this->module->getDataPath() . DIRECTORY_SEPARATOR . $result[0]['name']);
 				break;
 			case 'DELETE':
 				$upload_handler->delete();
@@ -216,17 +221,38 @@ class ImportController extends Controller {
 			$fileName = $_GET['fileName'];
 			$importFilePath = $this->module->resolveFilePath($_GET['fileName']);
 
-			$dataFilePath = Yii::app()->user->id . DIRECTORY_SEPARATOR . $fileName;
-			copy($importFilePath, Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $dataFilePath);
+			$dataFilePath = $this->module->getDataPath() . DIRECTORY_SEPARATOR . $fileName;
+			copy($importFilePath, $dataFilePath);
 
-			echo CJSON::encode($this->createMedia($fileName, $dataFilePath));
+            $model = $this->createMedia($fileName, $dataFilePath);
+			echo CJSON::encode($model->attributes);
 		} else {
 			throw new CHttpException(500, 'File not found');
 		}
 	}
 
-	private function createMedia($fileName, $filePath) {
-		$fullFilePath = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $filePath;
+    public function actionCkeditorUpload() {
+        if ($_FILES['upload']['tmp_name']) {
+
+            $fileName = $_FILES['upload']['name'];
+            $importFilePath = $_FILES['upload']['tmp_name'];
+
+            $dataFilePath = $this->module->getDataPath() . DIRECTORY_SEPARATOR . $fileName;
+            copy($importFilePath, $dataFilePath);
+
+            $model = $this->createMedia($fileName, $dataFilePath);
+
+            echo "<script type='text/javascript'>
+window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$model->createUrl('large')."', '');
+        </script>";
+        } else {
+            throw new CHttpException(500, 'File not found');
+        }
+    }
+
+	private function createMedia($fileName, $fullFilePath) {
+		$filePath = str_replace(Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR,"", $fullFilePath);
+
 		$md5 = md5_file($fullFilePath);
 		$getimagesize = getimagesize($fullFilePath);
 
@@ -254,7 +280,7 @@ class ImportController extends Controller {
 		$model->size = filesize($fullFilePath);
 
 		if ($model->save()) {
-			return $model->attributes;
+			return $model;
 		} else {
 			$errorMessage = "";
 			foreach ($model->errors AS $attrErrors) {

@@ -1,9 +1,11 @@
 <div class="ckeditor">
-    <h1> <?php echo Yii::t('app', 'Ckeditor'); ?> P3 Medias</h1>
+    <h1>Media
+        <small>Ckeditor Browser</small>
+    </h1>
 
     <div class="row">
-        <div class="span6">
-            <h3>Operations</h3>
+        <div class="span4">
+            <h3>1. Choose Format</h3>
 
             <p>
                 <?php
@@ -11,7 +13,22 @@
                     $identifier = $key . ((isset($preset['type'])) ? '|' . $preset['type'] : '');
                     $data[$identifier] = (isset($preset['name'])) ? $preset['name'] : $key;
                 }
-                echo CHtml::dropDownList("preset", null, $data, array("class" => "span3 btn"));
+                echo CHtml::dropDownList("preset", null, $data, array("class" => "span3 btn btn-warning"));
+                ?>
+
+            </p>
+
+
+        </div>
+        <div class="span8">
+
+            <div class="well form-inline">
+                <?php
+                $form = $this->beginWidget('CActiveForm',
+                                           array(
+                                                //'action'=>Yii::app()->createUrl($this->route),
+                                                'method' => 'get',
+                                           ));
                 ?>
 
                 <?php
@@ -23,20 +40,6 @@
                 echo CHtml::link('Reload', null, array('target' => '_blank', 'class' => 'btn',
                                                        'onclick' => 'location.reload();'));
                 ?>
-            </p>
-
-
-        </div>
-        <div class="span6">
-            <h3>Search</h3>
-
-            <div class="Xform form-inline">
-                <?php
-                $form = $this->beginWidget('CActiveForm', array(
-                                                               //'action'=>Yii::app()->createUrl($this->route),
-                                                               'method' => 'get',
-                                                          ));
-                ?>
 
                 <?php echo $form->label($model, 'id'); ?>
                 <?php echo $form->textField($model, 'id', array('size' => 4, 'maxlength' => 32, 'class' => 'span1')); ?>
@@ -44,18 +47,22 @@
                 <?php echo $form->label($model, 'title'); ?>
                 <?php echo $form->textField($model, 'title', array('size' => 12, 'maxlength' => 32,
                                                                    'class' => 'span2')); ?>
-                <br/>
                 <?php #echo $form->label($model, 'description'); ?>
                 <?php #	echo $form->textField($model, 'description', array('size' => 12, 'maxlength' => 32, 'class' => 'span2')); ?>
 
+                <!--
                 <?php echo $form->label($model, 'type'); ?>
                 <?php echo $form->textField($model, 'type', array('size' => 12, 'maxlength' => 32,
-                                                                  'class' => 'span1')); ?>
+                                                                  'class' => 'span1')); ?>-->
 
 
                 <?php echo CHtml::submitButton(Yii::t('app', 'Search')); ?>
 
+
+
+
                 <?php $this->endWidget(); ?>
+
 
             </div>
             <!-- search-form -->
@@ -63,6 +70,8 @@
 
 
     </div>
+
+    <h3>2. Choose File</h3>
 
     <div class="row">
         <div class="span12">

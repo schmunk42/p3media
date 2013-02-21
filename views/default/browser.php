@@ -5,21 +5,16 @@ $this->breadcrumbs = array(
 );
 ?>
 
+<?php
+$this->widget('TbBreadcrumbs',
+              array(
+                   'links' => $this->breadcrumbs
+              ));
+?>
 
 
-<h1>Media</h1>
-<p>
-    <?php
-    $this->widget('TbBreadcrumbs',
-                  array(
-                       'links' => $this->breadcrumbs
+<h1>Media <small>Browser</small></h1>
 
-                  ));
-    ?>
-</p>
-
-
-<h2>Filemanager</h2>
 
 <style type="text/css">
     .files li.span3 .thumbnail-wrapper {
@@ -49,16 +44,31 @@ $this->breadcrumbs = array(
         <?php
         $this->widget('bootstrap.widgets.TbButton',
                       array(
-                           'label' => 'Create new folder',
+                           'label' => 'New Folder',
                            'icon' => 'plus',
                            'url' => array(
-                               'p3media/create',
+                               'p3Media/create',
                                'P3Media' => array('type' => 2),
                                'returnUrl' => $this->createUrl("", $_GET)
                            ),
                            'htmlOptions' => array('class' => 'btn'))
         );
         ?>
+        <br/><br/>
+        <?php
+        $this->widget('bootstrap.widgets.TbButton',
+                      array(
+                           'label' => 'New File',
+                           'icon' => 'plus',
+                           'url' => array(
+                               'p3Media/create',
+                               'P3Media' => array('type' => 1),
+                               'returnUrl' => $this->createUrl("", $_GET)
+                           ),
+                           'htmlOptions' => array('class' => 'btn'))
+        );
+        ?>
+
     </div>
     <div class="span9">
         <div class="form-inline">
