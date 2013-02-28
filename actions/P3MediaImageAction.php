@@ -145,14 +145,17 @@ class P3MediaImageAction extends CAction {
     }
 
     private static function prepareRenderPath($public = false) {
-        $basePath = Yii::app()->basePath;
-
         // set render path
         if ($public === true) {
-            $path = $basePath . DIRECTORY_SEPARATOR . Yii::app()->controller->module->params['publicRuntimePath'];
+            !empty(Yii::app()->controller->module->params['publicRuntimeAlias'])
+                ? $path = Yii::getPathOfAlias(Yii::app()->controller->module->params['publicRuntimeAlias'])
+                : $path = Yii::app()->basePath . DIRECTORY_SEPARATOR . Yii::app()->controller->module->params['publicRuntimePath'];
         } else {
-            $path = $basePath . DIRECTORY_SEPARATOR . Yii::app()->controller->module->params['protectedRuntimePath'];
+            !empty(Yii::app()->controller->module->params['protectedRuntimeAlias'])
+                ? $path = Yii::getPathOfAlias(Yii::app()->controller->module->params['protectedRuntimeAlias'])
+                : $path = Yii::app()->basePath . DIRECTORY_SEPARATOR . Yii::app()->controller->module->params['protectedRuntimePath'];
         }
+
         if (!is_dir($path)) {
             Yii::log('Creating render path in ' . $path, CLogger::LEVEL_INFO, 'p2.file');
             if (!@mkdir($path, 0777, true)) {
