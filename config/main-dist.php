@@ -18,8 +18,10 @@ return array(
 			'class' => 'ext.phundament.p3media.P3MediaModule',
 			'params' => array(
 				'publicRuntimePath' => '../runtime/p3media',
+				'publicRuntimeAlias' => 'application.runtime.p3media',
 				'publicRuntimeUrl' => '/runtime/p3media',
 				'protectedRuntimePath' => 'runtime/p3media',
+				'protectedRuntimeAlias' => 'application.www.runtime.p3media',
 				'presets' => array(
 					'p3media-ckbrowse' => array(
 						'commands' => array(
