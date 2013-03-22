@@ -21,6 +21,7 @@
 class DefaultController extends Controller
 {
     public $directoriesList;
+    public $defaultAction = "browser";
 
     public function filters()
     {
