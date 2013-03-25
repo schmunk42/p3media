@@ -14,6 +14,21 @@ if ($this->action->id !== 'uploadPopup') {
     Media <small>Upload Session</small>
 </h1>
 
+<div class="btn-toolbar">
+    <?php
+    $this->widget('bootstrap.widgets.TbButton',
+                  array(
+                       'label'       => 'Browse',
+                       'icon'        => 'list',
+                       'url'         => array(
+                           '/p3media/default',
+                           'returnUrl' => $this->createUrl("", $_GET)
+                       ),
+                       'htmlOptions' => array('class' => 'btn'))
+    );
+    ?>
+</div>
+
 <p>
 <ul>
     <li>

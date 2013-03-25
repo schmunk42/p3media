@@ -2,6 +2,9 @@
 $this->breadcrumbs['P3 Medias'] = array('admin');
 $this->breadcrumbs[] = $model->id;
 ?>
+
+<?php $this->widget("TbBreadcrumbs", array("links" => $this->breadcrumbs)) ?>
+
 <h1>
     View P3 Media #<?php echo $model->id ?></h1>
 

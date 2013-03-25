@@ -17,6 +17,9 @@ return false;
 ");
 ?>
 
+<?php $this->widget("TbBreadcrumbs", array("links"=>$this->breadcrumbs)) ?>
+
+
 <h1>
     <?php echo Yii::t('app', 'Manage'); ?> <?php echo Yii::t('app', 'P3 Medias'); ?> </h1>
 
