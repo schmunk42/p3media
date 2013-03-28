@@ -122,6 +122,8 @@ class P3MediaController extends Controller
     public function actionDelete($id)
     {
         if (Yii::app()->request->isPostRequest) {
+
+
             try {
                 $this->loadModel($id)->delete();
             } catch (Exception $e) {
@@ -129,7 +131,7 @@ class P3MediaController extends Controller
             }
 
             if (!isset($_GET['ajax'])) {
-                if (isset($_GET['returnUrl'])) {
+                if (isset($_GET['returnUrl']) && !empty($_GET['returnUrl'])) {
                     $this->redirect($_GET['returnUrl']);
                 }
                 else {

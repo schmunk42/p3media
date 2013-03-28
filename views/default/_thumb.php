@@ -63,7 +63,7 @@
                         array("id" => $data->id, "preset" => "p3media-manager")),
                     $data->title,
                     array("class" => "280x180")),
-                array('p3Media/update', 'id' => $data->id, 'return_url' => $this->createUrl('/p3media/default/manager'))
+                array('p3Media/update', 'id' => $data->id, 'returnUrl' => $this->createUrl(''))
             );
             ?>
         </div>
