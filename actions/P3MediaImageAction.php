@@ -226,12 +226,28 @@ class P3MediaImageAction extends CAction {
         }
     }
 
-    private static function sendImage($image, $model, $preset) {
+    private static function sendImage($image, $model, $preset) {   
         $offset = 60 * 60 * 24 * 365;
-        header("Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT");
-        header("Last-Modified: " . gmdate("D, d M Y H:i:s", filemtime($image)) . " GMT");
-        header("Content-Length: " . filesize($image) . "");  // bugs with FF + Flash + ImageLoading - REWORKED - size bug before?
 
+        if(headers_sent()) {
+            Yii::log("Headers already sent ($image)", "error", "HEADER");
+            foreach (getallheaders() as $name => $value) {
+                Yii::log("Sent header: $name: $value", "error", "HEADER");
+            }
+            return ;
+        }
+        
+        if($expiringDate = gmdate("D, d M Y H:i:s", time() + $offset)) {
+            header("Expires: $expiringDate GMT");
+        }
+        if($lastModified = gmdate("D, d M Y H:i:s", filemtime($image))) {
+            header("Last-Modified: $lastModified GMT");
+        }
+        if($filesize = filesize($image)) {
+            header("Content-Length: " . $filesize . "");  // bugs with FF + Flash + ImageLoading - REWORKED - size bug before?
+        }
+                
+       
         if ($preset['contentDisposition'] === 'attachment') {
             header("Content-Disposition: attachment; filename=\"" . basename($model->title) . "\";\n\n");
         } else {
