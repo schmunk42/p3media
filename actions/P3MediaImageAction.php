@@ -226,12 +226,19 @@ class P3MediaImageAction extends CAction {
         }
     }
 
-    private static function sendImage($image, $model, $preset) {
+    private static function sendImage($image, $model, $preset) {   
         $offset = 60 * 60 * 24 * 365;
-        header("Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT");
-        header("Last-Modified: " . gmdate("D, d M Y H:i:s", filemtime($image)) . " GMT");
-        header("Content-Length: " . filesize($image) . "");  // bugs with FF + Flash + ImageLoading - REWORKED - size bug before?
-
+        if($expiringDate = gmdate("D, d M Y H:i:s", time() + $offset)) {
+            header("Expires: $expiringDate GMT");
+        }
+        if($lastModified = gmdate("D, d M Y H:i:s", filemtime($image))) {
+            header("Last-Modified: $lastModified GMT");
+        }
+        if($filesize = filesize($image)) {
+            header("Content-Length: " . $filesize . "");  // bugs with FF + Flash + ImageLoading - REWORKED - size bug before?
+        }
+                
+       
         if ($preset['contentDisposition'] === 'attachment') {
             header("Content-Disposition: attachment; filename=\"" . basename($model->title) . "\";\n\n");
         } else {
@@ -261,6 +268,7 @@ class P3MediaImageAction extends CAction {
 
         header('Content-type: ' . $mime);
         readfile($image);
+        Yii::app()->end();
     }
 
     private static function sendErrorImage($preset) {
@@ -270,6 +278,7 @@ class P3MediaImageAction extends CAction {
         $outFile = $path . DIRECTORY_SEPARATOR . "missing-" . substr(sha1(serialize($preset)), 0, 10) . ".png";
         self::generateImage(Yii::getPathOfAlias('p3media.images') . DIRECTORY_SEPARATOR . 'missing.png', $outFile, $preset);
         readfile($outFile);
+        Yii::app()->end();
         #P2Helper::writeFileLogs();
         #exit();
     }
