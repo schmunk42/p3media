@@ -72,10 +72,9 @@ class DefaultController extends Controller
         $directories = P3Media::model()->getFolderItems();
 
         $criteria = new CDbCriteria();
-        $criteria->condition = "id0.type = ".P3Media::TYPE_FOLDER;
-        $criteria->with = 'id0';
+        $criteria->condition = "t.type = ".P3Media::TYPE_FOLDER;
 
-        $this->directoriesList = CHtml::listData(P3MediaMeta::model()->findAll($criteria), 'id', 'id0.title');
+        $this->directoriesList = CHtml::listData(P3Media::model()->findAll($criteria), 'id', 'title');
 
         $this->render('browser', array('files' => $files, 'directories' => $directories));
     }
