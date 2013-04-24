@@ -49,8 +49,16 @@
                               'url' => array('p3MediaMeta/update', 'id' => $data->id,
                                              'returnUrl' => $this->createUrl("", $_GET))
                           ),
+                          array(
+                        		"type"=>"danger",
+                        		"icon"=>"icon-remove icon-white",
+                        		"htmlOptions"=> array(
+                            		"submit"=>array("p3Media/delete","id"=>$data->id, "returnUrl"=>Yii::app()->request->getParam("returnUrl")),
+                            		"confirm"=>"Do you want to delete this item?")
+                         		)
                       )
                       ));
+        
         ?>
     </p>
 
