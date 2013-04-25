@@ -53,7 +53,7 @@
                         		"type"=>"danger",
                         		"icon"=>"icon-remove icon-white",
                         		"htmlOptions"=> array(
-                            		"submit"=>array("p3Media/delete","id"=>$data->id, "returnUrl"=>Yii::app()->request->getParam("returnUrl")),
+                            		"submit"=>array("p3Media/delete","id"=>$data->id, "returnUrl"=>$_SERVER['REQUEST_URI']),
                             		"confirm"=>"Do you want to delete this item?")
                          		)
                       )
