@@ -68,11 +68,16 @@ class CkeditorController extends Controller {
 
 		$model->dbCriteria->order = "id DESC";
 
-		$this->render('index', array('model' => $model));
+        $this->render('index', array('model' => $model, 'defaultPreset' => null));
 	}
 
-	public function actionFlash() {
-		$this->render('index', array('model' => $model));
+    public function actionFlash()
+    {
+        $model = new P3Media('search');
+        $model->unsetAttributes();
+        $model->attributes = array('mimeType' => 'flash');
+
+        $this->render('index', array('model' => $model, 'defaultPreset' => 'original'));
 	}
 
     private function loadModel() {

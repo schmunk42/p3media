@@ -10,10 +10,10 @@
             <p>
                 <?php
                 foreach ($this->module->params['presets'] AS $key => $preset) {
-                    $identifier = $key . ((isset($preset['type'])) ? '|' . $preset['type'] : '');
+                    $identifier        = $key . ((isset($preset['type'])) ? '|' . $preset['type'] : '');
                     $data[$identifier] = (isset($preset['name'])) ? $preset['name'] : $key;
                 }
-                echo CHtml::dropDownList("preset", null, $data, array("class" => "span3 btn btn-warning"));
+                echo CHtml::dropDownList("preset", $defaultPreset, $data, array("class" => "span3 btn"));
                 ?>
 
             </p>
@@ -35,9 +35,9 @@
                 #echo CHtml::link(Yii::t('app', 'Advanced Search'), '#', array('class' => 'search-button'));
                 #echo " ";
                 echo CHtml::link('Upload', array('/p3media/import/upload'), array('target' => '_blank',
-                                                                                  'class' => 'btn'));
+                                                                                  'class'  => 'btn'));
                 echo " ";
-                echo CHtml::link('Reload', null, array('target' => '_blank', 'class' => 'btn',
+                echo CHtml::link('Reload', null, array('target'  => '_blank', 'class' => 'btn',
                                                        'onclick' => 'location.reload();'));
                 ?>
 
@@ -45,7 +45,7 @@
                 <?php echo $form->textField($model, 'id', array('size' => 4, 'maxlength' => 32, 'class' => 'span1')); ?>
 
                 <?php echo $form->label($model, 'title'); ?>
-                <?php echo $form->textField($model, 'title', array('size' => 12, 'maxlength' => 32,
+                <?php echo $form->textField($model, 'title', array('size'  => 12, 'maxlength' => 32,
                                                                    'class' => 'span2')); ?>
                 <?php #echo $form->label($model, 'description'); ?>
                 <?php #	echo $form->textField($model, 'description', array('size' => 12, 'maxlength' => 32, 'class' => 'span2')); ?>
@@ -80,13 +80,13 @@
             $dataProvider->pagination->pageSize = 12;
             $this->widget('bootstrap.widgets.TbThumbnails',
                           array(
-                               'dataProvider' => $dataProvider,
-                               'template' => "{pager}\n{items}",
-                               'pager' => array(
-                                   'class' => 'TbPager',
+                               'dataProvider'    => $dataProvider,
+                               'template'        => "{pager}\n{items}",
+                               'pager'           => array(
+                                   'class'               => 'TbPager',
                                    'displayFirstAndLast' => true,
                                ),
-                               'itemView' => '_thumb',
+                               'itemView'        => '_thumb',
                                // Remove the existing tooltips and rebind the plugin after each ajax-call.
                                'afterAjaxUpdate' => "js:function() {
         jQuery('.tooltip').remove();
