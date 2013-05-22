@@ -12,25 +12,25 @@ $this->widget('TbBreadcrumbs',
 );
 ?>
 
-<h1>Media <small>Overview</small></h1>
+<h1><?php echo Yii::t('P3MediaModule.crud', 'Media'); ?> <small><?php echo Yii::t('P3MediaModule.crud', 'Overview'); ?></small></h1>
 
 
-<h2>Manage</h2>
+<h2><?php echo Yii::t('P3MediaModule.crud', 'Manage'); ?></h2>
 <p>
 <ul>
     <li>
-        <?php echo CHtml::link('Media Browser', array('browser')); ?>
+        <?php echo CHtml::link(Yii::t('P3MediaModule.crud', 'Media Browser'), array('browser')); ?>
     </li>
     <li>
-        <?php echo CHtml::link('CRUD', array('/p3media/p3Media/admin')); ?>
+        <?php echo CHtml::link(Yii::t('P3MediaModule.crud', 'CRUD'), array('/p3media/p3Media/admin')); ?>
     </li>
 </ul>
 
-<h2>Import</h2>
+<h2><?php echo Yii::t('P3MediaModule.crud', 'Import'); ?></h2>
 <p>
 <ul>
-    <li><?php echo CHtml::link('Upload from browser', array('import/upload')); ?></li>
-    <li><?php echo CHtml::link('Scan import directory', array('import/scan')); ?></li>
+    <li><?php echo CHtml::link(Yii::t('P3MediaModule.crud', 'Upload from browser'), array('import/upload')); ?></li>
+    <li><?php echo CHtml::link(Yii::t('P3MediaModule.crud', 'Scan import directory'), array('import/scan')); ?></li>
 </ul>
 </p>
 

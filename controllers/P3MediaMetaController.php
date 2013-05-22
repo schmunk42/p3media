@@ -137,7 +137,7 @@ public function accessRules() {
         }
         else
             throw new CHttpException(400,
-                    Yii::t('app', 'Invalid request. Please do not repeat this request again.'));
+                    Yii::t('P3MediaModule.crud', 'Invalid request. Please do not repeat this request again.'));
     }
 
     public function actionIndex()
@@ -165,7 +165,7 @@ public function accessRules() {
     {
         $model=P3MediaMeta::model()->findByPk($id);
         if($model===null)
-            throw new CHttpException(404,Yii::t('app', 'The requested page does not exist.'));
+            throw new CHttpException(404,Yii::t('P3MediaModule.crud', 'The requested page does not exist.'));
         return $model;
     }
 
