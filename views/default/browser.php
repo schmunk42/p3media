@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs = array(
     $this->module->id => array("/" . $this->module->id),
-    'Browser'
+    Yii::t('P3MediaModule.crud', 'Browser')
 );
 ?>
 
@@ -14,15 +14,15 @@ $this->widget('TbBreadcrumbs',
 
 
 <h1>
-    Media
-    <small>Browser</small>
+    <?php echo Yii::t('P3MediaModule.crud', 'Media'); ?>
+    <small><?php echo Yii::t('P3MediaModule.crud', 'Browser'); ?></small>
 </h1>
 
 <div class="btn-toolbar">
     <?php
     $this->widget('bootstrap.widgets.TbButton',
                   array(
-                       'label'       => 'Manage',
+                       'label'       => Yii::t('P3MediaModule.crud', 'Manage'),
                        'icon'        => 'list',
                        'url'         => array(
                            'p3Media/admin',
@@ -35,7 +35,7 @@ $this->widget('TbBreadcrumbs',
     <?php
     $this->widget('bootstrap.widgets.TbButton',
                   array(
-                       'label'       => 'Upload Files',
+                       'label'       => Yii::t('P3MediaModule.crud', 'Upload Files'),
                        'icon'        => 'circle-arrow-up',
                        'url'         => array(
                            '/p3media/import/upload',
@@ -48,7 +48,7 @@ $this->widget('TbBreadcrumbs',
     <?php
     $this->widget('bootstrap.widgets.TbButton',
                   array(
-                       'label'       => 'Create File',
+                       'label'       => Yii::t('P3MediaModule.crud', 'Create File'),
                        'icon'        => 'plus',
                        'url'         => array(
                            'p3Media/create',
@@ -61,7 +61,7 @@ $this->widget('TbBreadcrumbs',
     <?php
     $this->widget('bootstrap.widgets.TbButton',
                   array(
-                       'label'       => 'Create Folder',
+                       'label'       => Yii::t('P3MediaModule.crud', 'Create Folder'),
                        'icon'        => 'plus',
                        'url'         => array(
                            'p3Media/create',
@@ -89,7 +89,7 @@ $this->widget('TbBreadcrumbs',
                           array(
                                'items' => array(
                                    array(
-                                       'label' => 'Root',
+                                       'label' => Yii::t('P3MediaModule.crud', 'Root'),
                                        'url'   => array(""),
                                        'items' => $directories
                                    )
@@ -109,7 +109,7 @@ $this->widget('TbBreadcrumbs',
             <?php echo $form->label($files, 'title'); ?>
             <?php echo $form->textField($files, 'title', array('size' => 12, 'maxlength' => 32, 'class' => 'span2')); ?>
 
-            <?php echo CHtml::submitButton(Yii::t('app', 'Search')); ?>
+            <?php echo CHtml::submitButton(Yii::t('P3MediaModule.crud', 'Search')); ?>
 
             <?php $this->endWidget(); ?>
 
@@ -124,7 +124,7 @@ $this->widget('TbBreadcrumbs',
                                'ajaxUpdate'         => false, // TODO: ajax update not compatible with EditableField
                                'dataProvider'       => $dataProvider,
                                'template'           => "{pager}\n{sorter}\n{items}\n{pager}\n{summary}",
-                               'sortableAttributes' => array('title' => 'Title', 'id' => 'ID'),
+                               'sortableAttributes' => array('title' => Yii::t('P3MediaModule.crud', 'Title'), 'id' => Yii::t('P3MediaModule.crud', 'ID')),
                                'pager'              => array(
                                    'class'               => 'TbPager',
                                    'displayFirstAndLast' => true,

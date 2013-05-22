@@ -1,26 +1,27 @@
 <?php
-$this->breadcrumbs['P3 Medias'] = array('admin');
 $this->breadcrumbs[] = $model->id;
 ?>
 
 <?php $this->widget("TbBreadcrumbs", array("links" => $this->breadcrumbs)) ?>
 
 <h1>
-    View P3 Media #<?php echo $model->id ?></h1>
+    <?php echo Yii::t('P3MediaModule.crud', 'Media'); ?>
+    <small>#<?php echo $model->id ?></small>
+</h1>
 
 
 <?php $this->renderPartial("_toolbar", array("model"=>$model)); ?>
 
 <h2>
-    Image
+    <?php echo Yii::t('P3MediaModule.crud', 'Image'); ?>
 </h2>
 
     <p>
-        <?php echo $model->image('p3media-ckbrowse')."<br/>" . CHtml::link('Download', $this->createUrl('/p3media/file/', array('id' => $model->id))) . "<br/>"; ?>
+        <?php echo $model->image('p3media-ckbrowse')."<br/>" . CHtml::link(Yii::t('P3MediaModule.crud', 'Download'), $this->createUrl('/p3media/file/', array('id' => $model->id))) . "<br/>"; ?>
     </p>
 
 <h2>
-    Data
+    <?php echo Yii::t('P3MediaModule.crud', 'Data'); ?>
 </h2>
 
 
@@ -44,14 +45,14 @@ $this->breadcrumbs[] = $model->id;
 
 
 <h2>
-    Relations
+    <?php echo Yii::t('P3MediaModule.crud', 'Relations'); ?>
 </h2>
 
 <div class='row'>
 <div class='span3'><?php $this->widget('bootstrap.widgets.TbButtonGroup', array(
         'type'=>'', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
         'buttons'=>array(
-            array('label'=>'metaData', 'icon'=>'icon-list-alt', 'url'=> array('p3MediaMeta/admin')),
+            array('label'=>Yii::t('P3MediaModule.crud', 'Metadata'), 'icon'=>'icon-list-alt', 'url'=> array('p3MediaMeta/admin')),
                 array('icon'=>'icon-plus', 'url'=>array('p3MediaMeta/create', 'P3MediaMeta' => array('id'=>$model->{$model->tableSchema->primaryKey}))),
         ),
     )); ?></div><div class='span8'>

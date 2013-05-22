@@ -1,6 +1,5 @@
 <?php
-$this->breadcrumbs['P3 Media Metas'] = array('admin');
-$this->breadcrumbs[] = Yii::t('app', 'Admin');
+$this->breadcrumbs[] = Yii::t('P3MediaModule.crud', 'Metadata');
 
 
 Yii::app()->clientScript->registerScript('search', "
@@ -17,10 +16,15 @@ return false;
 ");
 ?>
 
+<?php $this->widget("TbBreadcrumbs", array("links"=>$this->breadcrumbs)) ?>
+    
 <h1>
-    <?php echo Yii::t('app', 'Manage'); ?> <?php echo Yii::t('app', 'P3 Media Metas'); ?> </h1>
+    <?php echo Yii::t('P3MediaModule.crud', 'Media'); ?>
+    <small><?php echo Yii::t('P3MediaModule.crud', 'Manage Metadata'); ?></small>
+</h1>
 
 <?php $this->renderPartial("_toolbar", array("model"=>$model)); ?>
+
 <?php
 $locale = CLocale::getInstance(Yii::app()->language);
 

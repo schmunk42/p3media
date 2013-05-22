@@ -1,4 +1,4 @@
-<?php $this->breadcrumbs[] = 'Scan'; ?>
+<?php $this->breadcrumbs[] = Yii::t('P3MediaModule.crud', 'Scan'); ?>
 
 
 <?php
@@ -8,7 +8,7 @@ $this->widget('TbBreadcrumbs',
               ));
 ?>
 
-<h1>Media <small>Scan</small></h1>
+<h1><?php echo Yii::t('P3MediaModule.crud', 'Media'); ?> <small><?php echo Yii::t('P3MediaModule.crud', 'Scan'); ?></small></h1>
 
 <p>
     Import alias: <?php echo $this->module->importAlias ?><br/>

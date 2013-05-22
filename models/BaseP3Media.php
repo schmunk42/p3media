@@ -70,16 +70,16 @@ abstract class BaseP3Media extends CActiveRecord{
 	public function attributeLabels()
 	{
 		return array(
-			'id' => Yii::t('app', 'ID'),
-			'title' => Yii::t('app', 'Title'),
-			'description' => Yii::t('app', 'Description'),
-			'type' => Yii::t('app', 'Type'),
-			'path' => Yii::t('app', 'Path'),
-			'md5' => Yii::t('app', 'Md5'),
-			'originalName' => Yii::t('app', 'Original Name'),
-			'mimeType' => Yii::t('app', 'Mime Type'),
-			'size' => Yii::t('app', 'Size'),
-			'info' => Yii::t('app', 'Info'),
+			'id' => Yii::t('P3MediaModule.crud', 'ID'),
+			'title' => Yii::t('P3MediaModule.crud', 'Title'),
+			'description' => Yii::t('P3MediaModule.crud', 'Description'),
+			'type' => Yii::t('P3MediaModule.crud', 'Type'),
+			'path' => Yii::t('P3MediaModule.crud', 'Path'),
+			'md5' => Yii::t('P3MediaModule.crud', 'MD5'),
+			'originalName' => Yii::t('P3MediaModule.crud', 'Original Name'),
+			'mimeType' => Yii::t('P3MediaModule.crud', 'MIME Type'),
+			'size' => Yii::t('P3MediaModule.crud', 'Size'),
+			'info' => Yii::t('P3MediaModule.crud', 'Info'),
 		);
 	}
 
