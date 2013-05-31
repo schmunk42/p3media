@@ -56,7 +56,7 @@
                     </div>
 
         <div class="row buttons">
-        <?php echo CHtml::submitButton(Yii::t('app', 'Search')); ?>
+        <?php echo CHtml::submitButton(Yii::t('P3MediaModule.crud', 'Search')); ?>
     </div>
 
     <?php $this->endWidget(); ?>

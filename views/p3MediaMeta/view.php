@@ -1,15 +1,20 @@
 <?php
-$this->breadcrumbs['P3 Media Metas'] = array('admin');
+$this->breadcrumbs[Yii::t('P3MediaModule.crud', 'Metadata')] = array('admin');
 $this->breadcrumbs[] = $model->id;
 ?>
+
+<?php $this->widget("TbBreadcrumbs", array("links"=>$this->breadcrumbs)) ?>
+
 <h1>
-    View P3 Media Meta #<?php echo $model->id ?></h1>
+    <?php echo Yii::t('P3MediaModule.crud', 'Media'); ?>
+    <small><?php echo Yii::t('P3MediaModule.crud', 'Metadata');?> #<?php echo $model->id ?></small>
+</h1>
 
 
 <?php $this->renderPartial("_toolbar", array("model"=>$model)); ?>
 
 <h2>
-    Data
+    <?php echo Yii::t('P3MediaModule.crud', 'Data'); ?>
 </h2>
 
 <p>
@@ -53,7 +58,7 @@ $this->breadcrumbs[] = $model->id;
 
 
 <h2>
-    Relations
+    <?php echo Yii::t('P3MediaModule.crud', 'Relations'); ?>
 </h2>
 
 <div class='row'>

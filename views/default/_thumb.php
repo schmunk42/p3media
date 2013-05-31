@@ -27,7 +27,7 @@
                           ));
         }
         else {
-            echo "No meta data";
+            echo Yii::t('P3MediaModule.crud', 'No meta data');
         }
         ?>
 
@@ -54,7 +54,7 @@
                         		"icon"=>"icon-remove icon-white",
                         		"htmlOptions"=> array(
                             		"submit"=>array("p3Media/delete","id"=>$data->id, "returnUrl"=>$_SERVER['REQUEST_URI']),
-                            		"confirm"=>"Do you want to delete this item?")
+                            		"confirm"=>Yii::t('P3MediaModule.crud', 'Do you want to delete this item?'))
                          		)
                       )
                       ));

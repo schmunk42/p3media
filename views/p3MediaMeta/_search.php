@@ -7,7 +7,7 @@
 
                     <div class="row">
             <?php echo $form->label($model,'id'); ?>
-                            <?php echo $form->dropDownList($model,'id',CHtml::listData(P3Media::model()->findAll(), 'id', 'title'),array('prompt'=>Yii::t('app', 'All'))); ?>
+                            <?php echo $form->dropDownList($model,'id',CHtml::listData(P3Media::model()->findAll(), 'id', 'title'),array('prompt'=>Yii::t('P3MediaModule.crud', 'All'))); ?>
                     </div>
 
                     <div class="row">
@@ -27,7 +27,7 @@
 
                     <div class="row">
             <?php echo $form->label($model,'treeParent_id'); ?>
-                            <?php echo $form->dropDownList($model,'treeParent_id',CHtml::listData(P3MediaMeta::model()->findAll(), 'id', 'status'),array('prompt'=>Yii::t('app', 'All'))); ?>
+                            <?php echo $form->dropDownList($model,'treeParent_id',CHtml::listData(P3MediaMeta::model()->findAll(), 'id', 'status'),array('prompt'=>Yii::t('P3MediaModule.crud', 'All'))); ?>
                     </div>
 
                     <div class="row">
@@ -121,7 +121,7 @@
                     </div>
 
         <div class="row buttons">
-        <?php echo CHtml::submitButton(Yii::t('app', 'Search')); ?>
+        <?php echo CHtml::submitButton(Yii::t('P3MediaModule.crud', 'Search')); ?>
     </div>
 
     <?php $this->endWidget(); ?>
