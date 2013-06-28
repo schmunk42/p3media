@@ -28,6 +28,7 @@ class P3MediaSelect extends CWidget
                                'width'              => '100%',
                                'height'             => '500px',
                                'placeholder'        => 'Search Media File',
+                               'allowClear'         => true,
                                'minimumInputLength' => 0,
                                'ajax'               => array(
                                    'url'      => Yii::app()->controller->createUrl('/p3media/p3Media/ajaxSearch'),
