@@ -101,7 +101,7 @@
 <script type="text/javascript">
     function select(id, title) {
         if ($('#preset').val() == '') {
-            alert(Yii::t('P3MediaModule.crud', 'Please choose an image preset.'));
+            alert("<?php echo Yii::t('P3MediaModule.crud', 'Please choose an image preset.') ?>");
             return false;
         }
         var identifier = $('#preset').val();
