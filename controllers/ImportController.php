@@ -144,10 +144,12 @@ class ImportController extends Controller {
 					}
 
 				$upload_handler->post();
-				$contents = ob_get_contents();
-				$result = CJSON::decode($contents);
+				$upload_handler_output = ob_get_contents();
+				$result = CJSON::decode($upload_handler_output);
 				#var_dump($result);exit;
-				$this->createMedia($result[0]['name'], $this->module->getDataPath() . DIRECTORY_SEPARATOR . $result[0]['name']);
+				$savedMedia = $this->createMedia($result[0]['name'], $this->module->getDataPath() . DIRECTORY_SEPARATOR . $result[0]['name']);
+				$result[0]['p3_media_id'] = $savedMedia->id;
+				$contents = CJSON::encode($result);
 				break;
 			case 'DELETE':
 				$upload_handler->delete();
