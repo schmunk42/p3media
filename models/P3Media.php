@@ -66,33 +66,39 @@ class P3Media extends BaseP3Media
 
     public function behaviors()
     {
+        $metaDataBehavior = array(
+            'class'            => 'P3MetaDataBehavior',
+            'metaDataRelation' => 'metaData',
+            'parentRelation'   => 'treeParent',
+            'childrenRelation' => 'p3MediaMetas',
+            'contentRelation'  => 'id0',
+            'defaultLanguage'  => (Yii::app()->params['P3Media.defaultLanguage']) ?
+                Yii::app()->params['P3Media.defaultLanguage'] : P3MetaDataBehavior::ALL_LANGUAGES,
+            'defaultStatus'    => (Yii::app()->params['P3Media.defaultStatus']) ?
+                Yii::app()->params['P3Media.defaultStatus'] : P3MetaDataBehavior::STATUS_ACTIVE,
+        );
 
         // exist in console app - no upload behaviour (TODO - review)
         if (Yii::app() instanceof CConsoleApplication) {
             $return = array_merge(
                 array(
-                     'MetaData' => array(
-                         'class' => 'P3MetaDataBehavior',
-                         'metaDataRelation' => 'metaData',
-                     )
-                ), parent::behaviors()
+                     'MetaData' => $metaDataBehavior,
+                     parent::behaviors()
+                )
             );
-        }
-        else {
+        } else {
             $return = array_merge(
                 array(
                      'UploadBehaviour' => array(
-                         'class' => 'P3FileUploadBehavior',
-                         'dataAlias' => Yii::app()->getModule('p3media')->dataAlias,
-                         'trashAlias' => Yii::app()->getModule('p3media')->dataAlias . ".trash",
+                         'class'            => 'P3FileUploadBehavior',
+                         'dataAlias'        => Yii::app()->getModule('p3media')->dataAlias,
+                         'trashAlias'       => Yii::app()->getModule('p3media')->dataAlias . ".trash",
                          'dataSubdirectory' => Yii::app()->user->id,
-                         'uploadInstance' => 'fileUpload',
+                         'uploadInstance'   => 'fileUpload',
                      ),
-                     'MetaData' => array(
-                         'class' => 'P3MetaDataBehavior',
-                         'metaDataRelation' => 'metaData',
-                     )
-                ), parent::behaviors()
+                     'MetaData'        => $metaDataBehavior
+                ),
+                parent::behaviors()
             );
         }
 
