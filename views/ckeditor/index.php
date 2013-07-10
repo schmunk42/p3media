@@ -127,8 +127,3 @@
         ;
     }
 </script>
-
-<?php
-// always use the backend theme for this view
-Yii::app()->theme = (Yii::app()->params['p3.backendTheme']) ? Yii::app()->params['p3.backendTheme'] : "backend";
-?>
