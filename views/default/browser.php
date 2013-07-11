@@ -118,12 +118,15 @@ $this->widget(
                      'class' => 'TbMenu',
                      'items' => array(
                          array(
-                             'label' => Yii::t('P3MediaModule.crud', 'Root'),
+                             'label' => Yii::t('P3MediaModule.crud', 'Uploaded Files'),
+                             'icon' => 'inbox white',
                              'url'   => array("/p3media/default/browser"),
+                             'active' => false
                          ),
                          array(
                              'class' => 'TbMenu',
-                             'label' => Yii::t('P3MediaModule.crud', 'Directories'),
+                             'label' => Yii::t('P3MediaModule.crud', 'Folders'),
+                             'icon' => 'folder-open white',
                              'items' => $directories
                          )
                      ),
@@ -149,6 +152,11 @@ $this->widget(
     );
     ?>
 </div>
+
+<?php
+// show only on uploaded files tab
+if (!Yii::app()->request->getParam('id')) $this->widget('jquery-file-upload-widget.EFileUpload');
+?>
 
 <div class="">
     <div class="span12">
