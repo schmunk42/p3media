@@ -6,6 +6,7 @@
         $this->widget(
             'bootstrap.widgets.TbButtonGroup',
             array(
+                 'size' => 'mini',
                  'buttons' => array(
                      array(
                          'icon' => 'eye-open',
@@ -13,7 +14,7 @@
                              'p3Media/view',
                              'id'        => $data->id,
                              'returnUrl' => $this->createUrl("", $_GET)
-                         )
+                         ),
                      ),
                      array(
                          'icon' => 'pencil',
