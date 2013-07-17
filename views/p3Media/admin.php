@@ -39,6 +39,7 @@ $locale = CLocale::getInstance(Yii::app()->language);
 
 
 		'id',
+		'nameId',
 		'title',
 #		'description',
 		'type',
