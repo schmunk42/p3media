@@ -126,6 +126,7 @@ class P3Media extends BaseP3Media
         $criteria->compare('originalName', $this->originalName, true);
         $criteria->compare('mimeType', $this->mimeType, true);
         $criteria->compare('size', $this->size);
+        $criteria->compare('nameId', $this->nameId, true);
 
         #var_dump($this->treeParent);exit;
         #$criteria->compare('info', $this->info, true);
