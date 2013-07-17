@@ -30,7 +30,8 @@ $this->breadcrumbs[] = $model->id;
     $this->widget('TbDetailView', array(
     'data'=>$model,
     'attributes'=>array(
-            'id',
+        'id',
+        'nameId',
         'title',
         'description',
         'type',

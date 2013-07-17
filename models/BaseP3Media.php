@@ -50,11 +50,12 @@ abstract class BaseP3Media extends CActiveRecord{
 			array('path, title', 'unique'),
 			array('title', 'identificationColumnValidator'),
 			array('title', 'required'),
-			array('description, type, path, md5, originalName, mimeType, size, info', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('description, type, path, md5, originalName, mimeType, nameId, size, info', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('type, size', 'numerical', 'integerOnly'=>true),
 			array('title, md5', 'length', 'max'=>32),
 			array('path', 'length', 'max'=>255),
 			array('originalName, mimeType', 'length', 'max'=>128),
+            array('nameId', 'length', 'max' => 64),
 			array('description, info', 'safe'),
 			array('id, title, description, type, path, md5, originalName, mimeType, size, info', 'safe', 'on'=>'search'),
 		);
@@ -80,6 +81,7 @@ abstract class BaseP3Media extends CActiveRecord{
 			'mimeType' => Yii::t('P3MediaModule.crud', 'MIME Type'),
 			'size' => Yii::t('P3MediaModule.crud', 'Size'),
 			'info' => Yii::t('P3MediaModule.crud', 'Info'),
+            'nameId' => Yii::t('P3MediaModule.crud', 'Name ID'),
 		);
 	}
 
@@ -98,7 +100,7 @@ abstract class BaseP3Media extends CActiveRecord{
 		$criteria->compare('mimeType', $this->mimeType, true);
 		$criteria->compare('size', $this->size);
 		$criteria->compare('info', $this->info, true);
-
+        
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria'=>$criteria,
 		));
