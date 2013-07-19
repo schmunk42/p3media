@@ -37,22 +37,29 @@ class P3MediaImageAction extends CAction {
             }
             //$preset = new CMap($this->controller->module->params['presets']['default']);
         }
+        
+        $identifier = array();
+        if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
+            $identifier['id'] = $_GET['id'];
+        } elseif(!empty($_GET['nameId'])) {
+            $identifier['nameId'] = $_GET['nameId'];
+        }
 
-        if (is_numeric($_GET['id'])) {
-            $result = self::processMediaFile($_GET['id'], $preset);
+        if (!empty($identifier)) {
+            $result = self::processMediaFile($identifier, $preset);
             switch ($result['type']) {
                 case 'public':
                     header('location: ' . $result['data']);
                     break;
                 case 'protected':
-                    $model = self::findModel($_GET['id']);
+                    $model = self::findModel($identifier);
                     self::sendImage($result['data'], $model, $preset);
                     break;
                 default:
                     self::sendErrorImage($preset);
             }
         } else {
-            #throw new Exception('No id specified!');
+            #throw new Exception('Nor id neither nameId specified!');
             self::sendErrorImage($preset);
         }
 
@@ -62,17 +69,19 @@ class P3MediaImageAction extends CAction {
     /**
      * Renders an image from P2File specified by id and preset
      *
-     * @param integer $id
+     * @param array $identifier
      * @param string $preset
      * @return mixed Rendering result, false if an error occured, otherwise an array with 'type' and 'data'
      */
-    public static function processMediaFile($id, $preset) {
 
-        Yii::trace('Processing media file #' . $id . ' ...', 'p2.file');
-
+    public static function processMediaFile($identifier, $preset) {
+        Yii::trace(
+            'Processing media file with ' .
+            key($identifier) . ' "' . $identifier[key($identifier)] . '" ...',
+            'p2.file');
         // get file from db
-        $model = self::findModel($id);
-        if (!$model)
+        $model = self::findModel($identifier);
+        if (!$model) 
             return false;
 
         // look for mapping - TODO: separate method ...
@@ -170,8 +179,15 @@ class P3MediaImageAction extends CAction {
         return $path;
     }
 
-    private static function findModel($id) {
-        return P3Media::model()->with('metaData')->findByPk($id); // TODO?
+    private static function findModel($identifier) {
+        if(key($identifier) == 'id') {
+            return P3Media::model()->with('metaData')->findByPk(
+                    $identifier[key($identifier)]); // TODO?
+        } elseif(key($identifier) == 'nameId') {
+            return P3Media::model()->with('metaData')->findByAttributes(
+                    array(key($identifier) => $identifier[key($identifier)])); // TODO?
+        }
+
     }
 
     private static function generateHash($model, $preset) {
