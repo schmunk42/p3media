@@ -15,7 +15,7 @@ $this->widget('TbBreadcrumbs',
     Import path: <?php echo Yii::getPathOfAlias($this->module->importAlias) ?><br/>
 </p>
 
-<table>
+<table class="table">
 
     <?php
     foreach ($files AS $file):
@@ -44,9 +44,9 @@ $this->widget('TbBreadcrumbs',
         );
         ?>
         <tr>
-            <td><?php echo $file->name ?></td>
-            <td id="md5-<?php echo $file->id ?>"></td>
-            <td id="button-<?php echo $file->id ?>"><?php
+            <td class="span4"><?php echo $file->name ?></td>
+            <td class="span4" id="md5-<?php echo $file->id ?>"></td>
+            <td class="span1" id="button-<?php echo $file->id ?>"><?php
                 echo CHtml::ajaxButton(
                     'import',
                     array(
@@ -63,11 +63,12 @@ $this->widget('TbBreadcrumbs',
 				}'
                     ),
                     array(
-                         'disabled' => 'disabled'
+                         'disabled' => 'disabled',
+                         'class' => 'btn'
                     )
                 );
                 ?></td>
-            <td id="status-<?php echo $file->id ?>">-</td>
+            <td  class="span3" id="status-<?php echo $file->id ?>">-</td>
         </tr>
         <?php
     endforeach;
