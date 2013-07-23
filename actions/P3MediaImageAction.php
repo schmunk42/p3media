@@ -69,12 +69,15 @@ class P3MediaImageAction extends CAction {
     /**
      * Renders an image from P2File specified by id and preset
      *
-     * @param array $identifier
+     * @param array/integer $identifier
      * @param string $preset
      * @return mixed Rendering result, false if an error occured, otherwise an array with 'type' and 'data'
      */
 
     public static function processMediaFile($identifier, $preset) {
+        if (is_integer($identifier)) {
+            $identifier = array('id' => $identifier);
+        }
         Yii::trace(
             'Processing media file with ' .
             key($identifier) . ' "' . $identifier[key($identifier)] . '" ...',
