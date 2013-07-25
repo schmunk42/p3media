@@ -38,14 +38,15 @@ class P3MediaImageAction extends CAction {
             //$preset = new CMap($this->controller->module->params['presets']['default']);
         }
 
-        if (is_numeric($_GET['id'])) {
-            $result = self::processMediaFile($_GET['id'], $preset);
+        $id = Yii::app()->request->getParam('id');
+        if (is_numeric($id)) {
+            $result = self::processMediaFile($id, $preset);
             switch ($result['type']) {
                 case 'public':
                     header('location: ' . $result['data']);
                     break;
                 case 'protected':
-                    $model = self::findModel($_GET['id']);
+                    $model = self::findModel($id);
                     self::sendImage($result['data'], $model, $preset);
                     break;
                 default:
