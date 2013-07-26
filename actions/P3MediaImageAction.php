@@ -39,10 +39,12 @@ class P3MediaImageAction extends CAction {
         }
         
         $identifier = array();
-        if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
-            $identifier['id'] = $_GET['id'];
-        } elseif(!empty($_GET['nameId'])) {
-            $identifier['nameId'] = $_GET['nameId'];
+        $id = Yii::app()->request->getParam('id');
+        $nameId = Yii::app()->request->getParam('nameId');
+        if (!empty($id) && is_numeric($id)) {
+            $identifier['id'] = $id;
+        } elseif(!empty($nameId)) {
+            $identifier['nameId'] = $nameId;
         }
 
         if (!empty($identifier)) {
