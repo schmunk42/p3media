@@ -25,7 +25,7 @@ class P3MediaImageAction extends CAction {
             throw new CException("Application component 'image' not found.");
         }
 
-        Yii::trace("Starting file image action ...", "p2.file");
+        Yii::trace("Starting file image action ...", "p3pages.actions.P3MediaImageAction");
         // check preset
         if (isset($_GET['preset']) && isset($this->controller->module->params['presets'][$_GET['preset']])) {
             $preset = new CMap($this->controller->module->params['presets'][$_GET['preset']]);
@@ -37,23 +37,31 @@ class P3MediaImageAction extends CAction {
             }
             //$preset = new CMap($this->controller->module->params['presets']['default']);
         }
-
+        
+        $identifier = array();
         $id = Yii::app()->request->getParam('id');
-        if (is_numeric($id)) {
-            $result = self::processMediaFile($id, $preset);
+        $nameId = Yii::app()->request->getParam('nameId');
+        if (!empty($id) && is_numeric($id)) {
+            $identifier['id'] = $id;
+        } elseif(!empty($nameId)) {
+            $identifier['nameId'] = $nameId;
+        }
+
+        if (!empty($identifier)) {
+            $result = self::processMediaFile($identifier, $preset);
             switch ($result['type']) {
                 case 'public':
                     header('location: ' . $result['data']);
                     break;
                 case 'protected':
-                    $model = self::findModel($id);
+                    $model = self::findModel($identifier);
                     self::sendImage($result['data'], $model, $preset);
                     break;
                 default:
                     self::sendErrorImage($preset);
             }
         } else {
-            #throw new Exception('No id specified!');
+            #throw new Exception('Nor id neither nameId specified!');
             self::sendErrorImage($preset);
         }
 
@@ -63,17 +71,22 @@ class P3MediaImageAction extends CAction {
     /**
      * Renders an image from P2File specified by id and preset
      *
-     * @param integer $id
+     * @param array/integer $identifier
      * @param string $preset
      * @return mixed Rendering result, false if an error occured, otherwise an array with 'type' and 'data'
      */
-    public static function processMediaFile($id, $preset) {
 
-        Yii::trace('Processing media file #' . $id . ' ...', 'p2.file');
-
+    public static function processMediaFile($identifier, $preset) {
+        if (is_integer($identifier)) {
+            $identifier = array('id' => $identifier);
+        }
+        Yii::trace(
+            'Processing media file with ' .
+            key($identifier) . ' "' . $identifier[key($identifier)] . '" ...',
+            'p3pages.actions.P3MediaImageAction');
         // get file from db
-        $model = self::findModel($id);
-        if (!$model)
+        $model = self::findModel($identifier);
+        if (!$model) 
             return false;
 
         // look for mapping - TODO: separate method ...
@@ -107,25 +120,25 @@ class P3MediaImageAction extends CAction {
 
             if (is_file($outFile)) {
                 // file exists
-                #Yii::trace('found existing file.', 'p2.file');
+                #Yii::trace('found existing file.', 'p3pages.actions.P3MediaImageAction');
             } else {
-                Yii::log('Creating image from ' . $inFile, CLogger::LEVEL_INFO, 'p2.file');
+                Yii::log('Creating image from ' . $inFile, CLogger::LEVEL_INFO, 'p3pages.actions.P3MediaImageAction');
                 if (!self::generateImage($inFile, $outFile, $preset)) {
-                    Yii::log('Error while rendering ' . $inFile, CLogger::LEVEL_INFO, 'p2.file');
+                    Yii::log('Error while rendering ' . $inFile, CLogger::LEVEL_INFO, 'p3pages.actions.P3MediaImageAction');
 
                     $mimeImageDir = Yii::getPathOfAlias('p3media.images.mimetypes');
                     $mimeImageFile = $mimeImageDir . DIRECTORY_SEPARATOR . CFileHelper::getMimeTypeByExtension($inFile) . '.png';
                     #echo $mimeImageFile;exit;
 
                     if (!is_file($mimeImageFile)) {
-                        Yii::log('Missing mime type image ' . $mimeImageFile, CLogger::LEVEL_WARNING, 'p2.file');
+                        Yii::log('Missing mime type image ' . $mimeImageFile, CLogger::LEVEL_WARNING, 'p3pages.actions.P3MediaImageAction');
                         $mimeImageFile = $mimeImageDir . DIRECTORY_SEPARATOR . "mime-empty.png";
                     }
                     self::generateImage($mimeImageFile, $outFile, $preset);
                 }
             }
         } else {
-            Yii::log("File #{$id} {$inFile} missing! [uniqid:" . uniqid() . "]", CLogger::LEVEL_WARNING, 'p2.file'); // TODO: log message appears twice
+            Yii::log("File #{$id} {$inFile} missing! [uniqid:" . uniqid() . "]", CLogger::LEVEL_WARNING, 'p3pages.actions.P3MediaImageAction'); // TODO: log message appears twice
             return false;
         }
 
@@ -158,7 +171,7 @@ class P3MediaImageAction extends CAction {
         }
 
         if (!is_dir($path)) {
-            Yii::log('Creating render path in ' . $path, CLogger::LEVEL_INFO, 'p2.file');
+            Yii::log('Creating render path in ' . $path, CLogger::LEVEL_INFO, 'p3pages.actions.P3MediaImageAction');
             if (!@mkdir($path, 0777, true)) {
                 throw new CException("Unable to create render path in '{$path}'");
             }
@@ -171,8 +184,15 @@ class P3MediaImageAction extends CAction {
         return $path;
     }
 
-    private static function findModel($id) {
-        return P3Media::model()->with('metaData')->findByPk($id); // TODO?
+    private static function findModel($identifier) {
+        if(key($identifier) == 'id') {
+            return P3Media::model()->with('metaData')->findByPk(
+                    $identifier[key($identifier)]); // TODO?
+        } elseif(key($identifier) == 'nameId') {
+            return P3Media::model()->with('metaData')->findByAttributes(
+                    array(key($identifier) => $identifier[key($identifier)])); // TODO?
+        }
+
     }
 
     private static function generateHash($model, $preset) {
@@ -190,7 +210,7 @@ class P3MediaImageAction extends CAction {
         try {
             $image = Yii::app()->image->load($src);
         } catch (Exception $e) {
-            Yii::log($e->getMessage() . ' ' . $src, CLogger::LEVEL_ERROR, "p2.file");
+            Yii::log($e->getMessage() . ' ' . $src, CLogger::LEVEL_ERROR, "p3pages.actions.P3MediaImageAction");
             return false;
         }
         if (isset($preset['commands'])) {
@@ -222,7 +242,7 @@ class P3MediaImageAction extends CAction {
             $image->save($dest);
             return true;
         } catch (Exception $e) {
-            Yii::log($e->getMessage(), CLogger::LEVEL_ERROR, "p2.file");
+            Yii::log($e->getMessage(), CLogger::LEVEL_ERROR, "p3pages.actions.P3MediaImageAction");
             return false;
         }
     }
@@ -273,7 +293,7 @@ class P3MediaImageAction extends CAction {
     }
 
     private static function sendErrorImage($preset) {
-        #Yii::log("Sending error image ...", CLogger::LEVEL_TRACE, 'p2.file');
+        #Yii::log("Sending error image ...", CLogger::LEVEL_TRACE, 'p3pages.actions.P3MediaImageAction');
         header('Content-Type: png');
         $path = self::prepareRenderPath($preset['savePublic']);
         $outFile = $path . DIRECTORY_SEPARATOR . "missing-" . substr(sha1(serialize($preset)), 0, 10) . ".png";
