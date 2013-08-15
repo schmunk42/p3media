@@ -172,7 +172,13 @@ class P3MediaImageAction extends CAction {
     }
 
     private static function findModel($id) {
-        return P3Media::model()->with('metaData')->findByPk($id); // TODO?
+        // we search for the model via meta-data to apply the criteria in beforeFind()
+        $mm = P3MediaMeta::model()->findByPk($id);
+        if ($mm !== null) {
+            return $mm->id0;
+        } else {
+            return null;
+        }
     }
 
     private static function generateHash($model, $preset) {
