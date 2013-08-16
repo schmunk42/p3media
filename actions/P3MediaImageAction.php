@@ -55,7 +55,7 @@ class P3MediaImageAction extends CAction {
                     break;
                 case 'protected':
                     $model = self::findModel($identifier);
-                    self::sendImage($result['data'], $model, $preset);
+                    self::sendImage($result['data'], basename($model->title), $preset);
                     break;
                 default:
                     self::sendErrorImage($preset);
@@ -113,7 +113,7 @@ class P3MediaImageAction extends CAction {
                     header('location: '. str_replace(Yii::app()->basePath, Yii::app()->baseUrl, $outUrl));
                     //self::sendImage($outFile, $model, $preset);
                 } else {
-                    self::sendImage($inFile, $model, $preset);
+                    self::sendImage($inFile, basename($model->title), $preset);
                 }
             }
 
@@ -192,7 +192,11 @@ class P3MediaImageAction extends CAction {
             $model = P3Media::model()->with('metaData')->findByAttributes(
                     array(key($identifier) => $identifier[key($identifier)])); // TODO?
         }
-        
+
+        if ($model === null) {
+            return null;
+        }
+
         // we search for the model via meta-data to apply the criteria in beforeFind()
         $mm = P3MediaMeta::model()->findByPk($model->id);
         if ($mm !== null) {
@@ -255,7 +259,18 @@ class P3MediaImageAction extends CAction {
         }
     }
 
-    private static function sendImage($image, $model, $preset) {   
+    private static function sendImage($image, $filename, $preset) {
+
+        if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])
+            &&
+            (strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) == filemtime($image))) {
+            // send the last mod time of the file back
+            header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime($image)).' GMT',
+                true, 304);
+            Yii::app()->end();
+        }
+
+
         $offset = 60 * 60 * 24 * 365;
         if($expiringDate = gmdate("D, d M Y H:i:s", time() + $offset)) {
             header("Expires: $expiringDate GMT");
@@ -269,9 +284,9 @@ class P3MediaImageAction extends CAction {
                 
        
         if ($preset['contentDisposition'] === 'attachment') {
-            header("Content-Disposition: attachment; filename=\"" . basename($model->title) . "\";\n\n");
+            header("Content-Disposition: attachment; filename=\"" . $filename . "\";\n\n");
         } else {
-            header("Content-Disposition: inline; filename=\"" . basename($model->title) . "\";\n\n");
+            header("Content-Disposition: inline; filename=\"" . $filename . "\";\n\n");
         }
 
         if ($preset['noCache'] === true) {
@@ -301,15 +316,13 @@ class P3MediaImageAction extends CAction {
     }
 
     private static function sendErrorImage($preset) {
-        #Yii::log("Sending error image ...", CLogger::LEVEL_TRACE, 'p3pages.actions.P3MediaImageAction');
         header('Content-Type: png');
         $path = self::prepareRenderPath($preset['savePublic']);
         $outFile = $path . DIRECTORY_SEPARATOR . "missing-" . substr(sha1(serialize($preset)), 0, 10) . ".png";
-        self::generateImage(Yii::getPathOfAlias('p3media.images') . DIRECTORY_SEPARATOR . 'missing.png', $outFile, $preset);
-        readfile($outFile);
-        Yii::app()->end();
-        #P2Helper::writeFileLogs();
-        #exit();
+        if (is_file($outFile)) {
+            self::generateImage(Yii::getPathOfAlias('p3media.images') . DIRECTORY_SEPARATOR . 'missing.png', $outFile, $preset);
+        }
+        self::sendImage($outFile, 'error', $preset);
     }
 
 }
