@@ -138,7 +138,7 @@ class P3MediaImageAction extends CAction {
                 }
             }
         } else {
-            Yii::log("File #{$id} {$inFile} missing! [uniqid:" . uniqid() . "]", CLogger::LEVEL_WARNING, 'p3pages.actions.P3MediaImageAction'); // TODO: log message appears twice
+            Yii::log("File ".key($identifier) . "=>" . $identifier[key($identifier)] ." {$inFile} missing! [uniqid:" . uniqid() . "]", CLogger::LEVEL_WARNING, 'p3pages.actions.P3MediaImageAction'); // TODO: log message appears twice
             return false;
         }
 
