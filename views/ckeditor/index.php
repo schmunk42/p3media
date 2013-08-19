@@ -24,29 +24,51 @@
 
             <div class="well form-inline">
                 <?php
-                $form = $this->beginWidget('CActiveForm',
-                                           array(
-                                                //'action'=>Yii::app()->createUrl($this->route),
-                                                'method' => 'get',
-                                           ));
+                $form = $this->beginWidget(
+                    'CActiveForm',
+                    array(
+                         //'action'=>Yii::app()->createUrl($this->route),
+                         'method' => 'get',
+                    )
+                );
                 ?>
 
                 <?php
                 #echo CHtml::link(Yii::t('P3MediaModule.crud', 'Advanced Search'), '#', array('class' => 'search-button'));
                 #echo " ";
-                echo CHtml::link(Yii::t('P3MediaModule.crud', 'Upload'), array('/p3media/import/upload'), array('target' => '_blank',
-                                                                                  'class'  => 'btn'));
+                echo CHtml::link(
+                    Yii::t('P3MediaModule.crud', 'Upload'),
+                    array('/p3media/import/upload'),
+                    array(
+                         'target' => '_blank',
+                         'class'  => 'btn'
+                    )
+                );
                 echo " ";
-                echo CHtml::link(Yii::t('P3MediaModule.crud', 'Reload'), null, array('target'  => '_blank', 'class' => 'btn',
-                                                       'onclick' => 'location.reload();'));
+                echo CHtml::link(
+                    Yii::t('P3MediaModule.crud', 'Reload'),
+                    null,
+                    array(
+                         'target'  => '_blank',
+                         'class'   => 'btn',
+                         'onclick' => 'location.reload();'
+                    )
+                );
                 ?>
 
                 <?php echo $form->label($model, 'id'); ?>
                 <?php echo $form->textField($model, 'id', array('size' => 4, 'maxlength' => 32, 'class' => 'span1')); ?>
 
                 <?php echo $form->label($model, 'title'); ?>
-                <?php echo $form->textField($model, 'title', array('size'  => 12, 'maxlength' => 32,
-                                                                   'class' => 'span2')); ?>
+                <?php echo $form->textField(
+                    $model,
+                    'title',
+                    array(
+                         'size'      => 12,
+                         'maxlength' => 32,
+                         'class'     => 'span2'
+                    )
+                ); ?>
                 <?php #echo $form->label($model, 'description'); ?>
                 <?php #	echo $form->textField($model, 'description', array('size' => 12, 'maxlength' => 32, 'class' => 'span2')); ?>
 
@@ -78,21 +100,23 @@
             <?php
             $dataProvider = $model->search();
             $dataProvider->pagination->pageSize = 12;
-            $this->widget('bootstrap.widgets.TbThumbnails',
-                          array(
-                               'dataProvider'    => $dataProvider,
-                               'template'        => "{pager}\n{items}",
-                               'pager'           => array(
-                                   'class'               => 'TbPager',
-                                   'displayFirstAndLast' => true,
-                               ),
-                               'itemView'        => '_thumb',
-                               // Remove the existing tooltips and rebind the plugin after each ajax-call.
-                               'afterAjaxUpdate' => "js:function() {
+            $this->widget(
+                'bootstrap.widgets.TbThumbnails',
+                array(
+                     'dataProvider'    => $dataProvider,
+                     'template'        => "{pager}\n{items}",
+                     'pager'           => array(
+                         'class'               => 'TbPager',
+                         'displayFirstAndLast' => true,
+                     ),
+                     'itemView'        => '_thumb',
+                     // Remove the existing tooltips and rebind the plugin after each ajax-call.
+                     'afterAjaxUpdate' => "js:function() {
         jQuery('.tooltip').remove();
         jQuery('a[rel=tooltip]').tooltip();
     }",
-                          ));
+                )
+            );
             ?>
         </div>
     </div>
