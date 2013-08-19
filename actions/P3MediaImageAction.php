@@ -319,7 +319,7 @@ class P3MediaImageAction extends CAction {
         header('Content-Type: png');
         $path = self::prepareRenderPath($preset['savePublic']);
         $outFile = $path . DIRECTORY_SEPARATOR . "missing-" . substr(sha1(serialize($preset)), 0, 10) . ".png";
-        if (is_file($outFile)) {
+        if (!is_file($outFile)) {
             self::generateImage(Yii::getPathOfAlias('p3media.images') . DIRECTORY_SEPARATOR . 'missing.png', $outFile, $preset);
         }
         self::sendImage($outFile, 'error', $preset);
