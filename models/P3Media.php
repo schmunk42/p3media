@@ -149,7 +149,14 @@ class P3Media extends BaseP3Media
     public function createUrl($preset = null)
     {
         return Yii::app()->controller->createUrl(
-            '/p3media/file/image', array('id' => $this->id, 'preset' => $preset));
+            '/p3media/file/image',
+            array(
+                 'id' => $this->id,
+                 'preset' => $preset,
+                 'title'=>$this->title,
+                 'extension'=>'.'.Yii::app()->getModule('p3media')->params['presets'][$preset]['type']
+            )
+        );
     }
 
     public function getFolderItems()
