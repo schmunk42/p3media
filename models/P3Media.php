@@ -83,8 +83,8 @@ class P3Media extends BaseP3Media
             $return = array_merge(
                 array(
                      'MetaData' => $metaDataBehavior,
-                     parent::behaviors()
-                )
+                ),
+                parent::behaviors()
             );
         } else {
             $return = array_merge(
