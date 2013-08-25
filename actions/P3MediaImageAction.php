@@ -142,7 +142,7 @@ class P3MediaImageAction extends CAction {
         if ($preset['savePublic'] === true) {
             return array(
                 'type' => 'public',
-                'data' => Yii::app()->baseUrl . Yii::app()->controller->module->params['publicRuntimeUrl'] . "/" . $hash,
+                'data' => Yii::app()->baseUrl . Yii::app()->getModule('p3media')->params['publicRuntimeUrl'] . "/" . $hash,
                 'info' => $info);
         } else {
             return array(
@@ -175,12 +175,12 @@ class P3MediaImageAction extends CAction {
         // set render path
         if ($public === true) {
             !empty(Yii::app()->controller->module->params['publicRuntimeAlias'])
-                ? $path = Yii::getPathOfAlias(Yii::app()->controller->module->params['publicRuntimeAlias'])
-                : $path = Yii::app()->basePath . DIRECTORY_SEPARATOR . Yii::app()->controller->module->params['publicRuntimePath'];
+                ? $path = Yii::getPathOfAlias(Yii::app()->getModule('p3media')->params['publicRuntimeAlias'])
+                : $path = Yii::app()->basePath . DIRECTORY_SEPARATOR . Yii::app()->getModule('p3media')->params['publicRuntimePath'];
         } else {
             !empty(Yii::app()->controller->module->params['protectedRuntimeAlias'])
-                ? $path = Yii::getPathOfAlias(Yii::app()->controller->module->params['protectedRuntimeAlias'])
-                : $path = Yii::app()->basePath . DIRECTORY_SEPARATOR . Yii::app()->controller->module->params['protectedRuntimePath'];
+                ? $path = Yii::getPathOfAlias(Yii::app()->getModule('p3media')->params['protectedRuntimeAlias'])
+                : $path = Yii::app()->basePath . DIRECTORY_SEPARATOR . Yii::app()->getModule('p3media')->params['protectedRuntimePath'];
         }
 
         if (!is_dir($path)) {
