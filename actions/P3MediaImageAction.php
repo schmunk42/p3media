@@ -84,19 +84,13 @@ class P3MediaImageAction extends CAction {
             'Processing media file with ' .
             key($identifier) . ' "' . $identifier[key($identifier)] . '" ...',
             'p3pages.actions.P3MediaImageAction');
+
         // get file from db
         $model = self::findModel($identifier);
         if (!$model) 
             return false;
 
-        // look for mapping - TODO: separate method ...
         $inFile = Yii::getPathOfAlias(Yii::app()->controller->module->dataAlias) . DIRECTORY_SEPARATOR . $model->path;
-        /* if (is_array(Yii::app()->params['p2.file.pathMappings'])) foreach(Yii::app()->params['p2.file.pathMappings'] AS $oldPath => $newPath){
-          if (substr($model->filePath,0,strlen($oldPath)) == $oldPath) {
-          $inFile = Yii::app()->basePath . DIRECTORY_SEPARATOR . str_replace($oldPath, $newPath, $model->filePath);
-          }
-          } */
-
         $path = self::prepareRenderPath($preset['savePublic']);
 
         if (is_file($inFile)) {
