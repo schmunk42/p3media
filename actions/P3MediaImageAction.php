@@ -158,6 +158,25 @@ class P3MediaImageAction extends CAction {
         }
     }
 
+    /**
+     * Process a local file with given preset
+     *
+     * @param $file
+     * @param $preset
+     *
+     * @return string
+     */
+    public static function processLocalFile($file, $preset){
+        $path = self::prepareRenderPath(true);
+        $hash = md5($path.filemtime($path)).".".Yii::app()->getModule('p3media')->params['presets'][$preset]['type'];
+        $outFile = $path.'/'.$hash;
+        $outUrl = Yii::app()->baseUrl . Yii::app()->getModule('p3media')->params['publicRuntimeUrl'].'/'.$hash;
+        if (!is_file($outFile)) {
+            self::generateImage($file, $outFile, $preset);
+        }
+        return $outUrl;
+    }
+
     private static function prepareRenderPath($public = false) {
         // set render path
         if ($public === true) {
