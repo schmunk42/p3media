@@ -163,7 +163,7 @@ class P3MediaImageAction extends CAction {
     public static function processLocalFile($file, $preset){
         $settings = Yii::app()->getModule('p3media')->params['presets'][$preset];
         $path = self::prepareRenderPath(true);
-        $hash = $preset.'-'.md5($file.'.'.filemtime($file)).".".$settings['type'];
+        $hash = $preset.'-'.md5($file.'.'.filemtime($file).'.'.CJSON::encode($settings)).".".$settings['type'];
         $outFile = $path.'/'.$hash;
         $outUrl = Yii::app()->baseUrl . Yii::app()->getModule('p3media')->params['publicRuntimeUrl'].'/'.$hash;
         if (!is_file($outFile)) {
