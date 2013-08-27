@@ -52,10 +52,10 @@ abstract class BaseP3Media extends CActiveRecord{
 			array('title', 'required'),
 			array('description, type, path, md5, originalName, mimeType, nameId, size, info', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('type, size', 'numerical', 'integerOnly'=>true),
-			array('title, md5', 'length', 'max'=>32),
+			array('md5', 'length', 'max'=>32),
 			array('path', 'length', 'max'=>255),
 			array('originalName, mimeType', 'length', 'max'=>128),
-            array('nameId', 'length', 'max' => 64),
+            array('title, nameId', 'length', 'max' => 64),
 			array('description, info', 'safe'),
 			array('id, title, description, type, path, md5, originalName, mimeType, size, info', 'safe', 'on'=>'search'),
 		);

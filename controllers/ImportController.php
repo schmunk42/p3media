@@ -261,7 +261,7 @@ window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$mode
 		$model = new P3Media;
 		$model->detachBehavior('Upload');
 
-		$model->title = substr($fileName, 0, 25) . '-' . substr(uniqid(), -6); #P3StringHelper::cleanName($fileName, 32); // TODO: Add uniqid for title, so there's no unique conflict
+		$model->title = substr($fileName, 0, 57) . '-' . substr(uniqid(), -6); #P3StringHelper::cleanName($fileName, 32); // TODO: Add uniqid for title, so there's no unique conflict
 		$model->originalName = $fileName;
 
 		$model->type = 1; //P3Media::TYPE_FILE;
