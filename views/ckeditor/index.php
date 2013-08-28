@@ -10,6 +10,10 @@
             <p>
                 <?php
                 foreach ($this->module->params['presets'] AS $key => $preset) {
+
+                    // skip presets without name
+                    if (empty($preset['name'])) continue;
+
                     $identifier        = $key . ((isset($preset['type'])) ? '|' . $preset['type'] : '');
                     $data[$identifier] = (isset($preset['name'])) ? $preset['name'] : $key;
                 }
