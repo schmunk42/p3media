@@ -164,7 +164,7 @@
 <div class="row">
 <label for="id0"><?php echo Yii::t('P3MediaModule.crud', 'Id0'); ?></label>
 <?php $this->widget(
-					'GtcRelation',
+					'\GtcRelation',
 					array(
 							'model' => $model,
 							'relation' => 'id0',
@@ -180,7 +180,7 @@
 <div class="row">
 <label for="treeParent"><?php echo Yii::t('P3MediaModule.crud', 'TreeParent'); ?></label>
 <?php $this->widget(
-					'GtcRelation',
+					'\GtcRelation',
 					array(
 							'model' => $model,
 							'relation' => 'treeParent',
