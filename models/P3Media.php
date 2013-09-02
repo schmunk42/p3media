@@ -140,12 +140,27 @@ class P3Media extends BaseP3Media
             ));
     }
 
-    public function image($preset = null)
+    /**
+     * Generates an image tag with the given preset
+     *
+     * @param null  $preset
+     * @param array $htmlOptions
+     *
+     * @return string
+     */
+    public function image($preset = null, $htmlOptions = array())
     {
         return CHtml::image(
-            $this->createUrl($preset), $this->title);
+            $this->createUrl($preset), $this->title, $htmlOptions);
     }
 
+    /**
+     * Create a url to the image rendered with the given preset
+     *
+     * @param null $preset
+     *
+     * @return string
+     */
     public function createUrl($preset = null)
     {
         return Yii::app()->controller->createUrl(
@@ -159,6 +174,11 @@ class P3Media extends BaseP3Media
         );
     }
 
+    /**
+     * Returns all records with type folder in a CMenu compatible tree structure
+     *
+     * @return array
+     */
     public function getFolderItems()
     {
         $criteria = new CDbCriteria();
