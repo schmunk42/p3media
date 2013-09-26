@@ -43,6 +43,13 @@ if ($this->action->id !== 'uploadPopup') {
     </li>
 </ul>
 </p>
+
+<style type="text/css">
+    #fileupload form {
+        margin-bottom: 0;
+    }
+</style>
+
 <?php
 $this->widget('jquery-file-upload-widget.EFileUpload');
 ?>
