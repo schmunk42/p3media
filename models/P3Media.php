@@ -34,7 +34,7 @@ class P3Media extends BaseP3Media
         return parent::init();
     }
 
-    public function __toString()
+    public function getItemLabel()
     {
         return (string)$this->title;
     }
