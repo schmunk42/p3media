@@ -72,7 +72,7 @@
         <i class="icon-tag"></i>
         <?php
         $this->widget(
-            'EditableField',
+            'TbEditableField',
             array(
                  'type'      => 'text',
                  'model'     => $data,
@@ -89,7 +89,7 @@
     // TODO: remove 'if'
     if ($data->metaData) {
         $this->widget(
-            'EditableField',
+            'TbEditableField',
             array(
                  'type'      => 'select',
                  'model'     => $data->metaData,

@@ -114,7 +114,7 @@ class P3MediaController extends Controller
 
     public function actionAjaxUpdate()
     {
-        Yii::import('EditableSaver'); //or you can add import 'ext.editable.*' to config
+        Yii::import('TbEditableSaver'); //or you can add import 'ext.editable.*' to config
         $es = new EditableSaver('P3Media'); // classname of model to be updated
         $es->update();
     }
