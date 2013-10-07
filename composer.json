@@ -15,7 +15,7 @@
     "require": {
         "php": ">=5.3.0",
         "yiisoft/yii": "1.1.*",
-        "clevertech/yiibooster": "1.*",
+        "clevertech/yiibooster": "1.*,2.*",
         "phundament/p3extensions": ">=0.17.0"
     }
 }
