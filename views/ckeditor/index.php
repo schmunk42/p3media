@@ -63,10 +63,10 @@
                 <?php echo $form->label($model, 'id'); ?>
                 <?php echo $form->textField($model, 'id', array('size' => 4, 'maxlength' => 32, 'class' => 'span1')); ?>
 
-                <?php echo $form->label($model, 'title'); ?>
+                <?php echo $form->label($model, 'default_title'); ?>
                 <?php echo $form->textField(
                     $model,
-                    'title',
+                    'default_title',
                     array(
                          'size'      => 12,
                          'maxlength' => 32,

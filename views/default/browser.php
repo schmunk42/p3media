@@ -136,7 +136,7 @@
 
         <div class="form-search" style="display: inline-block">
             <?php $form = $this->beginWidget('CActiveForm', array('method' => 'get')); ?>
-            <?php echo $form->textField($files, 'title', array('size' => 12, 'maxlength' => 32, 'class' => '')); ?>
+            <?php echo $form->textField($files, 'default_title', array('size' => 12, 'maxlength' => 32, 'class' => '')); ?>
             <?php echo CHtml::submitButton(Yii::t('P3MediaModule.crud', 'Search'), array('class' => 'btn')); ?>
             <?php $this->endWidget(); ?>
         </div>
@@ -161,7 +161,7 @@
                     array(
                          'ajaxUpdate'         => false, // TODO: ajax update not compatible with EditableField
                          'dataProvider'       => $dataProvider,
-                         'template'           => "{sorter}{pager}\n{items}\n{pager}\n{summary}",
+                         'template'           => "{sorter}<br/>\n{pager}\n{items}\n{pager}\n{summary}", // TODO: fix template (no br)
                          'sortableAttributes' => array(
                              'title' => Yii::t('P3MediaModule.crud', 'Title'),
                              'id'    => Yii::t('P3MediaModule.crud', 'ID')

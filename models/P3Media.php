@@ -4,7 +4,7 @@
 Yii::setPathOfAlias('P3Media', dirname(__FILE__));
 Yii::import('P3Media.*');
 
-Yii::setPathOfAlias('P3MediaModule', dirname(__FILE__).DIRECTORY_SEPARATOR.'..');
+Yii::setPathOfAlias('P3MediaModule', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..');
 Yii::import('P3MediaModule.behaviors.*');
 
 class P3Media extends BaseP3Media
@@ -97,6 +97,51 @@ class P3Media extends BaseP3Media
           array('column3', 'rule2'),
           ) */
         );
+    }
+
+    public function search($criteria = null)
+    {
+        if (is_null($criteria)) {
+            $criteria = new CDbCriteria;
+        }
+
+        $criteria->compare('t.id', $this->id);
+        $criteria->compare('t.status', $this->status, true);
+        $criteria->compare('t.type', $this->type, true);
+        $criteria->compare('t.name_id', $this->name_id, true);
+        $criteria->compare('t.default_title', $this->default_title, true);
+        $criteria->compare('t.default_description', $this->default_description, true);
+        $criteria->compare('t.tree_position', $this->tree_position);
+        $criteria->compare('t.custom_data_json', $this->custom_data_json, true);
+        $criteria->compare('t.original_name', $this->original_name, true);
+        $criteria->compare('t.path', $this->path, true);
+        $criteria->compare('t.hash', $this->hash, true);
+        $criteria->compare('t.mime_type', $this->mime_type, true);
+        $criteria->compare('t.size', $this->size);
+        $criteria->compare('t.info_php_json', $this->info_php_json, true);
+        $criteria->compare('t.info_image_magick_json', $this->info_image_magick_json, true);
+        $criteria->compare('t.access_owner', $this->access_owner, true);
+        $criteria->compare('t.access_domain', $this->access_domain, true);
+        $criteria->compare('t.access_read', $this->access_read, true);
+        $criteria->compare('t.access_update', $this->access_update, true);
+        $criteria->compare('t.access_delete', $this->access_delete, true);
+        $criteria->compare('t.access_append', $this->access_append, true);
+        $criteria->compare('t.copied_from_id', $this->copied_from_id);
+        #$criteria->compare('t.created_at', $this->created_at, true);
+        #$criteria->compare('t.updated_at', $this->updated_at, true);
+
+        // TODO: Disable folders on title search
+        if (!$this->default_title) {
+            if ($this->tree_parent_id === null) {
+                $criteria->addCondition('tree_parent_id IS NULL');
+            } else {
+                $criteria->compare('t.tree_parent_id', $this->tree_parent_id);
+            }
+        }
+
+        return new CActiveDataProvider(get_class($this), array(
+                                                              'criteria' => $criteria,
+                                                         ));
     }
 
     /**

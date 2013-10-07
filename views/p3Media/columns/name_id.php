@@ -1,7 +1,7 @@
 <div class="row">
     <?php
     if ($this->action->id == 'update') {
-        echo $model->image('p3media-ckbrowse');
+        echo $model->image('p3media-manager');
         echo "<br/>" . CHtml::link(Yii::t('P3MediaModule.crud', 'Download'), $this->createUrl('/p3media/file/', array('id' => $model->id))) . "<br/>";
     }
     ?>

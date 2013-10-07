@@ -67,6 +67,8 @@ class DefaultController extends Controller
             $files->attributes = $_GET['P3Media'];
         }
 
+        $files->status = null;
+
         $directories = P3Media::model()->getFolderItems();
 
         $criteria = new CDbCriteria();

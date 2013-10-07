@@ -261,12 +261,14 @@ window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$mode
 		$model = new P3Media;
 		$model->detachBehavior('Upload');
 
-		$model->title = substr($fileName, 0, 25) . '-' . substr(uniqid(), -6); #P3StringHelper::cleanName($fileName, 32); // TODO: Add uniqid for title, so there's no unique conflict
-		$model->originalName = $fileName;
+		$model->default_title = $fileName;
+		$model->original_name = $fileName;
 
-		$model->type = 1; //P3Media::TYPE_FILE;
+		$model->type = P3Media::TYPE_FILE;
 		$model->path = $filePath;
-		$model->md5 = $md5;
+		$model->hash = $md5;
+
+        $model->access_domain = '*';
 
         if (function_exists("mime_content_type")){
 			$mime = mime_content_type($fullFilePath);
@@ -277,8 +279,8 @@ window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$mode
         } else {
 			$mime = $getimagesize['mime'];
 		}
-		$model->mimeType = $mime;
-		$model->info = CJSON::encode(getimagesize($fullFilePath));
+		$model->mime_type = $mime;
+		$model->info_php_json = CJSON::encode(getimagesize($fullFilePath));
 		$model->size = filesize($fullFilePath);
 
 		if ($model->save()) {
