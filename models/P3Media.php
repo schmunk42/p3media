@@ -132,7 +132,7 @@ class P3Media extends BaseP3Media
 
         // TODO: Disable folders on title search
         if (!$this->default_title) {
-            if ($this->tree_parent_id === null) {
+            if ($this->tree_parent_id === null && Yii::app()->controller->action->id != 'admin') {
                 $criteria->addCondition('tree_parent_id IS NULL');
             } else {
                 $criteria->compare('t.tree_parent_id', $this->tree_parent_id);
