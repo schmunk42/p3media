@@ -200,30 +200,34 @@ class P3MediaImageAction extends CAction {
 
     private static function findModel($identifier) {
         if(key($identifier) == 'id') {
-            $model = P3Media::model()->with('metaData')->findByPk(
+            $model = P3Media::model()->findByPk(
                     $identifier[key($identifier)]); // TODO?
         } elseif(key($identifier) == 'nameId') {
-            $model = P3Media::model()->with('metaData')->findByAttributes(
+            $model = P3Media::model()->findByAttributes(
                     array(key($identifier) => $identifier[key($identifier)])); // TODO?
         }
+
+        return $model;
+
+
 
         if ($model === null) {
             return null;
         }
 
-        // we search for the model via meta-data to apply the criteria in beforeFind()
+        /* TODO ?? we search for the model via meta-data to apply the criteria in beforeFind()
         $mm = P3MediaMeta::model()->findByPk($model->id);
         if ($mm !== null) {
             return $mm->id0;
         } else {
             return null;
-        }
+        }*/
 
   }
 
     private static function generateHash($model, $preset) {
         $pathInfo = pathinfo($model->path);
-        $hash = $model->title . "-" . substr(sha1($model->md5 . CJSON::encode($preset->toArray())), 0, 10) . "-" . $model->id;
+        $hash = $model->title . "-" . substr(sha1($model->hash . CJSON::encode($preset->toArray())), 0, 10) . "-" . $model->id;
         if (isset($preset['type'])) {
             $hash = $hash . '.' . $preset['type'];
         } else {

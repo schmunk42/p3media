@@ -1,133 +1,455 @@
-<div class="form">
-    <p class="note">
-        <?php echo Yii::t('P3MediaModule.crud', 'Fields with');?> <span
-            class="required">*</span> <?php echo Yii::t('P3MediaModule.crud', 'are required');?>.
+<div class="crud-form">
+
+    
+    <?php
+        Yii::app()->bootstrap->registerAssetCss('../select2/select2.css');
+        Yii::app()->bootstrap->registerAssetJs('../select2/select2.js');
+        Yii::app()->clientScript->registerScript('crud/variant/update','$(".crud-form select").select2();');
+
+        $form=$this->beginWidget('TbActiveForm', array(
+            'id' => 'p3-media-form',
+            'enableAjaxValidation' => true,
+            'enableClientValidation' => true,
+            'htmlOptions' => array(
+                'enctype' => 'multipart/form-data'
+            )
+        ));
+
+        echo $form->errorSummary($model);
+    ?>
+    
+    <div class="row">
+        <div class="span7"> <!-- main inputs -->
+            <h2>
+                <?php echo Yii::t('crud','Data')?>                <small>
+                    <?php echo $model->itemLabel ?>
+                </small>
+
+            </h2>
+
+
+            <div class="form-horizontal">
+
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php  ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            ;
+                            echo $form->error($model,'id')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.id')) != 'help.id')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'status') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->dropDownList($model,'status',P3Media::optsstatus(),array('empty'=>'undefined'));;
+                            echo $form->error($model,'status')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.status')) != 'help.status')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'type') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo CHtml::activeDropDownList($model, 'type', array(
+            'file' => 'file',
+            'directory' => 'directory',
+));
+                            echo $form->error($model,'type')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.type')) != 'help.type')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'name_id') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            $this->renderPartial('columns/name_id', array('model' => $model, 'form' => $form));
+                            echo $form->error($model,'name_id')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.name_id')) != 'help.name_id')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'default_title') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->textField($model, 'default_title', array('size' => 60, 'maxlength' => 255));
+                            echo $form->error($model,'default_title')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.default_title')) != 'help.default_title')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'default_description') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->textArea($model, 'default_description', array('rows' => 6, 'cols' => 50));
+                            echo $form->error($model,'default_description')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.default_description')) != 'help.default_description')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'tree_parent_id') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->textField($model, 'tree_parent_id');
+                            echo $form->error($model,'tree_parent_id')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.tree_parent_id')) != 'help.tree_parent_id')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'tree_position') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->textField($model, 'tree_position');
+                            echo $form->error($model,'tree_position')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.tree_position')) != 'help.tree_position')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'custom_data_json') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            $this->widget(
+                'jsonEditorView.JuiJSONEditorInput',
+                array(
+                     'model'     => $model,
+                     'attribute' => 'custom_data_json'
+                )
+            );;
+                            echo $form->error($model,'custom_data_json')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.custom_data_json')) != 'help.custom_data_json')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'original_name') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->textField($model,'original_name',array('disabled'=>'disabled'));
+                            echo $form->error($model,'original_name')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.original_name')) != 'help.original_name')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'path') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->textField($model,'path',array('disabled'=>'disabled'));
+                            echo $form->error($model,'path')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.path')) != 'help.path')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'hash') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->textField($model,'hash',array('disabled'=>'disabled'));
+                            echo $form->error($model,'hash')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.hash')) != 'help.hash')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'mime_type') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->textField($model,'mime_type',array('disabled'=>'disabled'));
+                            echo $form->error($model,'mime_type')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.mime_type')) != 'help.mime_type')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'size') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->textField($model,'size',array('disabled'=>'disabled'));
+                            echo $form->error($model,'size')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.size')) != 'help.size')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'info_php_json') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $model->info_php_json;
+                            echo $form->error($model,'info_php_json')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.info_php_json')) != 'help.info_php_json')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'info_image_magick_json') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $model->info_image_magick_json;
+                            echo $form->error($model,'info_image_magick_json')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.info_image_magick_json')) != 'help.info_image_magick_json')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'access_owner') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->textField($model,'access_owner',array('disabled'=>'disabled'));
+                            echo $form->error($model,'access_owner')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.access_owner')) != 'help.access_owner')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'access_domain') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->dropDownList($model,'access_domain',P3Media::optsaccessdomain(),array('empty'=>'undefined'));;
+                            echo $form->error($model,'access_domain')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.access_domain')) != 'help.access_domain')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'access_read') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->dropDownList($model,'access_read',P3Media::optsaccessread(),array('empty'=>'undefined'));;
+                            echo $form->error($model,'access_read')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.access_read')) != 'help.access_read')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'access_update') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->dropDownList($model,'access_update',P3Media::optsaccessupdate(),array('empty'=>'undefined'));;
+                            echo $form->error($model,'access_update')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.access_update')) != 'help.access_update')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'access_delete') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->dropDownList($model,'access_delete',P3Media::optsaccessdelete(),array('empty'=>'undefined'));;
+                            echo $form->error($model,'access_delete')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.access_delete')) != 'help.access_delete')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'access_append') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->dropDownList($model,'access_append',P3Media::optsaccessappend(),array('empty'=>'undefined'));;
+                            echo $form->error($model,'access_append')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.access_append')) != 'help.access_append')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'copied_from_id') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->textField($model,'copied_from_id',array('disabled'=>'disabled'));
+                            echo $form->error($model,'copied_from_id')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.copied_from_id')) != 'help.copied_from_id')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'created_at') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->textField($model,'created_at',array('disabled'=>'disabled'));
+                            echo $form->error($model,'created_at')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.created_at')) != 'help.created_at')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'updated_at') ?>
+                        </div>
+                        <div class='controls'>
+                            <?php
+                            echo $form->textField($model,'updated_at',array('disabled'=>'disabled'));
+                            echo $form->error($model,'updated_at')
+                            ?>
+                            <span class="help-block">
+                                <?php echo (($t = Yii::t('p3MediaModule.model', 'help.updated_at')) != 'help.updated_at')?$t:'' ?>
+                            </span>
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+        <!-- main inputs -->
+
+        <div class="span5"> <!-- sub inputs -->
+            <h2>
+                <?php echo Yii::t('crud','Relations')?>
+            </h2>
+                                            
+                <h3>
+                    <?php echo Yii::t('p3MediaModule.model', 'P3MediaTranslations'); ?>
+                </h3>
+                <?php echo '<i>'.Yii::t('crud','Switch to view mode to edit related records.').'</i>' ?>
+                            
+        </div>
+        <!-- sub inputs -->
+    </div>
+
+    <p class="alert">
+        <?php echo Yii::t('crud','Fields with <span class="required">*</span> are required.');?>
     </p>
 
-    <?php
-    $form = $this->beginWidget('CActiveForm', array(
-                                                   'id' => 'p3-media-form',
-                                                   'enableAjaxValidation' => true,
-                                                   'enableClientValidation' => true,
-                                                   'htmlOptions' => array(
-                                                       'enctype' => 'multipart/form-data'
-                                                   )
-                                              ));
-
-    echo $form->errorSummary($model);
-    ?>
-    <div class="row">
+    <div class="form-actions" style="display: none">
+        
         <?php
-        if ($this->action->id == 'update') {
-            echo $model->image('p3media-ckbrowse');
-            echo "<br/>" . CHtml::link(Yii::t('P3MediaModule.crud', 'Download'), $this->createUrl('/p3media/file/', array('id' => $model->id))) . "<br/>";
-        }
+            echo CHtml::Button(
+            Yii::t('crud', 'Cancel'), array(
+                'submit' => (isset($_GET['returnUrl']))?$_GET['returnUrl']:array('p3Media/admin'),
+                'class' => 'btn'
+            ));
+            echo ' '.CHtml::submitButton(Yii::t('crud', 'Save'), array(
+                'class' => 'btn btn-primary'
+            ));
         ?>
-        <?php echo CHtml::label(Yii::t('P3MediaModule.crud', 'Upload File'), 'fileUpload'); ?>
-        <div>
-
-            <?php
-            echo CHtml::fileField('fileUpload', null, array(
-                                                           'style' => 'width: 100%',
-                                                           'onchange' => 'if (!$("#P3Media_title").val()) $("#P3Media_title").val($("#fileUpload").val().substr(0,25)+"-"+Math.round((Math.random()*1000000)));'
-                                                      )
-            );
-            ?>
-        </div>
-        <p class="hint">Maximum size: <?php echo min(ini_get('upload_max_filesize'), ini_get('post_max_size')) ?></p>
-    </div>
-    <div class="row-fluid">
-        <div class="span4">
-            <?php echo $form->labelEx($model, 'title'); ?>
-
-            <?php echo $form->textField($model, 'title', array('size' => 32, 'maxlength' => 32, 'style' => 'width: 100%')); ?>
-            <?php echo $form->error($model, 'title'); ?>
-            <div class='hint'><?php if ('hint.title' != $hint = Yii::t('P3MediaModule.crud', 'hint.title')) {
-                echo $hint;
-            } ?></div>
-
-            <?php echo $form->labelEx($model, 'description'); ?>
-            <?php echo $form->textArea($model, 'description', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?>
-            <?php echo $form->error($model, 'description'); ?>
-            <div class='hint'><?php if ('hint.description' != $hint = Yii::t('P3MediaModule.crud', 'hint.description')) {
-                echo $hint;
-            } ?></div>
-
-            <?php echo $form->labelEx($model, 'originalName'); ?>
-            <?php echo $form->textField($model, 'originalName', array('size' => 60, 'maxlength' => 128, 'style' => 'width: 100%')); ?>
-            <?php echo $form->error($model, 'originalName'); ?>
-            <div class='hint'><?php if ('hint.originalName' != $hint = Yii::t('P3MediaModule.crud', 'hint.originalName')) {
-                echo $hint;
-            } ?></div>
-
-            <?php echo $form->labelEx($model, 'path'); ?>
-            <?php echo $form->textField($model, 'path', array('size' => 60, 'maxlength' => 255, 'style' => 'width: 100%')); ?>
-            <?php echo $form->error($model, 'path'); ?>
-            <div class='hint'><?php if ('hint.path' != $hint = Yii::t('P3MediaModule.crud', 'hint.path')) {
-                echo $hint;
-            } ?></div>
-
-        </div>
-
-        <div class="span4">
-            <?php echo $form->labelEx($model, 'mimeType'); ?>
-            <?php echo $form->textField($model, 'mimeType', array('size' => 60, 'maxlength' => 128, 'style' => 'width: 100%')); ?>
-            <?php echo $form->error($model, 'mimeType'); ?>
-            <div class='hint'><?php if ('hint.mimeType' != $hint = Yii::t('P3MediaModule.crud', 'hint.mimeType')) {
-                echo $hint;
-            } ?></div>
-
-            <?php echo $form->labelEx($model, 'md5'); ?>
-            <?php echo $form->textField($model, 'md5', array('size' => 32, 'maxlength' => 32, 'style' => 'width: 100%')); ?>
-            <?php echo $form->error($model, 'md5'); ?>
-            <div class='hint'><?php if ('hint.md5' != $hint = Yii::t('P3MediaModule.crud', 'hint.md5')) {
-                echo $hint;
-            } ?></div>
-
-            <?php echo $form->labelEx($model, 'size'); ?>
-            <?php echo $form->textField($model, 'size', array('style' => 'width: 100%')); ?>
-            <?php echo $form->error($model, 'size'); ?>
-            <div class='hint'><?php if ('hint.size' != $hint = Yii::t('P3MediaModule.crud', 'hint.size')) {
-                echo $hint;
-            } ?></div>
-
-            <?php echo $form->labelEx($model, 'info'); ?>
-            <?php echo $form->textArea($model, 'info', array('rows' => 6, 'cols' => 50, 'style' => 'width: 100%')); ?>
-            <?php echo $form->error($model, 'info'); ?>
-            <div class='hint'><?php if ('hint.info' != $hint = Yii::t('P3MediaModule.crud', 'hint.info')) {
-                echo $hint;
-            } ?></div>
-
-            <?php echo $form->labelEx($model, 'type'); ?>
-            <?php echo $form->textField($model, 'type'); ?>
-            <?php echo $form->error($model, 'type'); ?>
-            <div class='hint'><?php if ('hint.type' != $hint = Yii::t('P3MediaModule.crud', 'hint.type')) {
-                echo $hint;
-            } ?></div>
-
-            <label for="metaData"><?php echo Yii::t('P3MediaModule.crud', 'Metadata'); ?></label>
-            <?php if ($model->metaData !== null) {
-            echo $model->metaData->status;
-            }; ?><br/>
-        </div>
-
-        <div class="span4">
-            <h3><?php echo Yii::t('P3MediaModule.crud', 'Media Identifier'); ?></h3>
-            <?php echo $form->labelEx($model, 'nameId'); ?>
-
-            <?php echo $form->textField($model, 'nameId'); ?>
-            <?php echo $form->error($model, 'nameId'); ?>
-            <?php if ('help.nameId' != $help = Yii::t('P3MediaModule.crud', 'help.nameId')) {
-                echo "<span class='help-block'>$help</span>";
-            } ?>
-        </div>
     </div>
 
-
-
-    <?php
-    echo CHtml::Button(Yii::t('P3MediaModule.crud', 'Cancel'), array(
-                                                     'submit' => array('p3media/admin')));
-    echo CHtml::submitButton(Yii::t('P3MediaModule.crud', 'Save'));
-    $this->endWidget(); ?>
+    <?php $this->endWidget() ?>
 </div> <!-- form -->

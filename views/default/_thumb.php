@@ -6,7 +6,7 @@
         $this->widget(
             'bootstrap.widgets.TbButtonGroup',
             array(
-                 'size' => 'mini',
+                 'size'    => 'mini',
                  'buttons' => array(
                      array(
                          'icon' => 'eye-open',
@@ -15,6 +15,7 @@
                              'id'        => $data->id,
                              'returnUrl' => $this->createUrl("", $_GET)
                          ),
+
                      ),
                      array(
                          'icon' => 'pencil',
@@ -86,22 +87,17 @@
 <p>
     <i class="icon-folder-close"></i>
     <?php
-    // TODO: remove 'if'
-    if ($data->metaData) {
-        $this->widget(
-            'TbEditableField',
-            array(
-                 'type'      => 'select',
-                 'model'     => $data->metaData,
-                 'attribute' => 'treeParent_id',
-                 'url'       => $this->createUrl('/p3media/p3MediaMeta/ajaxUpdate'),
-                 'source'    => $this->directoriesList,
-                 'emptytext' => Yii::t('app','Select Folder')
-            )
-        );
-    } else {
-        echo Yii::t('P3MediaModule.crud', 'No meta data');
-    }
+    $this->widget(
+        'TbEditableField',
+        array(
+             'type'      => 'select',
+             'model'     => $data,
+             'attribute' => 'tree_parent_id',
+             'url'       => $this->createUrl('/p3media/p3MediaMeta/ajaxUpdate'),
+             'source'    => $this->directoriesList,
+             'emptytext' => Yii::t('app', 'Select Folder')
+        )
+    );
     ?>
 </p>
 </li>

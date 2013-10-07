@@ -1,27 +1,21 @@
 <?php
 
-/**
- * Class file.
- *
- * @author Tobias Munk <schmunk@usrbin.de>
- * @link http://www.phundament.com/
- * @copyright Copyright &copy; 2005-2011 diemeisterei GmbH
- * @license http://www.phundament.com/license/
- */
+// auto-loading
+Yii::setPathOfAlias('P3Media', dirname(__FILE__));
+Yii::import('P3Media.*');
 
-/**
- *
- * @author Tobias Munk <schmunk@usrbin.de>
- * @package p3media.models
- * @since 3.0.1
- */
+Yii::setPathOfAlias('P3MediaModule', dirname(__FILE__).DIRECTORY_SEPARATOR.'..');
+Yii::import('P3MediaModule.behaviors.*');
+
 class P3Media extends BaseP3Media
 {
+    const TYPE_FILE   = 'file';
+    const TYPE_FOLDER = 'directory';
 
-    const TYPE_FILE = 1;
-    const TYPE_FOLDER = 2;
-
-    public $treeParent;
+    /**
+     * @var string default status
+     */
+    public $status = 'draft';
 
     // Add your model-specific methods here. This file will not be overriden by gtc except you force it.
     public static function model($className = __CLASS__)
@@ -36,109 +30,163 @@ class P3Media extends BaseP3Media
 
     public function getItemLabel()
     {
-        return (string)$this->title;
+        return parent::getItemLabel();
+    }
+
+    public function behaviors()
+    {
+        return array_merge(
+            parent::behaviors(),
+            array(
+                 'Access'           => array(
+                     'class' => '\PhAccessBehavior'
+                 ),
+                 'AdjacencyList'    => array(
+                     'class'            => '\AdjacencyListBehavior',
+                     'parentAttribute'  => 'tree_parent_id',
+                     'parentRelation'   => 'treeParent',
+                     'childrenRelation' => 'p3Widgets'
+                 ),
+                 'LoggableBehavior' => array(
+                     'class'   => 'vendor.sammaye.auditrail2.behaviors.LoggableBehavior',
+                     'ignored' => array(
+                         'created_at',
+                         'updated_at',
+                     )
+                 ),
+                 'Status'           => array(
+                     'class'       => 'vendor.yiiext.status-behavior.EStatusBehavior',
+                     'statusField' => 'status'
+                 ),
+                 'Timestamp'        => array(
+                     'class'               => 'zii.behaviors.CTimestampBehavior',
+                     'createAttribute'     => 'created_at',
+                     'updateAttribute'     => 'updated_at',
+                     'setUpdateOnCreate'   => true,
+                     'timestampExpression' => "date_format(date_create(),'Y-m-d H:i:s');",
+                 ),
+                 'Translatable'     => array(
+                     'class'                 => 'vendor.mikehaertl.translatable.Translatable',
+                     'translationRelation'   => 'p3MediaTranslations',
+                     'translationAttributes' => array(
+                         'title',
+                         'description',
+                     ),
+                     'fallbackColumns'       => array(
+                         'title'       => 'default_title',
+                         'description' => 'default_description',
+                     ),
+                 ),
+                 'UploadBehaviour'  => array(
+                     'class'            => 'PhFileUploadBehavior',
+                     'dataAlias'        => Yii::app()->getModule('p3media')->dataAlias,
+                     'trashAlias'       => Yii::app()->getModule('p3media')->dataAlias . ".trash",
+                     'dataSubdirectory' => Yii::app()->user->id,
+                     'uploadInstance'   => 'fileUpload',
+                 ),
+            )
+        );
     }
 
     public function rules()
     {
         return array_merge(
-        /* array('column1, column2', 'rule'), */
             parent::rules()
+        /* , array(
+          array('column1, column2', 'rule1'),
+          array('column3', 'rule2'),
+          ) */
         );
     }
 
-    public function relations()
+    /**
+     * @return array list of options
+     */
+    public static function optsStatus()
     {
-        return array(
-            'metaData' => array(self::HAS_ONE, 'P3MediaMeta', 'id'),
-        );
+        $model = P3Page::model();
+        return array_combine($model->Status->statuses, $model->Status->statuses);
     }
 
-    public function getP3MediaMeta()
+    /**
+     * @return array list of options
+
+    public static function optsAccessOwner()
     {
-        return $this->metaData;
+    return self::model()->Access->getAccessOwner();
+    }*/
+
+    /**
+     * @return array list of options
+     */
+    public static function optsAccessDomain()
+    {
+        return self::model()->Access->getAccessDomains();
     }
 
-    public function get_label()
+    /**
+     * @return array list of options
+     */
+    public static function optsAccessRead()
     {
-        return $this->title;
+        return self::model()->Access->getAccessRoles();
     }
 
-    public function behaviors()
+    /**
+     * @return array list of options
+     */
+    public static function optsAccessUpdate()
     {
-        $metaDataBehavior = array(
-            'class'            => 'P3MetaDataBehavior',
-            'metaDataRelation' => 'metaData',
-            'parentRelation'   => 'treeParent',
-            'childrenRelation' => 'p3MediaMetas',
-            'contentRelation'  => 'id0',
-            'defaultLanguage'  => (Yii::app()->params['P3Media.defaultLanguage']) ?
-                Yii::app()->params['P3Media.defaultLanguage'] : P3MetaDataBehavior::ALL_LANGUAGES,
-            'defaultStatus'    => (Yii::app()->params['P3Media.defaultStatus']) ?
-                Yii::app()->params['P3Media.defaultStatus'] : P3MetaDataBehavior::STATUS_ACTIVE,
-        );
+        return self::model()->Access->getAccessRoles();
+    }
 
-        // exist in console app - no upload behaviour (TODO - review)
-        if (Yii::app() instanceof CConsoleApplication) {
-            $return = array_merge(
-                array(
-                     'MetaData' => $metaDataBehavior,
-                ),
-                parent::behaviors()
-            );
+    /**
+     * @return array list of options
+     */
+    public static function optsAccessDelete()
+    {
+        return self::model()->Access->getAccessRoles();
+    }
+
+    /**
+     * @return array list of options
+     */
+    public static function optsAccessAppend()
+    {
+        return self::model()->Access->getAccessRoles();
+    }
+
+
+    /**
+     * Returns all records with type folder in a CMenu compatible tree structure
+     * @return array
+     */
+    public function getFolderItems()
+    {
+        $criteria        = new CDbCriteria();
+        $criteria->order = "default_title";
+        if ($this->id === null) {
+            $criteria->condition = "t.type = '" . P3Media::TYPE_FOLDER . "' AND t.tree_parent_id IS NULL";
         } else {
-            $return = array_merge(
-                array(
-                     'UploadBehaviour' => array(
-                         'class'            => 'P3FileUploadBehavior',
-                         'dataAlias'        => Yii::app()->getModule('p3media')->dataAlias,
-                         'trashAlias'       => Yii::app()->getModule('p3media')->dataAlias . ".trash",
-                         'dataSubdirectory' => Yii::app()->user->id,
-                         'uploadInstance'   => 'fileUpload',
-                     ),
-                     'MetaData'        => $metaDataBehavior
-                ),
-                parent::behaviors()
-            );
+            $criteria->condition = "t.type = '" . P3Media::TYPE_FOLDER . "' AND t.tree_parent_id = " . $this->id;
         }
+        $models = P3Media::model()->findAll($criteria);
 
-        return $return;
+        $items = array();
+        foreach ($models AS $model) {
+            if ($model->getFolderItems() === array()) {
+                $items[] = array('label' => $model->title, 'url' => array("", "id" => $model->id));
+            } else {
+                $items[] = array(
+                    'label' => $model->title,
+                    'url'   => array("", "id" => $model->id),
+                    'items' => $model->getFolderItems()
+                );
+            }
+        }
+        return $items;
     }
 
-    public function search()
-    {
-        $criteria = new CDbCriteria;
-        $criteria->with = 'metaData';
-
-        if ($this->treeParent == "_ROOT") {
-            $criteria->addCondition('metaData.treeParent_id IS NULL');
-        }
-        elseif ($this->treeParent !== null) {
-            $criteria->compare('metaData.treeParent_id', $this->treeParent, true);
-        }
-
-        $criteria->compare('t.id', $this->id);
-        $criteria->compare('title', $this->title, true);
-        $criteria->compare('description', $this->description, true);
-        $criteria->compare('t.type', $this->type);
-        $criteria->compare('path', $this->path, true);
-        $criteria->compare('md5', $this->md5, true);
-        $criteria->compare('originalName', $this->originalName, true);
-        $criteria->compare('mimeType', $this->mimeType, true);
-        $criteria->compare('size', $this->size);
-        $criteria->compare('nameId', $this->nameId, true);
-
-        #var_dump($this->treeParent);exit;
-        #$criteria->compare('info', $this->info, true);
-        return new CActiveDataProvider(
-            get_class($this),
-            array(
-                 'criteria' => $criteria,
-                 'sort' => array(
-                     'defaultOrder' => 't.id DESC',
-                 ),
-            ));
-    }
 
     /**
      * Generates an image tag with the given preset
@@ -151,7 +199,10 @@ class P3Media extends BaseP3Media
     public function image($preset = null, $htmlOptions = array())
     {
         return CHtml::image(
-            $this->createUrl($preset), $this->title, $htmlOptions);
+            $this->createUrl($preset),
+            $this->title,
+            $htmlOptions
+        );
     }
 
     /**
@@ -166,40 +217,11 @@ class P3Media extends BaseP3Media
         return Yii::app()->controller->createUrl(
             '/p3media/file/image',
             array(
-                 'id' => $this->id,
-                 'preset' => $preset,
-                 'title'=>$this->title,
-                 'extension'=>'.'.Yii::app()->getModule('p3media')->params['presets'][$preset]['type']
+                 'id'        => $this->id,
+                 'preset'    => $preset,
+                 'title'     => $this->title,
+                 'extension' => '.' . Yii::app()->getModule('p3media')->params['presets'][$preset]['type']
             )
         );
-    }
-
-    /**
-     * Returns all records with type folder in a CMenu compatible tree structure
-     *
-     * @return array
-     */
-    public function getFolderItems()
-    {
-        $criteria = new CDbCriteria();
-        $criteria->order = "title";
-        if ($this->id === null) {
-            $criteria->condition = "t.type = " . P3Media::TYPE_FOLDER . " AND metaData.treeParent_id IS NULL";
-        }
-        else {
-            $criteria->condition = "t.type = " . P3Media::TYPE_FOLDER . " AND metaData.treeParent_id = " . $this->id;
-        }
-        $models = P3Media::model()->with('metaData')->findAll($criteria);
-        $items = array();
-        foreach ($models AS $model) {
-            if ($model->getFolderItems() === array()) {
-                $items[] = array('label' => $model->title, 'url' => array("", "id" => $model->id));
-            }
-            else {
-                $items[] = array('label' => $model->title, 'url' => array("", "id" => $model->id),
-                                 'items' => $model->getFolderItems());
-            }
-        }
-        return $items;
     }
 }

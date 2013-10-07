@@ -50,30 +50,27 @@ class DefaultController extends Controller
 
     public function actionBrowser()
     {
+        // select files
         $files = new P3Media;
-
+        $files->type = P3Media::TYPE_FILE;
         // select files from folder
         if (isset($_GET['id'])) {
-            $files->treeParent = $_GET['id'];
+            $files->tree_parent_id = $_GET['id'];
+            #exit('xx');
         }
         else {
-            $files->treeParent = '_ROOT';
+            $files->tree_parent_id = null;
         }
-
         // apply search terms
         if (isset($_GET['P3Media'])) {
             $files->scenario = "search";
             $files->attributes = $_GET['P3Media'];
         }
 
-        // select only files
-        $files->type = P3Media::TYPE_FILE;
-
         $directories = P3Media::model()->getFolderItems();
 
         $criteria = new CDbCriteria();
-        $criteria->condition = "t.type = ".P3Media::TYPE_FOLDER;
-
+        $criteria->condition = "t.type = '".P3Media::TYPE_FOLDER."'";
         $this->directoriesList = CHtml::listData(P3Media::model()->findAll($criteria), 'id', 'title');
 
         $this->render('browser', array('files' => $files, 'directories' => $directories));

@@ -98,7 +98,7 @@
                          'icon'        => 'plus',
                          'url'         => array(
                              'p3Media/create',
-                             'P3Media'   => array('type' => 1),
+                             'P3Media'   => array('type' => P3Media::TYPE_FILE),
                              'returnUrl' => $this->createUrl("", $_GET)
                          ),
                          'htmlOptions' => array('class' => 'btn')
@@ -108,7 +108,7 @@
                          'icon'        => 'plus',
                          'url'         => array(
                              'p3Media/create',
-                             'P3Media'   => array('type' => 2),
+                             'P3Media'   => array('type' => P3Media::TYPE_FOLDER),
                              'returnUrl' => $this->createUrl("", $_GET)
                          ),
                          'htmlOptions' => array('class' => 'btn')
