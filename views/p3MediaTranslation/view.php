@@ -12,10 +12,10 @@ $this->breadcrumbs[] = Yii::t('crud', 'View');
 ?>
 
 <?php $this->widget("TbBreadcrumbs", array("links"=>$this->breadcrumbs)) ?>
-<h1>
-    <?php echo Yii::t('p3MediaModule.model','P3 Media Translation')?>
+    <h1>
+        <?php echo Yii::t('p3MediaModule.model','P3 Media Translation')?>
     <small><?php echo Yii::t('crud','View')?> #<?php echo $model->id ?></small>
-    </h1>
+        </h1>
 
 
 
@@ -60,27 +60,41 @@ $this->breadcrumbs[] = Yii::t('crud', 'View');
             'type' => 'html',
         ),
 array(
-                        'name' => 'status',
+                        'name'=>'status',
                         'type' => 'raw',
-                        'value' => $this->widget(
+                        'value' =>$this->widget(
                             'TbEditableField',
                             array(
-                                'model' => $model,
-                                'attribute' => 'status',
+                                'model'=>$model,
+                                'emptytext' => 'Click to select',
+                                'type' => 'select',
+                                'source' => P3MediaTranslation::optsstatus(),
+                                'attribute'=>'status',
                                 'url' => $this->createUrl('/p3media/p3MediaTranslation/editableSaver'),
+                                'select2' => array(
+                                    'placeholder' => 'Select...',
+                                    'allowClear' => true
+                                )
                             ),
                             true
                         )
                     ),
 array(
-                        'name' => 'language',
+                        'name'=>'language',
                         'type' => 'raw',
-                        'value' => $this->widget(
+                        'value' =>$this->widget(
                             'TbEditableField',
                             array(
-                                'model' => $model,
-                                'attribute' => 'language',
+                                'model'=>$model,
+                                'emptytext' => 'Click to select',
+                                'type' => 'select',
+                                'source' => P3MediaTranslation::optslanguage(),
+                                'attribute'=>'language',
                                 'url' => $this->createUrl('/p3media/p3MediaTranslation/editableSaver'),
+                                'select2' => array(
+                                    'placeholder' => 'Select...',
+                                    'allowClear' => true
+                                )
                             ),
                             true
                         )
@@ -101,15 +115,7 @@ array(
 array(
                         'name' => 'description',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'description',
-                                'url' => $this->createUrl('/p3media/p3MediaTranslation/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->description
                     ),
 array(
                         'name' => 'access_owner',
@@ -125,40 +131,61 @@ array(
                         )
                     ),
 array(
-                        'name' => 'access_read',
+                        'name'=>'access_read',
                         'type' => 'raw',
-                        'value' => $this->widget(
+                        'value' =>$this->widget(
                             'TbEditableField',
                             array(
-                                'model' => $model,
-                                'attribute' => 'access_read',
+                                'model'=>$model,
+                                'emptytext' => 'Click to select',
+                                'type' => 'select',
+                                'source' => P3MediaTranslation::optsaccessread(),
+                                'attribute'=>'access_read',
                                 'url' => $this->createUrl('/p3media/p3MediaTranslation/editableSaver'),
+                                'select2' => array(
+                                    'placeholder' => 'Select...',
+                                    'allowClear' => true
+                                )
                             ),
                             true
                         )
                     ),
 array(
-                        'name' => 'access_update',
+                        'name'=>'access_update',
                         'type' => 'raw',
-                        'value' => $this->widget(
+                        'value' =>$this->widget(
                             'TbEditableField',
                             array(
-                                'model' => $model,
-                                'attribute' => 'access_update',
+                                'model'=>$model,
+                                'emptytext' => 'Click to select',
+                                'type' => 'select',
+                                'source' => P3MediaTranslation::optsaccessupdate(),
+                                'attribute'=>'access_update',
                                 'url' => $this->createUrl('/p3media/p3MediaTranslation/editableSaver'),
+                                'select2' => array(
+                                    'placeholder' => 'Select...',
+                                    'allowClear' => true
+                                )
                             ),
                             true
                         )
                     ),
 array(
-                        'name' => 'access_delete',
+                        'name'=>'access_delete',
                         'type' => 'raw',
-                        'value' => $this->widget(
+                        'value' =>$this->widget(
                             'TbEditableField',
                             array(
-                                'model' => $model,
-                                'attribute' => 'access_delete',
+                                'model'=>$model,
+                                'emptytext' => 'Click to select',
+                                'type' => 'select',
+                                'source' => P3MediaTranslation::optsaccessdelete(),
+                                'attribute'=>'access_delete',
                                 'url' => $this->createUrl('/p3media/p3MediaTranslation/editableSaver'),
+                                'select2' => array(
+                                    'placeholder' => 'Select...',
+                                    'allowClear' => true
+                                )
                             ),
                             true
                         )
@@ -205,6 +232,7 @@ array(
            ),
         )); ?>
     </div>
+
 
     <div class="span5">
         <?php $this->renderPartial('_view-relations',array('model' => $model)); ?>    </div>

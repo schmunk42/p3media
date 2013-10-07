@@ -51,7 +51,7 @@
                                     </div>
                 <?php endif; ?>                <?php $this->widget('bootstrap.widgets.TbButtonGroup', array(
                        'buttons' => array(
-                               array('label'=>Yii::t('crud','Relations'), 'icon'=>'icon-random', 'items'=>array(array('icon' => 'arrow-right','label' => Yii::t('p3MediaModule.model','P3MediaTranslations'), 'url' =>array('/p3media/p3MediaTranslation/admin')),
+                               array('label'=>Yii::t('crud','Relations'), 'icon'=>'icon-random', 'items'=>array(array('icon' => 'circle-arrow-left','label' => Yii::t('p3MediaModule.model','TreeParent'), 'url' =>array('/p3media/p3Media/admin')),array('icon' => 'arrow-right','label' => Yii::t('p3MediaModule.model','P3Medias'), 'url' =>array('/p3media/p3Media/admin')),array('icon' => 'arrow-right','label' => Yii::t('p3MediaModule.model','P3MediaTranslations'), 'url' =>array('/p3media/p3MediaTranslation/admin')),
             )
           ),
         ),

@@ -59,6 +59,7 @@ class m131006_182400_unification extends EDbMigration
                  // time
                  "created_at"             => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
                  "updated_at"             => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
+                 "FOREIGN KEY(tree_parent_id) REFERENCES _p3_media_v0_16(id) ON DELETE RESTRICT ON UPDATE CASCADE",
             ),
             $options
         );

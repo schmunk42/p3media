@@ -7,7 +7,7 @@
     )); ?>
     <div class="row">
         <?php echo $form->label($model, 'id'); ?>
-        <?php ; ?>
+        <?php $this->renderPartial('columns/id', array('model' => $model, 'form' => $form)); ?>
     </div>
 
     <div class="row">
@@ -17,15 +17,12 @@
 
     <div class="row">
         <?php echo $form->label($model, 'type'); ?>
-        <?php echo CHtml::activeDropDownList($model, 'type', array(
-            'file' => 'file',
-            'directory' => 'directory',
-)); ?>
+        <?php echo $form->dropDownList($model,'type',P3Media::optstype(),array('empty'=>'undefined'));; ?>
     </div>
 
     <div class="row">
         <?php echo $form->label($model, 'name_id'); ?>
-        <?php $this->renderPartial('columns/name_id', array('model' => $model, 'form' => $form)); ?>
+        <?php echo $form->textField($model, 'name_id', array('size' => 60, 'maxlength' => 64)); ?>
     </div>
 
     <div class="row">
@@ -86,12 +83,12 @@
 
     <div class="row">
         <?php echo $form->label($model, 'info_php_json'); ?>
-        <?php echo $model->info_php_json; ?>
+        <?php echo CVarDumper::dumpAsString(CJSON::decode($model->info_php_json), 5, true); ?>
     </div>
 
     <div class="row">
         <?php echo $form->label($model, 'info_image_magick_json'); ?>
-        <?php echo $model->info_image_magick_json; ?>
+        <?php echo CVarDumper::dumpAsString(CJSON::decode($model->info_image_magick_json), 5, true); ?>
     </div>
 
     <div class="row">

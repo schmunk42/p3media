@@ -19,7 +19,7 @@
     ?>
     
     <div class="row">
-        <div class="span7"> <!-- main inputs -->
+        <div class="span7">
             <h2>
                 <?php echo Yii::t('crud','Data')?>                <small>
                     <?php echo $model->itemLabel ?>
@@ -37,7 +37,7 @@
                         </div>
                         <div class='controls'>
                             <?php
-                            ;
+                            $this->renderPartial('columns/id', array('model' => $model, 'form' => $form));
                             echo $form->error($model,'id')
                             ?>
                             <span class="help-block">
@@ -67,10 +67,7 @@
                         </div>
                         <div class='controls'>
                             <?php
-                            echo CHtml::activeDropDownList($model, 'type', array(
-            'file' => 'file',
-            'directory' => 'directory',
-));
+                            echo $form->dropDownList($model,'type',P3Media::optstype(),array('empty'=>'undefined'));;
                             echo $form->error($model,'type')
                             ?>
                             <span class="help-block">
@@ -85,7 +82,7 @@
                         </div>
                         <div class='controls'>
                             <?php
-                            $this->renderPartial('columns/name_id', array('model' => $model, 'form' => $form));
+                            echo $form->textField($model, 'name_id', array('size' => 60, 'maxlength' => 64));
                             echo $form->error($model,'name_id')
                             ?>
                             <span class="help-block">
@@ -130,7 +127,19 @@
                         </div>
                         <div class='controls'>
                             <?php
-                            echo $form->textField($model, 'tree_parent_id');
+                            $this->widget(
+                '\GtcRelation',
+                array(
+                    'model' => $model,
+                    'relation' => 'treeParent',
+                    'fields' => 'itemLabel',
+                    'allowEmpty' => true,
+                    'style' => 'dropdownlist',
+                    'htmlOptions' => array(
+                        'checkAll' => 'all'
+                    ),
+                )
+                );
                             echo $form->error($model,'tree_parent_id')
                             ?>
                             <span class="help-block">
@@ -256,7 +265,7 @@
                         </div>
                         <div class='controls'>
                             <?php
-                            echo $model->info_php_json;
+                            echo CVarDumper::dumpAsString(CJSON::decode($model->info_php_json), 5, true);
                             echo $form->error($model,'info_php_json')
                             ?>
                             <span class="help-block">
@@ -271,7 +280,7 @@
                         </div>
                         <div class='controls'>
                             <?php
-                            echo $model->info_image_magick_json;
+                            echo CVarDumper::dumpAsString(CJSON::decode($model->info_image_magick_json), 5, true);
                             echo $form->error($model,'info_image_magick_json')
                             ?>
                             <span class="help-block">
@@ -419,11 +428,17 @@
         </div>
         <!-- main inputs -->
 
-        <div class="span5"> <!-- sub inputs -->
+        
+        <div class="span5"><!-- sub inputs -->
             <h2>
                 <?php echo Yii::t('crud','Relations')?>
             </h2>
-                                            
+                                                            
+                <h3>
+                    <?php echo Yii::t('p3MediaModule.model', 'P3Medias'); ?>
+                </h3>
+                <?php echo '<i>'.Yii::t('crud','Switch to view mode to edit related records.').'</i>' ?>
+                                                            
                 <h3>
                     <?php echo Yii::t('p3MediaModule.model', 'P3MediaTranslations'); ?>
                 </h3>
@@ -437,7 +452,8 @@
         <?php echo Yii::t('crud','Fields with <span class="required">*</span> are required.');?>
     </p>
 
-    <div class="form-actions" style="display: none">
+    <!-- TODO: We need the buttons inside the form, when a user hits <enter> -->
+    <div class="form-actions" style="visibility: hidden; height: 1px">
         
         <?php
             echo CHtml::Button(

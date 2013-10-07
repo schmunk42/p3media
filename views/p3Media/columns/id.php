@@ -5,7 +5,6 @@
         echo "<br/>" . CHtml::link(Yii::t('P3MediaModule.crud', 'Download'), $this->createUrl('/p3media/file/', array('id' => $model->id))) . "<br/>";
     }
     ?>
-    <?php echo CHtml::label(Yii::t('P3MediaModule.crud', 'Upload File'), 'fileUpload'); ?>
     <div>
 
         <?php

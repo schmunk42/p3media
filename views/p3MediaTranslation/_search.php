@@ -17,12 +17,12 @@
 
     <div class="row">
         <?php echo $form->label($model, 'status'); ?>
-        <?php echo $form->textField($model, 'status', array('size' => 32, 'maxlength' => 32)); ?>
+        <?php echo $form->dropDownList($model,'status',P3MediaTranslation::optsstatus(),array('empty'=>'undefined'));; ?>
     </div>
 
     <div class="row">
         <?php echo $form->label($model, 'language'); ?>
-        <?php echo $form->textField($model, 'language', array('size' => 8, 'maxlength' => 8)); ?>
+        <?php echo $form->dropDownList($model,'language',P3MediaTranslation::optslanguage(),array('empty'=>'undefined'));; ?>
     </div>
 
     <div class="row">
@@ -42,17 +42,17 @@
 
     <div class="row">
         <?php echo $form->label($model, 'access_read'); ?>
-        <?php echo $form->textField($model, 'access_read', array('size' => 60, 'maxlength' => 256)); ?>
+        <?php echo $form->dropDownList($model,'access_read',P3MediaTranslation::optsaccessread(),array('empty'=>'undefined'));; ?>
     </div>
 
     <div class="row">
         <?php echo $form->label($model, 'access_update'); ?>
-        <?php echo $form->textField($model, 'access_update', array('size' => 60, 'maxlength' => 256)); ?>
+        <?php echo $form->dropDownList($model,'access_update',P3MediaTranslation::optsaccessupdate(),array('empty'=>'undefined'));; ?>
     </div>
 
     <div class="row">
         <?php echo $form->label($model, 'access_delete'); ?>
-        <?php echo $form->textField($model, 'access_delete', array('size' => 60, 'maxlength' => 256)); ?>
+        <?php echo $form->dropDownList($model,'access_delete',P3MediaTranslation::optsaccessdelete(),array('empty'=>'undefined'));; ?>
     </div>
 
     <div class="row">

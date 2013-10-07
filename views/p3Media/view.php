@@ -12,10 +12,10 @@ $this->breadcrumbs[] = Yii::t('crud', 'View');
 ?>
 
 <?php $this->widget("TbBreadcrumbs", array("links"=>$this->breadcrumbs)) ?>
-<h1>
-    <?php echo Yii::t('p3MediaModule.model','P3 Media')?>
+    <h1>
+        <?php echo Yii::t('p3MediaModule.model','P3 Media')?>
     <small><?php echo Yii::t('crud','View')?> #<?php echo $model->id ?></small>
-    </h1>
+        </h1>
 
 
 
@@ -69,14 +69,21 @@ array(
                         )
                     ),
 array(
-                        'name' => 'type',
+                        'name'=>'type',
                         'type' => 'raw',
-                        'value' => $this->widget(
+                        'value' =>$this->widget(
                             'TbEditableField',
                             array(
-                                'model' => $model,
-                                'attribute' => 'type',
+                                'model'=>$model,
+                                'emptytext' => 'Click to select',
+                                'type' => 'select',
+                                'source' => P3Media::optstype(),
+                                'attribute'=>'type',
                                 'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
+                                'select2' => array(
+                                    'placeholder' => 'Select...',
+                                    'allowClear' => true
+                                )
                             ),
                             true
                         )
@@ -110,29 +117,19 @@ array(
 array(
                         'name' => 'default_description',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'default_description',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->default_description
                     ),
-array(
-                        'name' => 'tree_parent_id',
-                        'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'tree_parent_id',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
-                    ),
+        array(
+            'name' => 'tree_parent_id',
+            'value' => ($model->treeParent !== null)?CHtml::link(
+                            '<i class="icon icon-circle-arrow-left"></i> '.$model->treeParent->itemLabel,
+                            array('/p3media/p3Media/view','id' => $model->treeParent->id),
+                            array('class' => '')).' '.CHtml::link(
+                            '<i class="icon icon-pencil"></i> ',
+                            array('/p3media/p3Media/update','id' => $model->treeParent->id),
+                            array('class' => '')):'n/a',
+            'type' => 'html',
+        ),
 array(
                         'name' => 'tree_position',
                         'type' => 'raw',
@@ -149,15 +146,7 @@ array(
 array(
                         'name' => 'custom_data_json',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'custom_data_json',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->custom_data_json
                     ),
 array(
                         'name' => 'original_name',
@@ -227,28 +216,12 @@ array(
 array(
                         'name' => 'info_php_json',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'info_php_json',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->info_php_json
                     ),
 array(
                         'name' => 'info_image_magick_json',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'info_image_magick_json',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->info_image_magick_json
                     ),
 array(
                         'name' => 'access_owner',
@@ -405,6 +378,7 @@ array(
            ),
         )); ?>
     </div>
+
 
     <div class="span5">
         <?php $this->renderPartial('_view-relations',array('model' => $model)); ?>    </div>

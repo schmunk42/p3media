@@ -30,7 +30,7 @@ class P3Media extends BaseP3Media
 
     public function getItemLabel()
     {
-        return parent::getItemLabel();
+        return $this->default_title;
     }
 
     public function behaviors()
@@ -151,6 +151,14 @@ class P3Media extends BaseP3Media
     {
         $model = P3Page::model();
         return array_combine($model->Status->statuses, $model->Status->statuses);
+    }
+
+    /**
+     * @return array list of options
+     */
+    public static function optsType()
+    {
+        return array(self::TYPE_FILE=>self::TYPE_FILE, self::TYPE_FOLDER=>self::TYPE_FOLDER);
     }
 
     /**

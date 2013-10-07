@@ -19,7 +19,7 @@
     ?>
     
     <div class="row">
-        <div class="span7"> <!-- main inputs -->
+        <div class="span7">
             <h2>
                 <?php echo Yii::t('crud','Data')?>                <small>
                     <?php echo $model->itemLabel ?>
@@ -79,7 +79,7 @@
                         </div>
                         <div class='controls'>
                             <?php
-                            echo $form->textField($model, 'status', array('size' => 32, 'maxlength' => 32));
+                            echo $form->dropDownList($model,'status',P3MediaTranslation::optsstatus(),array('empty'=>'undefined'));;
                             echo $form->error($model,'status')
                             ?>
                             <span class="help-block">
@@ -94,7 +94,7 @@
                         </div>
                         <div class='controls'>
                             <?php
-                            echo $form->textField($model, 'language', array('size' => 8, 'maxlength' => 8));
+                            echo $form->dropDownList($model,'language',P3MediaTranslation::optslanguage(),array('empty'=>'undefined'));;
                             echo $form->error($model,'language')
                             ?>
                             <span class="help-block">
@@ -154,7 +154,7 @@
                         </div>
                         <div class='controls'>
                             <?php
-                            echo $form->textField($model, 'access_read', array('size' => 60, 'maxlength' => 256));
+                            echo $form->dropDownList($model,'access_read',P3MediaTranslation::optsaccessread(),array('empty'=>'undefined'));;
                             echo $form->error($model,'access_read')
                             ?>
                             <span class="help-block">
@@ -169,7 +169,7 @@
                         </div>
                         <div class='controls'>
                             <?php
-                            echo $form->textField($model, 'access_update', array('size' => 60, 'maxlength' => 256));
+                            echo $form->dropDownList($model,'access_update',P3MediaTranslation::optsaccessupdate(),array('empty'=>'undefined'));;
                             echo $form->error($model,'access_update')
                             ?>
                             <span class="help-block">
@@ -184,7 +184,7 @@
                         </div>
                         <div class='controls'>
                             <?php
-                            echo $form->textField($model, 'access_delete', array('size' => 60, 'maxlength' => 256));
+                            echo $form->dropDownList($model,'access_delete',P3MediaTranslation::optsaccessdelete(),array('empty'=>'undefined'));;
                             echo $form->error($model,'access_delete')
                             ?>
                             <span class="help-block">
@@ -242,7 +242,8 @@
         </div>
         <!-- main inputs -->
 
-        <div class="span5"> <!-- sub inputs -->
+        
+        <div class="span5"><!-- sub inputs -->
             <h2>
                 <?php echo Yii::t('crud','Relations')?>
             </h2>
@@ -255,7 +256,8 @@
         <?php echo Yii::t('crud','Fields with <span class="required">*</span> are required.');?>
     </p>
 
-    <div class="form-actions" style="display: none">
+    <!-- TODO: We need the buttons inside the form, when a user hits <enter> -->
+    <div class="form-actions" style="visibility: hidden; height: 1px">
         
         <?php
             echo CHtml::Button(

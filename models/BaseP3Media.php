@@ -31,6 +31,8 @@
  * @property string $updated_at
  *
  * Relations of table "p3_media" available as properties of the model:
+ * @property P3Media $treeParent
+ * @property P3Media[] $p3Medias
  * @property P3MediaTranslation[] $p3MediaTranslations
  */
 abstract class BaseP3Media extends CActiveRecord
@@ -50,12 +52,11 @@ abstract class BaseP3Media extends CActiveRecord
     {
         return array_merge(
             parent::rules(), array(
-                array('status, type, default_title, access_owner, access_domain', 'required'),
-                array('name_id, default_description, tree_parent_id, tree_position, custom_data_json, original_name, path, hash, mime_type, size, info_php_json, info_image_magick_json, access_read, access_update, access_delete, access_append, copied_from_id, created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
+                array('status, default_title, access_owner, access_domain', 'required'),
+                array('type, name_id, default_description, tree_parent_id, tree_position, custom_data_json, original_name, path, hash, mime_type, size, info_php_json, info_image_magick_json, access_read, access_update, access_delete, access_append, copied_from_id, created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
                 array('tree_parent_id, tree_position, size, copied_from_id', 'numerical', 'integerOnly' => true),
                 array('status', 'length', 'max' => 32),
-                array('type', 'length', 'max' => 9),
-                array('name_id, hash, access_owner', 'length', 'max' => 64),
+                array('type, name_id, hash, access_owner', 'length', 'max' => 64),
                 array('default_title, path', 'length', 'max' => 255),
                 array('original_name, mime_type', 'length', 'max' => 128),
                 array('access_domain', 'length', 'max' => 8),
@@ -85,6 +86,8 @@ abstract class BaseP3Media extends CActiveRecord
     public function relations()
     {
         return array(
+            'treeParent' => array(self::BELONGS_TO, 'P3Media', 'tree_parent_id'),
+            'p3Medias' => array(self::HAS_MANY, 'P3Media', 'tree_parent_id'),
             'p3MediaTranslations' => array(self::HAS_MANY, 'P3MediaTranslation', 'p3_media_id'),
         );
     }
@@ -149,8 +152,8 @@ abstract class BaseP3Media extends CActiveRecord
         $criteria->compare('t.access_delete', $this->access_delete, true);
         $criteria->compare('t.access_append', $this->access_append, true);
         $criteria->compare('t.copied_from_id', $this->copied_from_id);
-        #$criteria->compare('t.created_at', $this->created_at, true);
-        #$criteria->compare('t.updated_at', $this->updated_at, true);
+        $criteria->compare('t.created_at', $this->created_at, true);
+        $criteria->compare('t.updated_at', $this->updated_at, true);
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria' => $criteria,
