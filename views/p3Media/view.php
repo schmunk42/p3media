@@ -36,17 +36,9 @@ $this->breadcrumbs[] = Yii::t('crud', 'View');
                 'data' => $model,
                 'attributes' => array(
                 array(
-                        'name' => 'id',
+                        'name' => 'Image',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'id',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->image('p3media-manager')
                     ),
 array(
                         'name'=>'status',
@@ -151,90 +143,42 @@ array(
 array(
                         'name' => 'original_name',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'original_name',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->original_name
                     ),
 array(
                         'name' => 'path',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'path',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->path
                     ),
 array(
                         'name' => 'hash',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'hash',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->hash
                     ),
 array(
                         'name' => 'mime_type',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'mime_type',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->mime_type
                     ),
 array(
                         'name' => 'size',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'size',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->size
                     ),
 array(
-                        'name' => 'info_php_json',
+                        'name' => 'Image',
                         'type' => 'raw',
-                        'value' => $model->info_php_json
+                        'value' => CVarDumper::dumpAsString(CJSON::decode($model->info_php_json), 5, true)
                     ),
 array(
-                        'name' => 'info_image_magick_json',
+                        'name' => 'Image',
                         'type' => 'raw',
-                        'value' => $model->info_image_magick_json
+                        'value' => CVarDumper::dumpAsString(CJSON::decode($model->info_image_magick_json), 5, true)
                     ),
 array(
                         'name' => 'access_owner',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'access_owner',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->access_owner
                     ),
 array(
                         'name'=>'access_domain',
@@ -339,41 +283,17 @@ array(
 array(
                         'name' => 'copied_from_id',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'copied_from_id',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->copied_from_id
                     ),
 array(
                         'name' => 'created_at',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'created_at',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->created_at
                     ),
 array(
                         'name' => 'updated_at',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'updated_at',
-                                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->updated_at
                     ),
            ),
         )); ?>

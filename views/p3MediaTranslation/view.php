@@ -120,15 +120,7 @@ array(
 array(
                         'name' => 'access_owner',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'access_owner',
-                                'url' => $this->createUrl('/p3media/p3MediaTranslation/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->access_owner
                     ),
 array(
                         'name'=>'access_read',
@@ -193,41 +185,17 @@ array(
 array(
                         'name' => 'copied_from_id',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'copied_from_id',
-                                'url' => $this->createUrl('/p3media/p3MediaTranslation/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->copied_from_id
                     ),
 array(
                         'name' => 'created_at',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'created_at',
-                                'url' => $this->createUrl('/p3media/p3MediaTranslation/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->created_at
                     ),
 array(
                         'name' => 'updated_at',
                         'type' => 'raw',
-                        'value' => $this->widget(
-                            'TbEditableField',
-                            array(
-                                'model' => $model,
-                                'attribute' => 'updated_at',
-                                'url' => $this->createUrl('/p3media/p3MediaTranslation/editableSaver'),
-                            ),
-                            true
-                        )
+                        'value' => $model->updated_at
                     ),
            ),
         )); ?>
