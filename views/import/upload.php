@@ -1,5 +1,5 @@
 <?php
-$this->breadcrumbs[] = Yii::t('P3MediaModule.crud', 'Upload');
+$this->breadcrumbs[] = Yii::t('P3MediaModule.module', 'Upload');
 
 
 if ($this->action->id !== 'uploadPopup') {
@@ -11,14 +11,14 @@ if ($this->action->id !== 'uploadPopup') {
 ?>
 
 <h1>
-    <?php echo Yii::t('P3MediaModule.crud', 'Media'); ?> <small><?php echo Yii::t('P3MediaModule.crud', 'Upload Session'); ?></small>
+    <?php echo Yii::t('P3MediaModule.module', 'Media'); ?> <small><?php echo Yii::t('P3MediaModule.module', 'Upload Session'); ?></small>
 </h1>
 
 <div class="btn-toolbar">
     <?php
     $this->widget('bootstrap.widgets.TbButton',
                   array(
-                       'label'       => Yii::t('P3MediaModule.crud', 'Browse'),
+                       'label'       => Yii::t('P3MediaModule.module', 'Browse'),
                        'icon'        => 'list',
                        'url'         => array(
                            '/p3media/default',
@@ -32,14 +32,14 @@ if ($this->action->id !== 'uploadPopup') {
 <p>
 <ul>
     <li>
-    	<?php echo Yii::t('P3MediaModule.crud', 'Add files by drag & drop or by clicking the select button below'); ?>
+    	<?php echo Yii::t('P3MediaModule.module', 'Add files by drag & drop or by clicking the select button below'); ?>
     </li>
     <li>
-    	<?php echo Yii::t('P3MediaModule.crud', 'Click Start upload'); ?>
+    	<?php echo Yii::t('P3MediaModule.module', 'Click Start upload'); ?>
     </li>
     <li>
-    	<?php echo Yii::t('P3MediaModule.crud', 'When upload has been completed, manage your files with'); ?>
-        <?php echo CHtml::link(Yii::t('P3MediaModule.crud', 'File Browser'), array('default/browser')) ?>
+    	<?php echo Yii::t('P3MediaModule.module', 'When upload has been completed, manage your files with'); ?>
+        <?php echo CHtml::link(Yii::t('P3MediaModule.module', 'File Browser'), array('default/browser')) ?>
     </li>
 </ul>
 </p>

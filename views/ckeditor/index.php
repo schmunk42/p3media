@@ -1,11 +1,11 @@
 <div class="ckeditor">
-    <h1><?php echo Yii::t('P3MediaModule.crud', 'Media'); ?>
-        <small><?php echo Yii::t('P3MediaModule.crud', 'CKEditor Browser'); ?></small>
+    <h1><?php echo Yii::t('P3MediaModule.module', 'Media'); ?>
+        <small><?php echo Yii::t('P3MediaModule.module', 'CKEditor Browser'); ?></small>
     </h1>
 
     <div class="row">
         <div class="span4">
-            <h3><?php echo Yii::t('P3MediaModule.crud', '1. Choose Format'); ?></h3>
+            <h3><?php echo Yii::t('P3MediaModule.module', '1. Choose Format'); ?></h3>
 
             <p>
                 <?php
@@ -38,10 +38,10 @@
                 ?>
 
                 <?php
-                #echo CHtml::link(Yii::t('P3MediaModule.crud', 'Advanced Search'), '#', array('class' => 'search-button'));
+                #echo CHtml::link(Yii::t('P3MediaModule.module', 'Advanced Search'), '#', array('class' => 'search-button'));
                 #echo " ";
                 echo CHtml::link(
-                    Yii::t('P3MediaModule.crud', 'Upload'),
+                    Yii::t('P3MediaModule.module', 'Upload'),
                     array('/p3media/import/upload'),
                     array(
                          'target' => '_blank',
@@ -50,7 +50,7 @@
                 );
                 echo " ";
                 echo CHtml::link(
-                    Yii::t('P3MediaModule.crud', 'Reload'),
+                    Yii::t('P3MediaModule.module', 'Reload'),
                     null,
                     array(
                          'target'  => '_blank',
@@ -82,7 +82,7 @@
                                                                   'class' => 'span1')); ?>-->
 
 
-                <?php echo CHtml::submitButton(Yii::t('P3MediaModule.crud', 'Search')); ?>
+                <?php echo CHtml::submitButton(Yii::t('P3MediaModule.module', 'Search')); ?>
 
 
 
@@ -97,7 +97,7 @@
 
     </div>
 
-    <h3><?php echo Yii::t('P3MediaModule.crud', '2. Choose File'); ?></h3>
+    <h3><?php echo Yii::t('P3MediaModule.module', '2. Choose File'); ?></h3>
 
     <div class="row">
         <div class="span12">
@@ -129,7 +129,7 @@
 <script type="text/javascript">
     function select(id, title) {
         if ($('#preset').val() == '') {
-            alert("<?php echo Yii::t('P3MediaModule.crud', 'Please choose an image preset.') ?>");
+            alert("<?php echo Yii::t('P3MediaModule.module', 'Please choose an image preset.') ?>");
             return false;
         }
         var identifier = $('#preset').val();

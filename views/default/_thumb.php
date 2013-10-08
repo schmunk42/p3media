@@ -9,16 +9,8 @@
                  'size'    => 'mini',
                  'buttons' => array(
                      array(
-                         'icon' => 'eye-open',
-                         'url'  => array(
-                             'p3Media/view',
-                             'id'        => $data->id,
-                             'returnUrl' => $this->createUrl("", $_GET)
-                         ),
-
-                     ),
-                     array(
                          'icon' => 'pencil',
+                         'type' => 'primary',
                          'url'  => array(
                              'p3Media/update',
                              'id'        => $data->id,
@@ -26,12 +18,13 @@
                          )
                      ),
                      array(
-                         'icon' => 'info-sign',
+                         'icon' => 'eye-open',
                          'url'  => array(
-                             'p3MediaMeta/update',
+                             'p3Media/view',
                              'id'        => $data->id,
                              'returnUrl' => $this->createUrl("", $_GET)
-                         )
+                         ),
+
                      ),
                      array(
                          "type"        => "danger",
@@ -42,7 +35,7 @@
                                  "id"        => $data->id,
                                  "returnUrl" => $_SERVER['REQUEST_URI']
                              ),
-                             "confirm" => Yii::t('P3MediaModule.crud', 'Do you want to delete this item?')
+                             "confirm" => Yii::t('P3MediaModule.module', 'Do you want to delete this item?')
                          )
                      )
                  )
@@ -95,7 +88,7 @@
              'attribute' => 'tree_parent_id',
              'url'       => $this->createUrl('/p3media/p3MediaMeta/ajaxUpdate'),
              'source'    => $this->directoriesList,
-             'emptytext' => Yii::t('app', 'Select Folder')
+             'emptytext' => Yii::t('P3MediaModule.module', 'Select Folder')
         )
     );
     ?>

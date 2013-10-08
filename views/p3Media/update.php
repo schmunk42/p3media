@@ -2,13 +2,13 @@
 $this->setPageTitle(
         Yii::t('p3MediaModule.model', 'P3 Media')
         . ' - '
-        . Yii::t('crud', 'Update')
+        . Yii::t('P3MediaModule.crud', 'Update')
         . ': '   
         . $model->getItemLabel()
 );    
 $this->breadcrumbs[Yii::t('p3MediaModule.model','P3 Medias')] = array('admin');
 $this->breadcrumbs[$model->{$model->tableSchema->primaryKey}] = array('view','id' => $model->{$model->tableSchema->primaryKey});
-$this->breadcrumbs[] = Yii::t('crud', 'Update');
+$this->breadcrumbs[] = Yii::t('P3MediaModule.crud', 'Update');
 ?>
 
 <?php $this->widget("TbBreadcrumbs", array("links"=>$this->breadcrumbs)) ?>
@@ -16,7 +16,7 @@ $this->breadcrumbs[] = Yii::t('crud', 'Update');
         
         <?php echo Yii::t('p3MediaModule.model','P3 Media'); ?>
         <small>
-            <?php echo Yii::t('crud','Update')?> #<?php echo $model->id ?>
+            <?php echo Yii::t('P3MediaModule.crud','Update')?> #<?php echo $model->id ?>
         </small>
         
     </h1>

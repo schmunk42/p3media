@@ -25,15 +25,16 @@ foreach ($cruds AS $crud) {
             'slim' => $appRoot . '/vendor/phundament/gii-template-collection/fullCrud/templates/slim',
         ),
         "model"     => array(
-            "model"          => "vendor.phundament.p3Media.models." . ucfirst($crud),
-            "controller"     => 'p3media/' . $crud,
-            'messageCatalog' => 'p3MediaModule.model',
-            'providers'      => array(
+            "model"                  => "vendor.phundament.p3Media.models." . ucfirst($crud),
+            "controller"             => 'p3media/' . $crud,
+            'messageCatalog'         => 'p3MediaModule.model',
+            'messageCatalogStandard' => 'P3MediaModule.crud',
+            'providers'              => array(
                 'vendor.phundament.gii-template-collection.fullCrud.providers.GtcPartialViewProvider',
                 'application.components.PhFieldProvider'
             ),
-            "template"       => "slim",
-            'formEnctype'    => 'multipart/form-data'
+            "template"               => "slim",
+            'formEnctype'            => 'multipart/form-data'
         )
     );
 }

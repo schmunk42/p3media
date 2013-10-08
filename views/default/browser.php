@@ -2,7 +2,7 @@
     <?php
     $this->breadcrumbs = array(
         $this->module->id => array("/" . $this->module->id),
-        Yii::t('P3MediaModule.crud', 'Browser')
+        Yii::t('P3MediaModule.module', 'Browser')
     );
     ?>
 
@@ -17,8 +17,8 @@
 
 
     <h1>
-        <?php echo Yii::t('P3MediaModule.crud', 'Media'); ?>
-        <small><?php echo Yii::t('P3MediaModule.crud', 'Browser'); ?></small>
+        <?php echo Yii::t('P3MediaModule.module', 'Media'); ?>
+        <small><?php echo Yii::t('P3MediaModule.module', 'Browser'); ?></small>
     </h1>
 
     <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id' => 'upload-modal')); ?>
@@ -39,7 +39,7 @@
             array(
                  'type'  => 'primary',
                  'icon'  => 'refresh white',
-                 'label' => Yii::t('P3MediaModule.crud', 'Browser'),
+                 'label' => Yii::t('P3MediaModule.module', 'Browser'),
                  'url'   => array(''),
                  #'htmlOptions' => array('data-dismiss' => 'modal'),
             )
@@ -52,7 +52,7 @@
         $this->widget(
             'bootstrap.widgets.TbButton',
             array(
-                 'label'       => Yii::t('P3MediaModule.crud', 'Upload'),
+                 'label'       => Yii::t('P3MediaModule.module', 'Upload'),
                  'icon'        => 'circle-arrow-up',
                  'htmlOptions' => array(
                      'data-toggle' => 'modal',
@@ -71,14 +71,14 @@
                  #'type'=>'inverse', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                  'buttons' => array(
                      array(
-                         'label'  => Yii::t('P3MediaModule.crud', 'Uploaded Files'),
+                         'label'  => Yii::t('P3MediaModule.module', 'Uploaded Files'),
                          'icon'   => 'inbox',
                          'url'    => array("/p3media/default/browser"),
                          'active' => false
                      ),
                      array(
                          #'class' => 'TbMenu',
-                         'label' => Yii::t('P3MediaModule.crud', 'Folders'),
+                         'label' => Yii::t('P3MediaModule.module', 'Folders'),
                          'icon'  => 'folder-open',
                          'items' => $directories
                      )
@@ -94,7 +94,7 @@
             array(
                  'buttons' => array(
                      array(
-                         'label'       => Yii::t('P3MediaModule.crud', 'Create File'),
+                         'label'       => Yii::t('P3MediaModule.module', 'Create File'),
                          'icon'        => 'plus',
                          'url'         => array(
                              'p3Media/create',
@@ -104,7 +104,7 @@
                          'htmlOptions' => array('class' => 'btn')
                      ),
                      array(
-                         'label'       => Yii::t('P3MediaModule.crud', 'Create Folder'),
+                         'label'       => Yii::t('P3MediaModule.module', 'Create Folder'),
                          'icon'        => 'plus',
                          'url'         => array(
                              'p3Media/create',
@@ -122,7 +122,7 @@
         $this->widget(
             'bootstrap.widgets.TbButton',
             array(
-                 'label'       => Yii::t('P3MediaModule.crud', 'Manage'),
+                 'label'       => Yii::t('P3MediaModule.module', 'Manage'),
                  'icon'        => 'list',
                  'url'         => array(
                      'p3Media/admin',
@@ -137,7 +137,7 @@
         <div class="form-search" style="display: inline-block">
             <?php $form = $this->beginWidget('CActiveForm', array('method' => 'get')); ?>
             <?php echo $form->textField($files, 'default_title', array('size' => 12, 'maxlength' => 32, 'class' => '')); ?>
-            <?php echo CHtml::submitButton(Yii::t('P3MediaModule.crud', 'Search'), array('class' => 'btn')); ?>
+            <?php echo CHtml::submitButton(Yii::t('P3MediaModule.module', 'Search'), array('class' => 'btn')); ?>
             <?php $this->endWidget(); ?>
         </div>
     </div>
@@ -163,8 +163,8 @@
                          'dataProvider'       => $dataProvider,
                          'template'           => "{sorter}<br/>\n{pager}\n{items}\n{pager}\n{summary}", // TODO: fix template (no br)
                          'sortableAttributes' => array(
-                             'title' => Yii::t('P3MediaModule.crud', 'Title'),
-                             'id'    => Yii::t('P3MediaModule.crud', 'ID')
+                             'title' => Yii::t('P3MediaModule.module', 'Title'),
+                             'id'    => Yii::t('P3MediaModule.module', 'ID')
                          ),
                          'pager'              => array(
                              'class'               => 'TbPager',

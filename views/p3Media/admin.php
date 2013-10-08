@@ -2,7 +2,7 @@
 $this->setPageTitle(
     Yii::t('p3MediaModule.model', 'P3 Medias')
     . ' - '
-    . Yii::t('crud', 'Manage')
+    . Yii::t('P3MediaModule.crud', 'Manage')
 );
 
 $this->breadcrumbs[] = Yii::t('p3MediaModule.model', 'P3 Medias');
@@ -25,7 +25,7 @@ Yii::app()->clientScript->registerScript('search', "
     <h1>
 
         <?php echo Yii::t('p3MediaModule.model', 'P3 Medias'); ?>
-        <small><?php echo Yii::t('crud', 'Manage'); ?></small>
+        <small><?php echo Yii::t('P3MediaModule.crud', 'Manage'); ?></small>
 
     </h1>
 

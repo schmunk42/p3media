@@ -2,7 +2,7 @@
     <?php
     if ($this->action->id == 'update') {
         echo $model->image('p3media-manager');
-        echo "<br/>" . CHtml::link(Yii::t('P3MediaModule.crud', 'Download'), $this->createUrl('/p3media/file/', array('id' => $model->id))) . "<br/>";
+        echo "<br/>" . CHtml::link(Yii::t('P3MediaModule.module', 'Download'), $this->createUrl('/p3media/file/', array('id' => $model->id))) . "<br/>";
     }
     ?>
     <div>

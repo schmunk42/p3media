@@ -21,7 +21,7 @@
     <div class="row">
         <div class="span7">
             <h2>
-                <?php echo Yii::t('crud','Data')?>                <small>
+                <?php echo Yii::t('P3MediaModule.crud','Data')?>                <small>
                     <?php echo $model->itemLabel ?>
                 </small>
 
@@ -44,7 +44,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -59,7 +59,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -74,7 +74,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -89,7 +89,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -104,7 +104,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -119,7 +119,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php echo '<h3>Tree</h3>' ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -146,7 +146,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -161,7 +161,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -182,7 +182,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php echo '<h3>File</h3>' ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -197,7 +197,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -212,7 +212,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -227,7 +227,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -242,7 +242,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -257,7 +257,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -272,7 +272,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -287,7 +287,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php echo '<h3>Access</h3>' ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -302,7 +302,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -317,7 +317,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -332,7 +332,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -347,7 +347,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -362,7 +362,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -377,7 +377,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -392,7 +392,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -407,7 +407,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                                     <?php  ?>
                     <div class="control-group">
                         <div class='control-label'>
@@ -422,7 +422,7 @@
                             ?>                            </div>
                         </div>
                     </div>
-                    <?php  ?>                    
+                    <?php  ?>
                 
             </div>
         </div>
@@ -430,26 +430,26 @@
 
         
         <div class="span5"><!-- sub inputs -->
+            <div class="well">
             <h2>
-                <?php echo Yii::t('crud','Relations')?>
-            </h2>
+                <?php echo Yii::t('P3MediaModule.crud','Relations')?>            </h2>
                                                             
                 <h3>
-                    <?php echo Yii::t('p3MediaModule.model', 'P3Medias'); ?>
+                    <?php echo Yii::t('p3MediaModule.model', 'relation.P3Medias'); ?>
                 </h3>
-                <?php echo '<i>'.Yii::t('crud','Switch to view mode to edit related records.').'</i>' ?>
+                <?php echo '<i>'.Yii::t('P3MediaModule.crud','Switch to view mode to edit related records.').'</i>' ?>
                                                             
                 <h3>
-                    <?php echo Yii::t('p3MediaModule.model', 'P3MediaTranslations'); ?>
+                    <?php echo Yii::t('p3MediaModule.model', 'relation.P3MediaTranslations'); ?>
                 </h3>
-                <?php echo '<i>'.Yii::t('crud','Switch to view mode to edit related records.').'</i>' ?>
-                            
+                <?php echo '<i>'.Yii::t('P3MediaModule.crud','Switch to view mode to edit related records.').'</i>' ?>
+                                        </div>
         </div>
         <!-- sub inputs -->
     </div>
 
     <p class="alert">
-        <?php echo Yii::t('crud','Fields with <span class="required">*</span> are required.');?>
+        <?php echo Yii::t('P3MediaModule.crud','Fields with <span class="required">*</span> are required.');?>
     </p>
 
     <!-- TODO: We need the buttons inside the form, when a user hits <enter> -->
@@ -457,11 +457,11 @@
         
         <?php
             echo CHtml::Button(
-            Yii::t('crud', 'Cancel'), array(
+            Yii::t('P3MediaModule.crud', 'Cancel'), array(
                 'submit' => (isset($_GET['returnUrl']))?$_GET['returnUrl']:array('p3Media/admin'),
                 'class' => 'btn'
             ));
-            echo ' '.CHtml::submitButton(Yii::t('crud', 'Save'), array(
+            echo ' '.CHtml::submitButton(Yii::t('P3MediaModule.crud', 'Save'), array(
                 'class' => 'btn btn-primary'
             ));
         ?>
