@@ -49,7 +49,7 @@ class CkeditorController extends Controller
             $model->attributes = $_GET['P3Media'];
         }
 
-        $this->render('index', array('model' => $model));
+        $this->render('index', array('model' => $model, 'defaultPreset' => null));
     }
 
     public function actionImage()
