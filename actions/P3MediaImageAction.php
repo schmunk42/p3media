@@ -279,6 +279,9 @@ class P3MediaImageAction extends CAction {
 
     private static function sendImage($image, $filename, $preset) {
 
+        $etag = md5_file($image);
+        header("Etag: $etag");
+
         if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])
             &&
             (strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) == filemtime($image))) {
