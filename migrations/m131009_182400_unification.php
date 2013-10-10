@@ -1,6 +1,6 @@
 <?php
 
-class m131006_182400_unification extends EDbMigration
+class m131009_182400_unification extends EDbMigration
 {
     public function up()
     {
