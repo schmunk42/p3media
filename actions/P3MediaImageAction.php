@@ -153,12 +153,12 @@ class P3MediaImageAction extends CAction {
     }
 
     /**
-     * Process a local file with given preset
+     * Process a local file with given preset to a public location
      *
      * @param $file
      * @param $preset
      *
-     * @return string
+     * @return string URL of outputted file
      */
     public static function processLocalFile($file, $preset){
         $settings = Yii::app()->getModule('p3media')->params['presets'][$preset];
@@ -206,23 +206,7 @@ class P3MediaImageAction extends CAction {
             $model = P3Media::model()->findByAttributes(
                     array(key($identifier) => $identifier[key($identifier)])); // TODO?
         }
-
         return $model;
-
-
-
-        if ($model === null) {
-            return null;
-        }
-
-        /* TODO ?? we search for the model via meta-data to apply the criteria in beforeFind()
-        $mm = P3MediaMeta::model()->findByPk($model->id);
-        if ($mm !== null) {
-            return $mm->id0;
-        } else {
-            return null;
-        }*/
-
   }
 
     private static function generateHash($model, $preset) {
