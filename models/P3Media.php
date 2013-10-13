@@ -158,7 +158,7 @@ class P3Media extends BaseP3Media
      */
     public static function optsType()
     {
-        return array(self::TYPE_FILE=>self::TYPE_FILE, self::TYPE_FOLDER=>self::TYPE_FOLDER);
+        return array(self::TYPE_FILE => self::TYPE_FILE, self::TYPE_FOLDER => self::TYPE_FOLDER);
     }
 
     /**
