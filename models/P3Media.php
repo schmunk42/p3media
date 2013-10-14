@@ -47,6 +47,9 @@ class P3Media extends BaseP3Media
                      'parentRelation'   => 'treeParent',
                      'childrenRelation' => 'p3Widgets'
                  ),
+                 'EventBridge' => array(
+                     'class'  => 'EventBridgeBehavior',
+                 ),
                  'LoggableBehavior' => array(
                      'class'   => 'vendor.sammaye.auditrail2.behaviors.LoggableBehavior',
                      'ignored' => array(

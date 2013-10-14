@@ -12,10 +12,21 @@
             "homepage": "http://www.usrbin.de"
         }
     ],
+    "autoload": {
+        "classmap": ["models/"]
+    },
     "require": {
         "php": ">=5.3.0",
         "yiisoft/yii": "1.1.*",
         "clevertech/yiibooster": ">=1.0,<3.0",
-        "phundament/p3extensions": ">=0.17.0"
+        "mikehaertl/translatable": "1.*",
+        "phundament/p3extensions": ">=0.17.0",
+        "schmunk42/access": "@dev",
+        "schmunk42/adjacency-list-behavior": "@dev",
+        "schmunk42/relation": "1.*",
+        "sammaye/auditrail2": "1.*",
+        "yiiext/status-behavior": "0.6.*",
+        "bwoester/yii-static-events-component": "1.*",
+        "bwoester/yii-event-interceptor": "1.*"
     }
 }
