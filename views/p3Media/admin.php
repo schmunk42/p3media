@@ -29,8 +29,9 @@ Yii::app()->clientScript->registerScript('search', "
 
     </h1>
 
-<?php $this->renderPartial("_toolbar", array("model" => $model)); ?>
 
+<?php $this->renderPartial("_toolbar", array("model" => $model)); ?>
+<?php Yii::beginProfile('P3Media.view.grid'); ?>
 
 
 <?php
@@ -39,7 +40,8 @@ $this->widget('TbGridView',
         'id' => 'p3-media-grid',
         'dataProvider' => $model->search(),
         'filter' => $model,
-        'template' => '{pager}{summary}{items}{pager}',
+        #'responsiveTable' => true,
+        'template' => '{summary}{pager}{items}{pager}',
         'pager' => array(
             'class' => 'TbPager',
             'displayFirstAndLast' => true,
@@ -95,7 +97,7 @@ $this->widget('TbGridView',
             array(
                 'name' => 'tree_parent_id',
                 'value' => 'CHtml::value($data, \'p3Medias.itemLabel\')',
-                'filter' => CHtml::listData(P3Media::model()->findAll(array('limit' => 1000)), 'id', 'itemLabel'),
+                'filter' => '',//CHtml::listData(P3Media::model()->findAll(array('limit' => 1000)), 'id', 'itemLabel'),
             ),
             array(
                 'class' => 'TbEditableColumn',
@@ -224,3 +226,4 @@ $this->widget('TbGridView',
     )
 );
 ?>
+<?php Yii::endProfile('P3Media.view.grid'); ?>

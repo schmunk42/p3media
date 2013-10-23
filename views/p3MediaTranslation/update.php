@@ -16,8 +16,10 @@ $this->breadcrumbs[] = Yii::t('P3MediaModule.crud', 'Update');
         
         <?php echo Yii::t('p3MediaModule.model','P3 Media Translation'); ?>
         <small>
-            <?php echo Yii::t('P3MediaModule.crud','Update')?> #<?php echo $model->id ?>
+            <?php echo $model->itemLabel ?>
+
         </small>
+
         
     </h1>
 

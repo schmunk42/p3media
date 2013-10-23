@@ -9,7 +9,7 @@
                  'size'    => 'mini',
                  'buttons' => array(
                      array(
-                         'icon' => 'pencil',
+                         'icon' => 'pencil white',
                          'type' => 'primary',
                          'url'  => array(
                              'p3Media/update',
@@ -28,7 +28,7 @@
                      ),
                      array(
                          "type"        => "danger",
-                         "icon"        => "icon-remove icon-white",
+                         "icon"        => "remove white",
                          "htmlOptions" => array(
                              "submit"  => array(
                                  "p3Media/delete",

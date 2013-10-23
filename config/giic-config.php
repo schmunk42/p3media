@@ -31,7 +31,7 @@ foreach ($cruds AS $crud) {
             'messageCatalogStandard' => 'P3MediaModule.crud',
             'providers'              => array(
                 'vendor.phundament.gii-template-collection.fullCrud.providers.GtcPartialViewProvider',
-                'application.components.PhFieldProvider'
+                'vendor.schmunk42.giic.examples.PhFieldProvider'
             ),
             "template"               => "slim",
             'formEnctype'            => 'multipart/form-data'

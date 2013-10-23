@@ -22,8 +22,7 @@
         <div class="span7">
             <h2>
                 <?php echo Yii::t('P3MediaModule.crud','Data')?>                <small>
-                    <?php echo $model->itemLabel ?>
-                </small>
+                    #<?php echo $model->id ?>                </small>
 
             </h2>
 
@@ -36,12 +35,12 @@
                             <?php  ?>
                         </div>
                         <div class='controls'>
-                            <div style="display: inline-block" data-toggle='tooltip' data-placement="right"
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
                                  title='<?php echo (($t = Yii::t('p3MediaModule.model', 'tooltip.id')) != 'tooltip.id')?$t:'' ?>'>
                                 <?php
                             ;
                             echo $form->error($model,'id')
-                            ?>                            </div>
+                            ?>                            </span>
                         </div>
                     </div>
                     <?php  ?>
@@ -51,7 +50,7 @@
                             <?php echo $form->labelEx($model, 'p3_media_id') ?>
                         </div>
                         <div class='controls'>
-                            <div style="display: inline-block" data-toggle='tooltip' data-placement="right"
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
                                  title='<?php echo (($t = Yii::t('p3MediaModule.model', 'tooltip.p3_media_id')) != 'tooltip.p3_media_id')?$t:'' ?>'>
                                 <?php
                             $this->widget(
@@ -68,7 +67,7 @@
                 )
                 );
                             echo $form->error($model,'p3_media_id')
-                            ?>                            </div>
+                            ?>                            </span>
                         </div>
                     </div>
                     <?php  ?>
@@ -78,12 +77,12 @@
                             <?php echo $form->labelEx($model, 'status') ?>
                         </div>
                         <div class='controls'>
-                            <div style="display: inline-block" data-toggle='tooltip' data-placement="right"
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
                                  title='<?php echo (($t = Yii::t('p3MediaModule.model', 'tooltip.status')) != 'tooltip.status')?$t:'' ?>'>
                                 <?php
                             echo $form->dropDownList($model,'status',P3MediaTranslation::optsstatus(),array('empty'=>'undefined'));;
                             echo $form->error($model,'status')
-                            ?>                            </div>
+                            ?>                            </span>
                         </div>
                     </div>
                     <?php  ?>
@@ -93,12 +92,12 @@
                             <?php echo $form->labelEx($model, 'language') ?>
                         </div>
                         <div class='controls'>
-                            <div style="display: inline-block" data-toggle='tooltip' data-placement="right"
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
                                  title='<?php echo (($t = Yii::t('p3MediaModule.model', 'tooltip.language')) != 'tooltip.language')?$t:'' ?>'>
                                 <?php
                             echo $form->dropDownList($model,'language',P3MediaTranslation::optslanguage(),array('empty'=>'undefined'));;
                             echo $form->error($model,'language')
-                            ?>                            </div>
+                            ?>                            </span>
                         </div>
                     </div>
                     <?php  ?>
@@ -108,12 +107,12 @@
                             <?php echo $form->labelEx($model, 'title') ?>
                         </div>
                         <div class='controls'>
-                            <div style="display: inline-block" data-toggle='tooltip' data-placement="right"
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
                                  title='<?php echo (($t = Yii::t('p3MediaModule.model', 'tooltip.title')) != 'tooltip.title')?$t:'' ?>'>
                                 <?php
                             echo $form->textField($model, 'title', array('size' => 60, 'maxlength' => 255));
                             echo $form->error($model,'title')
-                            ?>                            </div>
+                            ?>                            </span>
                         </div>
                     </div>
                     <?php  ?>
@@ -123,12 +122,12 @@
                             <?php echo $form->labelEx($model, 'description') ?>
                         </div>
                         <div class='controls'>
-                            <div style="display: inline-block" data-toggle='tooltip' data-placement="right"
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
                                  title='<?php echo (($t = Yii::t('p3MediaModule.model', 'tooltip.description')) != 'tooltip.description')?$t:'' ?>'>
                                 <?php
                             echo $form->textArea($model, 'description', array('rows' => 6, 'cols' => 50));
                             echo $form->error($model,'description')
-                            ?>                            </div>
+                            ?>                            </span>
                         </div>
                     </div>
                     <?php  ?>
@@ -138,12 +137,12 @@
                             <?php echo $form->labelEx($model, 'access_owner') ?>
                         </div>
                         <div class='controls'>
-                            <div style="display: inline-block" data-toggle='tooltip' data-placement="right"
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
                                  title='<?php echo (($t = Yii::t('p3MediaModule.model', 'tooltip.access_owner')) != 'tooltip.access_owner')?$t:'' ?>'>
                                 <?php
                             echo $form->textField($model,'access_owner',array('disabled'=>'disabled'));
                             echo $form->error($model,'access_owner')
-                            ?>                            </div>
+                            ?>                            </span>
                         </div>
                     </div>
                     <?php  ?>
@@ -153,12 +152,12 @@
                             <?php echo $form->labelEx($model, 'access_read') ?>
                         </div>
                         <div class='controls'>
-                            <div style="display: inline-block" data-toggle='tooltip' data-placement="right"
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
                                  title='<?php echo (($t = Yii::t('p3MediaModule.model', 'tooltip.access_read')) != 'tooltip.access_read')?$t:'' ?>'>
                                 <?php
                             echo $form->dropDownList($model,'access_read',P3MediaTranslation::optsaccessread(),array('empty'=>'undefined'));;
                             echo $form->error($model,'access_read')
-                            ?>                            </div>
+                            ?>                            </span>
                         </div>
                     </div>
                     <?php  ?>
@@ -168,12 +167,12 @@
                             <?php echo $form->labelEx($model, 'access_update') ?>
                         </div>
                         <div class='controls'>
-                            <div style="display: inline-block" data-toggle='tooltip' data-placement="right"
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
                                  title='<?php echo (($t = Yii::t('p3MediaModule.model', 'tooltip.access_update')) != 'tooltip.access_update')?$t:'' ?>'>
                                 <?php
                             echo $form->dropDownList($model,'access_update',P3MediaTranslation::optsaccessupdate(),array('empty'=>'undefined'));;
                             echo $form->error($model,'access_update')
-                            ?>                            </div>
+                            ?>                            </span>
                         </div>
                     </div>
                     <?php  ?>
@@ -183,12 +182,12 @@
                             <?php echo $form->labelEx($model, 'access_delete') ?>
                         </div>
                         <div class='controls'>
-                            <div style="display: inline-block" data-toggle='tooltip' data-placement="right"
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
                                  title='<?php echo (($t = Yii::t('p3MediaModule.model', 'tooltip.access_delete')) != 'tooltip.access_delete')?$t:'' ?>'>
                                 <?php
                             echo $form->dropDownList($model,'access_delete',P3MediaTranslation::optsaccessdelete(),array('empty'=>'undefined'));;
                             echo $form->error($model,'access_delete')
-                            ?>                            </div>
+                            ?>                            </span>
                         </div>
                     </div>
                     <?php  ?>
@@ -198,12 +197,12 @@
                             <?php echo $form->labelEx($model, 'copied_from_id') ?>
                         </div>
                         <div class='controls'>
-                            <div style="display: inline-block" data-toggle='tooltip' data-placement="right"
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
                                  title='<?php echo (($t = Yii::t('p3MediaModule.model', 'tooltip.copied_from_id')) != 'tooltip.copied_from_id')?$t:'' ?>'>
                                 <?php
                             echo $form->textField($model,'copied_from_id',array('disabled'=>'disabled'));
                             echo $form->error($model,'copied_from_id')
-                            ?>                            </div>
+                            ?>                            </span>
                         </div>
                     </div>
                     <?php  ?>
@@ -213,12 +212,12 @@
                             <?php echo $form->labelEx($model, 'created_at') ?>
                         </div>
                         <div class='controls'>
-                            <div style="display: inline-block" data-toggle='tooltip' data-placement="right"
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
                                  title='<?php echo (($t = Yii::t('p3MediaModule.model', 'tooltip.created_at')) != 'tooltip.created_at')?$t:'' ?>'>
                                 <?php
                             echo $form->textField($model,'created_at',array('disabled'=>'disabled'));
                             echo $form->error($model,'created_at')
-                            ?>                            </div>
+                            ?>                            </span>
                         </div>
                     </div>
                     <?php  ?>
@@ -228,12 +227,12 @@
                             <?php echo $form->labelEx($model, 'updated_at') ?>
                         </div>
                         <div class='controls'>
-                            <div style="display: inline-block" data-toggle='tooltip' data-placement="right"
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
                                  title='<?php echo (($t = Yii::t('p3MediaModule.model', 'tooltip.updated_at')) != 'tooltip.updated_at')?$t:'' ?>'>
                                 <?php
                             echo $form->textField($model,'updated_at',array('disabled'=>'disabled'));
                             echo $form->error($model,'updated_at')
-                            ?>                            </div>
+                            ?>                            </span>
                         </div>
                     </div>
                     <?php  ?>
@@ -245,8 +244,8 @@
         
         <div class="span5"><!-- sub inputs -->
             <div class="well">
-            <h2>
-                <?php echo Yii::t('P3MediaModule.crud','Relations')?>            </h2>
+            <!--<h2>
+                <?php echo Yii::t('P3MediaModule.crud','Relations')?>            </h2>-->
                                         </div>
         </div>
         <!-- sub inputs -->
