@@ -26,7 +26,6 @@
         "schmunk42/relation": "1.*",
         "sammaye/auditrail2": "1.*",
         "yiiext/status-behavior": "0.6.*",
-        "bwoester/yii-static-events-component": "1.*",
-        "bwoester/yii-event-interceptor": "1.*"
+        "bwoester/yii-static-events-component": "~1.0.2"
     }
 }
