@@ -108,6 +108,8 @@ class P3Media extends BaseP3Media
             $criteria = new CDbCriteria;
         }
 
+        $criteria->order = "t.updated_at DESC";
+
         $criteria->compare('t.id', $this->id);
         $criteria->compare('t.status', $this->status, true);
         $criteria->compare('t.type', $this->type, true);
@@ -280,4 +282,5 @@ class P3Media extends BaseP3Media
             )
         );
     }
+
 }
