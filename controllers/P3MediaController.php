@@ -32,7 +32,7 @@ public function accessRules()
         ),
         array(
             'allow',
-            'actions' => array('view', 'admin'), // let the user view the grid
+            'actions' => array('view', 'admin', 'ajaxSearch'), // let the user view the grid
             'roles' => array('P3media.P3Media.View'),
         ),
         array(
@@ -187,6 +187,23 @@ public function accessRules()
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
+    }
+
+    public function actionAjaxSearch()
+    {
+        $model        = new P3Media('search');
+        $model->title = $_GET['q'];
+        $result       = array();
+        foreach ($model->search()->getData() AS $data) {
+            $result[] = array(
+                'id'    => $data->id,
+                'title' => $data->title,
+                'image' => $data->image('p3media-upload')
+            );
+        }
+        echo $_GET['callback'] . "(";
+        echo CJSON::encode($result);
+        echo ")";
     }
 
 }
