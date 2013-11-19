@@ -277,7 +277,7 @@ class P3Media extends BaseP3Media
             array(
                  'id'        => $this->id,
                  'preset'    => $preset,
-                 'title'     => $this->title,
+                 'title'     => !empty($this->title) ? $this->title : 'media',
                  'extension' => '.' . Yii::app()->getModule('p3media')->params['presets'][$preset]['type']
             )
         );
