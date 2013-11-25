@@ -264,9 +264,9 @@ class P3Media extends BaseP3Media
     }
 
     /**
-     * Returns the file path to the source data file
+     * Returns the full path to the source data file
      */
-    public function getFilePath()
+    public function getFullPath()
     {
         return Yii::getPathOfAlias(Yii::app()->getModule('p3media')->dataAlias) . DIRECTORY_SEPARATOR . $this->path;
     }
