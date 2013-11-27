@@ -15,7 +15,7 @@ class P3Media extends BaseP3Media
     /**
      * @var string default status
      */
-    public $status = 'draft';
+    public $status = 'published';
 
     // Add your model-specific methods here. This file will not be overriden by gtc except you force it.
     public static function model($className = __CLASS__)
@@ -111,7 +111,7 @@ class P3Media extends BaseP3Media
         $criteria->order = "t.updated_at DESC";
 
         $criteria->compare('t.id', $this->id);
-        #$criteria->compare('t.status', $this->status, true);
+        $criteria->compare('t.status', $this->status, true);
         $criteria->compare('t.type', $this->type, true);
         $criteria->compare('t.name_id', $this->name_id, true);
         $criteria->compare('t.default_title', $this->default_title, true);
