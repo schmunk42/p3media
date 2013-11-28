@@ -15,7 +15,7 @@ class P3Media extends BaseP3Media
     /**
      * @var string default status
      */
-    public $status = 'draft';
+    public $status = 'published';
 
     // Add your model-specific methods here. This file will not be overriden by gtc except you force it.
     public static function model($className = __CLASS__)

@@ -192,12 +192,12 @@ public function accessRules()
     public function actionAjaxSearch()
     {
         $model        = new P3Media('search');
-        $model->title = $_GET['q'];
+        $model->default_title = $_GET['q'];
         $result       = array();
         foreach ($model->search()->getData() AS $data) {
             $result[] = array(
                 'id'    => $data->id,
-                'title' => $data->title,
+                'title' => $data->default_title,
                 'image' => $data->image('p3media-upload')
             );
         }
