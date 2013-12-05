@@ -71,7 +71,7 @@
                  'type'      => 'text',
                  'model'     => $data,
                  'attribute' => 'title',
-                 'url'       => $this->createUrl('/p3media/p3Media/ajaxUpdate'),
+                 'url'       => $this->createUrl('/p3media/p3Media/editableSaver'),
             )
         );
 
@@ -86,7 +86,7 @@
              'type'      => 'select',
              'model'     => $data,
              'attribute' => 'tree_parent_id',
-             'url'       => $this->createUrl('/p3media/p3MediaMeta/ajaxUpdate'),
+             'url'       => $this->createUrl('/p3media/p3Media/editableSaver'),
              'source'    => $this->directoriesList,
              'emptytext' => Yii::t('P3MediaModule.module', 'Select Folder')
         )
