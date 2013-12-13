@@ -211,7 +211,7 @@ class P3MediaImageAction extends CAction {
 
     private static function generateHash($model, $preset) {
         $pathInfo = pathinfo($model->path);
-        $hash = $model->title . "-" . substr(sha1($model->hash . CJSON::encode($preset->toArray())), 0, 10) . "-" . $model->id;
+        $hash = rawurlencode($model->title) . "-" . substr(sha1($model->hash . CJSON::encode($preset->toArray())), 0, 10) . "-" . $model->id;
         if (isset($preset['type'])) {
             $hash = $hash . '.' . $preset['type'];
         } else {
