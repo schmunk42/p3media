@@ -52,7 +52,6 @@ return array (
   'relation.P3Media' => '',
   'relation.P3MediaTranslations' => '',
   'relation.P3Medias' => '',
-  'relation.TreeParent' => '',
   'tooltip.access_append' => '',
   'tooltip.access_delete' => '',
   'tooltip.access_domain' => '',
@@ -82,8 +81,4 @@ return array (
   'tooltip.tree_position' => '',
   'tooltip.type' => '',
   'tooltip.updated_at' => '',
-  'P3Media' => '@@@@',
-  'P3MediaTranslations' => '@@@@',
-  'P3Medias' => '@@@@',
-  'TreeParent' => '@@@@',
 );
