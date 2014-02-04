@@ -15,7 +15,7 @@ class P3Media extends BaseP3Media
     /**
      * @var string default status
      */
-    public $status = 'draft';
+    public $status = 'published';
 
     // Add your model-specific methods here. This file will not be overriden by gtc except you force it.
     public static function model($className = __CLASS__)
@@ -272,14 +272,18 @@ class P3Media extends BaseP3Media
      */
     public function createUrl($preset = null)
     {
+        $type = isset(Yii::app()->getModule('p3media')->params['presets'][$preset]['type']) ?
+            Yii::app()->getModule('p3media')->params['presets'][$preset]['type'] :
+            substr(strrchr($this->mime_type, "/"), 1);
+
         return Yii::app()->controller->createUrl(
-            '/p3media/file/image',
-            array(
-                 'id'        => $this->id,
-                 'preset'    => $preset,
-                 'title'     => !empty($this->title) ? $this->title : 'media',
-                 'extension' => '.' . Yii::app()->getModule('p3media')->params['presets'][$preset]['type']
-            )
+                                     '/p3media/file/image',
+                                         array(
+                                              'id'        => $this->id,
+                                              'preset'    => $preset,
+                                              'title'     => !empty($this->title) ? $this->title : 'media',
+                                              'extension' => '.' . $type
+                                         )
         );
     }
 

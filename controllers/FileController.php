@@ -18,10 +18,10 @@
  * @since 3.0.1
  */
 class FileController extends Controller {
-	
+
 	/**
 	 * Imports {@link P3MediaImageAction}, available as /p3media/file/image.
-	 * 
+	 *
 	 * @return array
 	 */
 	public function actions() {
@@ -31,7 +31,7 @@ class FileController extends Controller {
 			),
 		);
 	}
-	
+
 	public function beforeAction($action) {
 		parent::beforeAction($action);
 		if (isset($_GET['path'])) { // TODO MetaData Access Check
@@ -45,7 +45,7 @@ class FileController extends Controller {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Return file as inline attachment, uses $_GET['id'] as input param.
 	 */
@@ -60,7 +60,8 @@ class FileController extends Controller {
 				throw new CException('File not found.');
 			} else {
 				header('Content-Disposition: attachment; filename="' . $model->title . '"');
-				header('Content-type: ' . $model->mimeType);
+				header('Content-type: ' . $model->mime_type);
+
 				readfile($filename);
 				exit;
 			}
