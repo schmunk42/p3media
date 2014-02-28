@@ -1,4 +1,4 @@
-<?php Yii::beginProfile('P3Media.view.toolbar'); ?>
+<?php Yii::beginProfile('P3MediaTranslation.view.toolbar'); ?>
 
 <?php
     $showDeleteButton = (Yii::app()->request->getParam("id"))?true:false;
@@ -43,7 +43,7 @@
                                 #'label'=>Yii::t('P3MediaModule.crud','Relations'),
                                 'icon'=>'icon-random',
                                 'items'=>array(array(
-                    'icon' => 'arrow-right','label' => Yii::t('p3MediaModule.model','relation.P3MediaTranslations'), 'url' =>array('/p3media/p3MediaTranslation/admin')),
+                    'icon' => 'circle-arrow-left','label' => Yii::t('p3MediaModule.model','relation.P3Media'), 'url' =>array('/p3media/p3Media/admin')),
             )
           ),
         ),
@@ -58,7 +58,7 @@
                            "icon"=>"icon-list-alt",
                            "size"=>"large",
                            "url"=>array("admin"),
-                           "visible"=>$showManageButton && (Yii::app()->user->checkAccess("P3media.P3Media.*") || Yii::app()->user->checkAccess("P3media.P3Media.View"))
+                           "visible"=>$showManageButton && (Yii::app()->user->checkAccess("P3media.P3MediaTranslation.*") || Yii::app()->user->checkAccess("P3media.P3MediaTranslation.View"))
                         ));
          ?>        </div>
     </div>
@@ -71,7 +71,7 @@
                        "icon"=>"chevron-left",
                        "size"=>"large",
                        "url"=>(isset($_GET["returnUrl"]))?$_GET["returnUrl"]:array("{$this->id}/admin"),
-                       "visible"=>$showCancelButton && (Yii::app()->user->checkAccess("P3media.P3Media.*") || Yii::app()->user->checkAccess("P3media.P3Media.View")),
+                       "visible"=>$showCancelButton && (Yii::app()->user->checkAccess("P3media.P3MediaTranslation.*") || Yii::app()->user->checkAccess("P3media.P3MediaTranslation.View")),
                        "htmlOptions"=>array(
                                        "class"=>"search-button",
                                        "data-toggle"=>"tooltip",
@@ -84,7 +84,7 @@
                         "size"=>"large",
                         "type"=>"success",
                         "url"=>array("create"),
-                        "visible"=>$showCreateButton && (Yii::app()->user->checkAccess("P3media.P3Media.*") || Yii::app()->user->checkAccess("P3media.P3Media.Create"))
+                        "visible"=>$showCreateButton && (Yii::app()->user->checkAccess("P3media.P3MediaTranslation.*") || Yii::app()->user->checkAccess("P3media.P3MediaTranslation.Create"))
                    ));
                     $this->widget("bootstrap.widgets.TbButton", array(
                         "label"=>Yii::t("P3MediaModule.crud","Delete"),
@@ -95,7 +95,7 @@
                             "submit"=>array("delete","id"=>$model->{$model->tableSchema->primaryKey}, "returnUrl"=>(Yii::app()->request->getParam("returnUrl"))?Yii::app()->request->getParam("returnUrl"):$this->createUrl("admin")),
                             "confirm"=>Yii::t("P3MediaModule.crud","Do you want to delete this item?")
                         ),
-                        "visible"=> $showDeleteButton && (Yii::app()->user->checkAccess("P3media.P3Media.*") || Yii::app()->user->checkAccess("P3media.P3Media.Delete"))
+                        "visible"=> $showDeleteButton && (Yii::app()->user->checkAccess("P3media.P3MediaTranslation.*") || Yii::app()->user->checkAccess("P3media.P3MediaTranslation.Delete"))
                     ));
                     $this->widget("bootstrap.widgets.TbButton", array(
                         #"label"=>Yii::t("P3MediaModule.crud","Update"),
@@ -103,14 +103,14 @@
                         "type"=>"primary",
                         "size"=>"large",
                         "url"=>array("update","id"=>$model->{$model->tableSchema->primaryKey}),
-                        "visible"=> $showUpdateButton &&  (Yii::app()->user->checkAccess("P3media.P3Media.*") || Yii::app()->user->checkAccess("P3media.P3Media.Update"))
+                        "visible"=> $showUpdateButton &&  (Yii::app()->user->checkAccess("P3media.P3MediaTranslation.*") || Yii::app()->user->checkAccess("P3media.P3MediaTranslation.Update"))
                     ));
                     $this->widget("bootstrap.widgets.TbButton", array(
                         #"label"=>Yii::t("P3MediaModule.crud","View"),
                         "icon"=>"icon-eye-open",
                         "size"=>"large",
                         "url"=>array("view","id"=>$model->{$model->tableSchema->primaryKey}),
-                        "visible"=>$showViewButton &&  (Yii::app()->user->checkAccess("P3media.P3Media.*") || Yii::app()->user->checkAccess("P3media.P3Media.View")),
+                        "visible"=>$showViewButton &&  (Yii::app()->user->checkAccess("P3media.P3MediaTranslation.*") || Yii::app()->user->checkAccess("P3media.P3MediaTranslation.View")),
                         "htmlOptions"=>array(
                                       "data-toggle"=>"tooltip",
                                       "title"=>Yii::t("P3MediaModule.crud","View Mode"),
@@ -124,7 +124,7 @@
                        "htmlOptions"=> array(
                             "onclick"=>"$('.crud-form form').submit();",
                        ),
-                       "visible"=>$showSaveButton &&  (Yii::app()->user->checkAccess("P3media.P3Media.*") || Yii::app()->user->checkAccess("P3media.P3Media.View"))
+                       "visible"=>$showSaveButton &&  (Yii::app()->user->checkAccess("P3media.P3MediaTranslation.*") || Yii::app()->user->checkAccess("P3media.P3MediaTranslation.View"))
                     ));
              ?>        </div>
         <?php if($this->action->id == 'admin'): ?>        <div class="btn-group">
@@ -168,7 +168,7 @@
 
 
 <?php if($this->action->id == 'admin'): ?><div class="search-form" style="display:none">
-    <?php Yii::beginProfile('P3Media.view.toolbar.search'); ?>    <?php $this->renderPartial('_search',array('model' => $model,)); ?>
-    <?php Yii::endProfile('P3Media.view.toolbar.search'); ?></div>
+    <?php Yii::beginProfile('P3MediaTranslation.view.toolbar.search'); ?>    <?php $this->renderPartial('_search',array('model' => $model,)); ?>
+    <?php Yii::endProfile('P3MediaTranslation.view.toolbar.search'); ?></div>
 <?php endif; ?>
-<?php Yii::endProfile('P3Media.view.toolbar'); ?>
+<?php Yii::endProfile('P3MediaTranslation.view.toolbar'); ?>

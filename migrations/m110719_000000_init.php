@@ -5,7 +5,7 @@ class m110719_000000_init extends CDbMigration {
 	public function up() {
 // Schema for table 'p3_media'
 
-		if (Yii::app()->db->schema instanceof CMysqlSchema)
+		if ($this->dbConnection->schema instanceof CMysqlSchema)
 			$options = 'ENGINE=InnoDB DEFAULT CHARSET=utf8';
 		else
 			$options = '';
@@ -60,7 +60,7 @@ class m110719_000000_init extends CDbMigration {
 
 // Foreign Keys for table 'p3_media_meta'
 
-		if ((Yii::app()->db->schema instanceof CSqliteSchema) == false):
+		if (($this->dbConnection->schema instanceof CSqliteSchema) == false):
 
 		$this->addForeignKey('fk_p3_media_id', 'p3_media_meta', 'id', 'p3_media', 'id', null, null); // update 'null' for ON DELTE and ON UPDATE
 

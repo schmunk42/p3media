@@ -112,7 +112,8 @@ class ImportController extends Controller {
 			case 'HEAD':
 			case 'GET':
 				$upload_handler->get();
-				// $contents = ob_get_contents();
+				#$contents = ob_get_contents();
+                $contents = "{}"; // we do not show existing files, since this list may get very long
 				break;
 			case 'POST':
 				// check if file exists
@@ -144,10 +145,12 @@ class ImportController extends Controller {
 					}
 
 				$upload_handler->post();
-				$contents = ob_get_contents();
-				$result = CJSON::decode($contents);
+				$upload_handler_output = ob_get_contents();
+				$result = CJSON::decode($upload_handler_output);
 				#var_dump($result);exit;
-				$this->createMedia($result[0]['name'], $this->module->getDataPath() . DIRECTORY_SEPARATOR . $result[0]['name']);
+				$savedMedia = $this->createMedia($result[0]['name'], $this->module->getDataPath() . DIRECTORY_SEPARATOR . $result[0]['name']);
+				$result[0]['p3_media_id'] = $savedMedia->id;
+				$contents = CJSON::encode($result);
 				break;
 			case 'DELETE':
 				$upload_handler->delete();
@@ -259,12 +262,14 @@ window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$mode
 		$model = new P3Media;
 		$model->detachBehavior('Upload');
 
-		$model->title = substr($fileName, 0, 25) . '-' . substr(uniqid(), -6); #P3StringHelper::cleanName($fileName, 32); // TODO: Add uniqid for title, so there's no unique conflict
-		$model->originalName = $fileName;
+		$model->default_title = $fileName;
+		$model->original_name = $fileName;
 
-		$model->type = 1; //P3Media::TYPE_FILE;
+		$model->type = P3Media::TYPE_FILE;
 		$model->path = $filePath;
-		$model->md5 = $md5;
+		$model->hash = $md5;
+
+        $model->access_domain = '*';
 
         if (function_exists("mime_content_type")){
 			$mime = mime_content_type($fullFilePath);
@@ -275,8 +280,8 @@ window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$mode
         } else {
 			$mime = $getimagesize['mime'];
 		}
-		$model->mimeType = $mime;
-		$model->info = CJSON::encode(getimagesize($fullFilePath));
+		$model->mime_type = $mime;
+		$model->info_php_json = CJSON::encode(getimagesize($fullFilePath));
 		$model->size = filesize($fullFilePath);
 
 		if ($model->save()) {

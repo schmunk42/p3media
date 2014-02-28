@@ -49,14 +49,13 @@ class CkeditorController extends Controller
             $model->attributes = $_GET['P3Media'];
         }
 
-        $this->render('index', array('model' => $model));
+        $this->render('index', array('model' => $model, 'defaultPreset' => null));
     }
 
     public function actionImage()
     {
         $model = new P3Media('search');
         $model->unsetAttributes();
-        $model->attributes = array('mimeType' => 'image');
 
         if (isset($_GET['P3Media'])) {
             $model->scenario   = "search";
@@ -69,6 +68,10 @@ class CkeditorController extends Controller
         }
 
         $model->dbCriteria->order = "id DESC";
+
+        $model->mime_type = 'image';
+        $model->tree_parent_id = false; // show all images - TODO
+        #$this->tree_parent_id = false; // TODO
 
         $this->render('index', array('model' => $model, 'defaultPreset' => null));
     }

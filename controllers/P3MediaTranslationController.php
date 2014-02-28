@@ -1,7 +1,7 @@
 <?php
 
 
-class P3MediaController extends Controller
+class P3MediaTranslationController extends Controller
 {
     #public $layout='//layouts/column2';
 
@@ -23,27 +23,27 @@ public function accessRules()
         array(
             'allow',
             'actions' => array('create', 'admin', 'view', 'update', 'editableSaver', 'delete'),
-            'roles' => array('P3media.P3Media.*'),
+            'roles' => array('P3media.P3MediaTranslation.*'),
         ),
         array(
             'allow',
             'actions' => array('create'),
-            'roles' => array('P3media.P3Media.Create'),
+            'roles' => array('P3media.P3MediaTranslation.Create'),
         ),
         array(
             'allow',
-            'actions' => array('view', 'admin', 'ajaxSearch'), // let the user view the grid
-            'roles' => array('P3media.P3Media.View'),
+            'actions' => array('view', 'admin'), // let the user view the grid
+            'roles' => array('P3media.P3MediaTranslation.View'),
         ),
         array(
             'allow',
             'actions' => array('update', 'editableSaver'),
-            'roles' => array('P3media.P3Media.Update'),
+            'roles' => array('P3media.P3MediaTranslation.Update'),
         ),
         array(
             'allow',
             'actions' => array('delete'),
-            'roles' => array('P3media.P3Media.Delete'),
+            'roles' => array('P3media.P3MediaTranslation.Delete'),
         ),
         array(
             'deny',
@@ -69,13 +69,13 @@ public function accessRules()
 
     public function actionCreate()
     {
-        $model = new P3Media;
+        $model = new P3MediaTranslation;
         $model->scenario = $this->scenario;
 
-        $this->performAjaxValidation($model, 'p3-media-form');
+        $this->performAjaxValidation($model, 'p3-media-translation-form');
 
-        if (isset($_POST['P3Media'])) {
-            $model->attributes = $_POST['P3Media'];
+        if (isset($_POST['P3MediaTranslation'])) {
+            $model->attributes = $_POST['P3MediaTranslation'];
 
             try {
                 if ($model->save()) {
@@ -88,8 +88,8 @@ public function accessRules()
             } catch (Exception $e) {
                 $model->addError('id', $e->getMessage());
             }
-        } elseif (isset($_GET['P3Media'])) {
-            $model->attributes = $_GET['P3Media'];
+        } elseif (isset($_GET['P3MediaTranslation'])) {
+            $model->attributes = $_GET['P3MediaTranslation'];
         }
 
         $this->render('create', array('model' => $model));
@@ -100,10 +100,10 @@ public function accessRules()
         $model = $this->loadModel($id);
         $model->scenario = $this->scenario;
 
-        $this->performAjaxValidation($model, 'p3-media-form');
+        $this->performAjaxValidation($model, 'p3-media-translation-form');
 
-        if (isset($_POST['P3Media'])) {
-            $model->attributes = $_POST['P3Media'];
+        if (isset($_POST['P3MediaTranslation'])) {
+            $model->attributes = $_POST['P3MediaTranslation'];
 
 
             try {
@@ -125,7 +125,7 @@ public function accessRules()
     public function actionEditableSaver()
     {
         Yii::import('TbEditableSaver');
-        $es = new TbEditableSaver('P3Media'); // classname of model to be updated
+        $es = new TbEditableSaver('P3MediaTranslation'); // classname of model to be updated
         $es->update();
     }
 
@@ -152,15 +152,15 @@ public function accessRules()
 
     public function actionAdmin()
     {
-        $model = new P3Media('search');
+        $model = new P3MediaTranslation('search');
         $scopes = $model->scopes();
         if (isset($scopes[$this->scope])) {
             $model->{$this->scope}();
         }
         $model->unsetAttributes();
 
-        if (isset($_GET['P3Media'])) {
-            $model->attributes = $_GET['P3Media'];
+        if (isset($_GET['P3MediaTranslation'])) {
+            $model->attributes = $_GET['P3MediaTranslation'];
         }
 
         $this->render('admin', array('model' => $model,));
@@ -168,7 +168,7 @@ public function accessRules()
 
     public function loadModel($id)
     {
-        $m = P3Media::model();
+        $m = P3MediaTranslation::model();
         // apply scope, if available
         $scopes = $m->scopes();
         if (isset($scopes[$this->scope])) {
@@ -183,27 +183,10 @@ public function accessRules()
 
     protected function performAjaxValidation($model)
     {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'p3-media-form') {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'p3-media-translation-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
-    }
-
-    public function actionAjaxSearch()
-    {
-        $model        = new P3Media('search');
-        $model->title = $_GET['q'];
-        $result       = array();
-        foreach ($model->search()->getData() AS $data) {
-            $result[] = array(
-                'id'    => $data->id,
-                'title' => $data->title,
-                'image' => $data->image('p3media-upload')
-            );
-        }
-        echo $_GET['callback'] . "(";
-        echo CJSON::encode($result);
-        echo ")";
     }
 
 }
