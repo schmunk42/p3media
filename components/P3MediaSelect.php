@@ -10,6 +10,7 @@ class P3MediaSelect extends CWidget
 {
     public $model;
     public $attribute;
+    public $preset = null;
 
     function run()
     {
@@ -19,6 +20,10 @@ class P3MediaSelect extends CWidget
                                          'data-init-text' => ($this->getMediaModel())?$this->getMediaModel()->title:null
                                     )
         );
+
+        if ($this->preset !== null) {
+            echo $selectedModel->image($this->preset);
+        }
 
         $id = get_class($this->model) . "_" . $this->attribute;
         $this->widget('ESelect2',
