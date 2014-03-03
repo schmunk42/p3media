@@ -99,7 +99,7 @@ EOD;
                 while (false !== ($file = readdir($handle))) {
                     if ($file != "." && $file != "..") {
                         $files[] = $file;
-                        $index[] = filemtime($fullRuntimePath . DIRECTORY_SEPARATOR . $file);
+                        $index[] = fileatime($fullRuntimePath . DIRECTORY_SEPARATOR . $file);
                     }
                 }
                 closedir($handle);
