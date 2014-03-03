@@ -32,9 +32,9 @@
 
         /**
          * @var float,
-         * @description will delete files older than 14 days
+         * @description will delete files older than xx days
          */
-        public $daysAlive = 14;
+        public $daysAlive;
 
         public function getHelp() {
             echo <<<EOD
