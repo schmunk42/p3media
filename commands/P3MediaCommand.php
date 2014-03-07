@@ -76,7 +76,7 @@ EOD;
          * Delete files in runtime.p3media after set $daysAlive
          * @param $daysAlive
          */
-        public function actionRuntime($daysAlive)
+        public function actionCleanupRuntime($daysAlive)
         {
             // Find p3media runtime path in application or webroot
             $relPath     = DIRECTORY_SEPARATOR . 'runtime' . DIRECTORY_SEPARATOR . 'p3media';
