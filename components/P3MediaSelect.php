@@ -5,16 +5,27 @@
  * Date: 25.02.13
  * Time: 17:11
  * To change this template use File | Settings | File Templates.
+ *
+ * @property $preset
  */
 class P3MediaSelect extends CWidget
 {
     public $model;
     public $attribute;
+    
+    /**
+     * @var string preset for image preview in admin view
+     */
+    public $preset = null;
 
     function run()
     {
         $selectedModel = $this->getMediaModel();
         $selectedTitle = $selectedModel ? $selectedModel->title : '';
+
+        if ($selectedModel && $this->preset !== null) {
+            echo $selectedModel->image($this->preset);
+        }
 
         $this->widget('TbSelect2',
                       array(
