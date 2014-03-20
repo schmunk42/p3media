@@ -34,7 +34,7 @@
          * @var float,
          * @description will delete files older than xx days
          */
-        public $daysAlive;
+        public $daysAlive = 30;
 
         public function getHelp() {
             echo <<<EOD
@@ -54,7 +54,7 @@ DESCRIPTION
     within the [--daysAlive]
 
 PARAMETERS
-    * daysAlive[float]
+    * daysAlive[float], default=30 days
     * quiet[bool]
 
 EOD;
