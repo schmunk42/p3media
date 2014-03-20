@@ -42,7 +42,7 @@ class FileController extends Controller {
                     $_GET['id'] = $model->id;
                     break;
                 case (!$model->isReadable):
-                    $this->redirect("/site/login");
+                    throw new CHttpException(405, 'Access denied.');
                     break;
                 default :
                     $_GET['id'] = 0;
@@ -59,17 +59,17 @@ class FileController extends Controller {
 	public function actionIndex() {
 		#$this->render('index');
 		if (!$_GET['id']) {
-			throw new CException('No file specified.');
+			throw new CHttpException(404, 'No file specified.');
 		} else {
 			$model = P3Media::model()->findByPk($_GET['id']);
 			$filename = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $model->path;
 			
             switch(true) {
                 case (!is_file($filename)):
-                    throw new CException('File not found.');
+                    throw new CHttpException(404, 'File not found.');
                     break;
                 case (!$model->isReadable):
-                    $this->redirect("/site/login");
+                    throw new CHttpException(405, 'Access denied.');
                     break;
                 default :
                     header('Content-Disposition: attachment; filename="' . $model->title . '"');
