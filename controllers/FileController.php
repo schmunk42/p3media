@@ -34,14 +34,21 @@ class FileController extends Controller {
 
 	public function beforeAction($action) {
 		parent::beforeAction($action);
-		if (isset($_GET['path'])) { // TODO MetaData Access Check
+		if (isset($_GET['path'])) {
 			$model = P3Media::model()->findByAttributes(array('path' => urldecode($_GET['path'])));
-			if ($model !== null) {
-				$_GET['id'] = $model->id;
-			} else {
-				$_GET['id'] = 0;
-				#return false;
-			}
+            
+            switch(true) {
+                case ($model !== null):
+                    $_GET['id'] = $model->id;
+                    break;
+                case (!$model->isReadable):
+                    throw new CHttpException(405, 'Access denied.');
+                    break;
+                default :
+                    $_GET['id'] = 0;
+                    break;
+            }
+
 		}
 		return true;
 	}
@@ -52,19 +59,26 @@ class FileController extends Controller {
 	public function actionIndex() {
 		#$this->render('index');
 		if (!$_GET['id']) {
-			throw new CException('No file specified.');
+			throw new CHttpException(404, 'No file specified.');
 		} else {
 			$model = P3Media::model()->findByPk($_GET['id']);
 			$filename = Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR . $model->path;
-			if (!is_file($filename)) {
-				throw new CException('File not found.');
-			} else {
-				header('Content-Disposition: attachment; filename="' . $model->title . '"');
-				header('Content-type: ' . $model->mime_type);
+			
+            switch(true) {
+                case (!is_file($filename)):
+                    throw new CHttpException(404, 'File not found.');
+                    break;
+                case (!$model->isReadable):
+                    throw new CHttpException(403, 'Access denied.');
+                    break;
+                default :
+                    header('Content-Disposition: attachment; filename="' . $model->title . '"');
+                    header('Content-type: ' . $model->mime_type);
 
-				readfile($filename);
-				exit;
-			}
+                    readfile($filename);
+                    exit;
+            }
+
 		}
 	}
 }
