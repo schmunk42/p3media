@@ -42,7 +42,7 @@ class FileController extends Controller {
                     $_GET['id'] = $model->id;
                     break;
                 case (!$model->isReadable):
-                    throw new CHttpException(405, 'Access denied.');
+                    throw new CHttpException(403, 'Access denied.');
                     break;
                 default :
                     $_GET['id'] = 0;
