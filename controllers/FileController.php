@@ -69,7 +69,7 @@ class FileController extends Controller {
                     throw new CHttpException(404, 'File not found.');
                     break;
                 case (!$model->isReadable):
-                    throw new CHttpException(405, 'Access denied.');
+                    throw new CHttpException(403, 'Access denied.');
                     break;
                 default :
                     header('Content-Disposition: attachment; filename="' . $model->title . '"');
