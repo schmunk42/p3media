@@ -197,11 +197,11 @@ class ImportController extends Controller {
 		if (is_file($filePath) && strstr($filePath, realpath(Yii::getPathOfAlias($this->module->importAlias)))) {
 			$md5 = md5_file($filePath);
 			$result['md5'] = $md5;
-			if (P3Media::model()->findByAttributes(array('md5' => $md5)) !== null) {
+			if (P3Media::model()->findByAttributes(array('hash' => $md5)) !== null) {
 				$message .= $warnings[] = "Identical file exists";
 				$message .= "<br/>";
 			}
-			if (P3Media::model()->findByAttributes(array('originalName' => $fileName)) !== null) {
+			if (P3Media::model()->findByAttributes(array('original_name' => $fileName)) !== null) {
 				$message .= $warnings[] = "File with same name exists";
 				$message .= "<br/>";
 			}
@@ -304,7 +304,7 @@ window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$mode
 	}
 
 	private function findMd5($md5) {
-		$model = P3Media::model()->findByAttributes(array('md5' => $md5));
+		$model = P3Media::model()->findByAttributes(array('hash' => $md5));
 		if ($model === null)
 			return false;
 		else
