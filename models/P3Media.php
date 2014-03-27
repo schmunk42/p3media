@@ -279,13 +279,15 @@ class P3Media extends BaseP3Media
      *
      * @return string
      */
-    public function createUrl($preset = null)
+    public function createUrl($preset = null, $absolute = false)
     {
         $type = isset(Yii::app()->getModule('p3media')->params['presets'][$preset]['type']) ?
             Yii::app()->getModule('p3media')->params['presets'][$preset]['type'] :
             substr(strrchr($this->mime_type, "/"), 1);
 
-        return Yii::app()->controller->createUrl(
+        $method = $absolute ? "createAbsoluteUrl" : "createUrl";
+
+        return Yii::app()->controller->$method(
                                      '/p3media/file/image',
                                          array(
                                               'id'        => $this->id,
