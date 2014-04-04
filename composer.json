@@ -24,6 +24,7 @@
         "schmunk42/access": "@stable",
         "schmunk42/adjacency-list-behavior": "@stable",
         "schmunk42/relation": "1.*",
+        "schmunk42/php-inflector": ">=0.1.0",
         "sammaye/auditrail2": "1.*",
         "yiiext/status-behavior": "0.7.*",
         "bwoester/yii-static-events-component": "~1.0.2"
