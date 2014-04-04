@@ -95,7 +95,7 @@ class P3MediaImageAction extends CAction {
 
         if (is_file($inFile)) {
 
-            $hash = self::generateHash($model, $preset);
+            $hash = self::generateFileName($model, $preset);
             $outFile = $path . DIRECTORY_SEPARATOR . $hash;
 
             if ($preset['originalFile'] === true) {
@@ -209,9 +209,10 @@ class P3MediaImageAction extends CAction {
         return $model;
   }
 
-    private static function generateHash($model, $preset) {
+    private static function generateFileName($model, $preset) {
         $pathInfo = pathinfo($model->path);
-        $hash = rawurlencode($model->title) . "-" . substr(sha1($model->hash . CJSON::encode($preset->toArray())), 0, 10) . "-" . $model->id;
+                
+        $hash = PhInflector::slug($model->title) . "-" . substr(sha1($model->hash . CJSON::encode($preset->toArray())), 0, 10) . "-" . $model->id;
         if (isset($preset['type'])) {
             $hash = $hash . '.' . $preset['type'];
         } else {
