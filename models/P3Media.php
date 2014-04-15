@@ -45,7 +45,7 @@ class P3Media extends BaseP3Media
                      'class'            => '\AdjacencyListBehavior',
                      'parentAttribute'  => 'tree_parent_id',
                      'parentRelation'   => 'treeParent',
-                     'childrenRelation' => 'p3Widgets'
+                     'childrenRelation' => 'p3Medias'
                  ),
                  'EventBridge' => array(
                      'class'  => 'EventBridgeBehavior',
