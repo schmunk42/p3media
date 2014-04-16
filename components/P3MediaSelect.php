@@ -16,7 +16,12 @@ class P3MediaSelect extends CWidget
      * set the tree_parent_id
      * @var integer
      */
-    public $tree_parent_id = null;
+    public $tree_parent_id      = null;
+    /**
+     * looking for the Model name
+     * @var null
+     */
+    public $tree_parent_name_id = null;
     /**
      * @var string preset for image preview in admin view
      */
@@ -36,6 +41,15 @@ class P3MediaSelect extends CWidget
         // Get only images form a specific folder
         if(!is_null($this->tree_parent_id)){
             $url = Yii::app()->controller->createUrl('/p3media/p3Media/ajaxSearch',array('tree_parent_id' => $this->tree_parent_id));
+        } elseif(!is_null($this->tree_parent_name_id)){
+            $model = P3Media::model()->findByAttributes(array('name_id'=>$this->tree_parent_name_id));
+
+            if(!is_null($model)){
+                $url = Yii::app()->controller->createUrl('/p3media/p3Media/ajaxSearch',array('tree_parent_id' => $model->id));
+            }else{
+                throw new CHttpException(500,"Folder with name_id : {$this->tree_parent_name_id} does not exist!");
+            }
+
         }
 
         $this->widget('TbSelect2',
