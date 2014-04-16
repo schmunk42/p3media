@@ -192,8 +192,14 @@ public function accessRules()
     public function actionAjaxSearch()
     {
         $model        = new P3Media('search');
+        // Get only images form a specific folder
+        if(isset($_GET['tree_parent_id'])){
+            $model->tree_parent_id = $_GET['tree_parent_id'];
+        }
+
         $model->default_title = $_GET['q'];
         $result       = array();
+
         foreach ($model->search()->getData() AS $data) {
             $result[] = array(
                 'id'    => $data->id,
@@ -201,6 +207,7 @@ public function accessRules()
                 'image' => $data->image('p3media-upload')
             );
         }
+
         echo $_GET['callback'] . "(";
         echo CJSON::encode($result);
         echo ")";

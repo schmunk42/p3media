@@ -12,7 +12,11 @@ class P3MediaSelect extends CWidget
 {
     public $model;
     public $attribute;
-    
+    /**
+     * set the tree_parent_id
+     * @var integer
+     */
+    public $tree_parent_id = null;
     /**
      * @var string preset for image preview in admin view
      */
@@ -27,6 +31,13 @@ class P3MediaSelect extends CWidget
             echo $selectedModel->image($this->preset);
         }
 
+        $url = Yii::app()->controller->createUrl('/p3media/p3Media/ajaxSearch');
+
+        // Get only images form a specific folder
+        if(!is_null($this->tree_parent_id)){
+            $url = Yii::app()->controller->createUrl('/p3media/p3Media/ajaxSearch',array('tree_parent_id' => $this->tree_parent_id));
+        }
+
         $this->widget('TbSelect2',
                       array(
                            'model'=> $this->model,
@@ -39,7 +50,7 @@ class P3MediaSelect extends CWidget
                                'allowClear'         => true,
                                'minimumInputLength' => 0,
                                'ajax'               => array(
-                                   'url'      => Yii::app()->controller->createUrl('/p3media/p3Media/ajaxSearch'),
+                                   'url'      => $url,
                                    'dataType' => 'jsonp',
                                    'data'     => 'js: function(term,page) {
                                                         return {
