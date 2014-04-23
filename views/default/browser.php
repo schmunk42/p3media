@@ -149,6 +149,7 @@
         }
     </style>
 
+    <h4><i class="icon icon-folder-open"></i>&nbsp;<?php echo $folder ?></h4>
     <div class="">
         <div class="span12">
             <div class="files">
