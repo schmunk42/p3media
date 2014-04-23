@@ -98,7 +98,7 @@
                          'icon'        => 'plus',
                          'url'         => array(
                              'p3Media/create',
-                             'P3Media'   => array('type' => P3Media::TYPE_FILE),
+                             'P3Media'   => array('type' => P3Media::TYPE_FILE, 'tree_parent_id'=>(isset($_GET['id'])?$_GET['id']:null)),
                              'returnUrl' => $this->createUrl("", $_GET)
                          ),
                          'htmlOptions' => array('class' => 'btn')
