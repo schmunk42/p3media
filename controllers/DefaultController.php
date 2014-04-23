@@ -58,20 +58,27 @@ class DefaultController extends Controller
         if (isset($_GET['P3Media'])) {
             $files->attributes = $_GET['P3Media'];
         }
-        // select files from folder
-        if (isset($_GET['id'])) {
-            $files->tree_parent_id = $_GET['id'];
-        }
-        else {
-            $files->tree_parent_id = null;
-        }
-
         // directories
         $directories = P3Media::model()->getFolderItems();
         $criteria = new CDbCriteria();
         $criteria->condition = "t.type = '".P3Media::TYPE_FOLDER."'";
         $this->directoriesList = CHtml::listData(P3Media::model()->findAll($criteria), 'id', 'title');
 
-        $this->render('browser', array('files' => $files, 'directories' => $directories));
+        $attributes = array('files' => $files, 'directories' => $directories);
+        // select files from folder
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $folderModel = P3Media::model()->findByPk($id);
+            $files->tree_parent_id = $id;
+            $attributes['folder'] = $folderModel->title;
+        }
+        else {
+            $files->tree_parent_id = null;
+            $attributes['folder'] = Yii::t('P3MediaModule.module', 'Uploaded Files');
+        }
+
+
+
+        $this->render('browser', $attributes);
     }
 }
