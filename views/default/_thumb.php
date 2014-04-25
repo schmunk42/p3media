@@ -1,6 +1,5 @@
 <li class="span3">
-    <span class="thumbnail" rel="tooltip" data-title="<?php echo "#" . $data->id ?>">
-
+    <div class="thumbnail" rel="tooltip" data-title="<?php echo "#" . $data->id ?>">
     <p>
         <?php
         $this->widget(
@@ -45,23 +44,23 @@
         ?>
     </p>
 
-        <div class="thumbnail-wrapper">
-            <?php
-            echo CHtml::link(
-                CHtml::image(
-                    Yii::app()->controller->createUrl(
-                        "/p3media/file/image",
-                        array("id" => $data->id, "preset" => "p3media-manager")
-                    ),
-                    $data->title,
-                    array("class" => "280x180")
+    <div class="thumbnail-wrapper">
+        <?php
+        echo CHtml::link(
+            CHtml::image(
+                Yii::app()->controller->createUrl(
+                    "/p3media/file/image",
+                    array("id" => $data->id, "preset" => "p3media-manager")
                 ),
-                array('p3Media/update', 'id' => $data->id, 'returnUrl' => $this->createUrl(''))
-            );
-            ?>
-        </div>
+                $data->title,
+                array("class" => "280x180")
+            ),
+            array('p3Media/update', 'id' => $data->id, 'returnUrl' => $this->createUrl(''))
+        );
+        ?>
+    </div>
 
-        <div class="ui-helper-clearfix"></div>
+    <div class="ui-helper-clearfix"></div>
     <h5>
         <i class=" icon-font"></i>
         <?php
@@ -77,50 +76,54 @@
 
         ?>
     </h5>
-<p>
-    <i class="icon-folder-close"></i>
-    <?php
-    $this->widget(
-        'TbEditableField',
-        array(
-            'type' => 'select',
-            'model' => $data,
-            'attribute' => 'tree_parent_id',
-            'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-            'source' => $this->directoriesList,
-            'emptytext' => Yii::t('P3MediaModule.module', 'Select Folder')
-        )
-    );
-    ?>
-</p>
-<p>
-    <i class="icon-list"></i>
-    <?php
-    $this->widget(
-        'TbEditableField',
-        array(
-            'type' => 'text',
-            'model' => $data,
-            'attribute' => 'tree_position',
-            'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-            'emptytext' => Yii::t('P3MediaModule.module', 'Position')
-        )
-    );
-    ?>
-</p>
-        <p>
-            <i class="icon icon-eye-open"></i>
-            <?php
-            $this->widget(
-                'TbEditableField',
-                array(
-                    'type' => 'select',
-                    'model' => $data,
-                    'attribute' => 'status',
-                    'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
-                    'source' => P3Media::optsStatus(),
-                )
-            );
-            ?>
-        </p>
+
+    <p>
+        <i class="icon-folder-close"></i>
+        <?php
+        $this->widget(
+            'TbEditableField',
+            array(
+                'type' => 'select',
+                'model' => $data,
+                'attribute' => 'tree_parent_id',
+                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
+                'source' => $this->directoriesList,
+                'emptytext' => Yii::t('P3MediaModule.module', 'Select Folder')
+            )
+        );
+        ?>
+    </p>
+
+    <p>
+        <i class="icon-list"></i>
+        <?php
+        $this->widget(
+            'TbEditableField',
+            array(
+                'type'      => 'text',
+                'model' => $data,
+                'attribute' => 'tree_position',
+                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
+                'emptytext' => Yii::t('P3MediaModule.module', 'Position')
+            )
+        );
+        ?>
+    </p>
+
+    <p>
+        <i class="icon icon-eye-open"></i>
+        <?php
+        $this->widget(
+            'TbEditableField',
+            array(
+                'type' => 'select',
+                'model' => $data,
+                'attribute' => 'status',
+                'url' => $this->createUrl('/p3media/p3Media/editableSaver'),
+                'source' => P3Media::optsStatus(),
+            )
+        );
+        ?>
+    </p>
+</div>
 </li>
