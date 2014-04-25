@@ -87,7 +87,7 @@ abstract class BaseP3Media extends CActiveRecord
     {
         return array(
             'treeParent' => array(self::BELONGS_TO, 'P3Media', 'tree_parent_id'),
-            'p3Medias' => array(self::HAS_MANY, 'P3Media', 'tree_parent_id'),
+            'p3Medias' => array(self::HAS_MANY, 'P3Media', 'tree_parent_id','order' => 'tree_position ASC'),
             'p3MediaTranslations' => array(self::HAS_MANY, 'P3MediaTranslation', 'p3_media_id'),
         );
     }

@@ -108,7 +108,7 @@ class P3Media extends BaseP3Media
             $criteria = new CDbCriteria;
         }
 
-        $criteria->order = "t.updated_at DESC";
+        $criteria->order = "t.tree_position ASC ,t.updated_at  DESC";
 
         $criteria->compare('t.id', $this->id);
         $criteria->compare('t.status', $this->status, true);
@@ -222,7 +222,8 @@ class P3Media extends BaseP3Media
     public function getFolderItems()
     {
         $criteria        = new CDbCriteria();
-        $criteria->order = "default_title";
+        $criteria->order = "tree_position";
+
         if ($this->id === null) {
             $criteria->condition = "t.type = '" . P3Media::TYPE_FOLDER . "' AND t.tree_parent_id IS NULL";
         } else {
