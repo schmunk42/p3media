@@ -1,7 +1,5 @@
 # Phundament 3 - Media
 
-p3media 0.1.0
-
 ##Requirements
 
  *  Yii 1.1.8
@@ -111,17 +109,6 @@ You can retrieve a resized version (see presets in config) of an image by using 
  *  Media presets for easy usage of [image](http://www.yiiframework.com/extension/image)
  *  CRUDs build with [gtc](http://www.yiiframework.com/extension/gii-template-collection/)
  *  Meta-data enabled (hierarchy, permissions)
-
-## Developer Checkout
-
-~~~
-git clone --recursive git://github.com/schmunk42/p3media.git \
-  protected/modules/p3media
-git clone --recursive git://github.com/schmunk42/p3extensions.git \
-  protected/extensions/p3extensions
-git clone --recursive https://github.com/schmunk42/gii-template-collection \
-  protected/extensions/gtc
-~~~
 
 
 ##Resources
