@@ -10,47 +10,47 @@ class P3MediaController extends Controller
     public $scope = "crud";
 
 
-public function filters()
-{
-    return array(
-        'accessControl',
-    );
-}
+    public function filters()
+    {
+        return array(
+            'accessControl',
+        );
+    }
 
-public function accessRules()
-{
-     return array(
-        array(
-            'allow',
-            'actions' => array('create', 'admin', 'view', 'update', 'editableSaver', 'delete', 'ajaxSearch'),
-            'roles' => array('P3media.P3Media.*'),
-        ),
-        array(
-            'allow',
-            'actions' => array('create'),
-            'roles' => array('P3media.P3Media.Create'),
-        ),
-        array(
-            'allow',
-            'actions' => array('view', 'admin', 'ajaxSearch'), // let the user view the grid
-            'roles' => array('P3media.P3Media.View'),
-        ),
-        array(
-            'allow',
-            'actions' => array('update', 'editableSaver'),
-            'roles' => array('P3media.P3Media.Update'),
-        ),
-        array(
-            'allow',
-            'actions' => array('delete'),
-            'roles' => array('P3media.P3Media.Delete'),
-        ),
-        array(
-            'deny',
-            'users' => array('*'),
-        ),
-    );
-}
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions' => array('create', 'admin', 'view', 'update', 'editableSaver', 'delete', 'ajaxSearch'),
+                'roles' => array('P3media.P3Media.*'),
+            ),
+            array(
+                'allow',
+                'actions' => array('create'),
+                'roles' => array('P3media.P3Media.Create'),
+            ),
+            array(
+                'allow',
+                'actions' => array('view', 'admin', 'ajaxSearch'), // let the user view the grid
+                'roles' => array('P3media.P3Media.View'),
+            ),
+            array(
+                'allow',
+                'actions' => array('update', 'editableSaver'),
+                'roles' => array('P3media.P3Media.Update'),
+            ),
+            array(
+                'allow',
+                'actions' => array('delete'),
+                'roles' => array('P3media.P3Media.Delete'),
+            ),
+            array(
+                'deny',
+                'users' => array('*'),
+            ),
+        );
+    }
 
     public function beforeAction($action)
     {
@@ -146,7 +146,10 @@ public function accessRules()
                 }
             }
         } else {
-            throw new CHttpException(400, Yii::t('P3MediaModule.crud', 'Invalid request. Please do not repeat this request again.'));
+            throw new CHttpException(400, Yii::t(
+                'P3MediaModule.crud',
+                'Invalid request. Please do not repeat this request again.'
+            ));
         }
     }
 
@@ -191,18 +194,18 @@ public function accessRules()
 
     public function actionAjaxSearch()
     {
-        $model        = new P3Media('search');
+        $model = new P3Media('search');
         // Get only images form a specific folder
-        if(isset($_GET['tree_parent_id'])){
+        if (isset($_GET['tree_parent_id'])) {
             $model->tree_parent_id = $_GET['tree_parent_id'];
         }
 
         $model->default_title = $_GET['q'];
-        $result       = array();
+        $result = array();
 
         foreach ($model->search()->getData() AS $data) {
             $result[] = array(
-                'id'    => $data->id,
+                'id' => $data->id,
                 'title' => $data->default_title,
                 'image' => $data->image('p3media-upload')
             );

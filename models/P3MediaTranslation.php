@@ -28,27 +28,27 @@ class P3MediaTranslation extends BaseP3MediaTranslation
         return array_merge(
             parent::behaviors(),
             array(
-                 'Access'           => array(
-                     'class' => '\PhAccessBehavior'
-                 ),
-                 'LoggableBehavior' => array(
-                     'class'   => 'vendor.sammaye.auditrail2.behaviors.LoggableBehavior',
-                     'ignored' => array(
-                         'created_at',
-                         'updated_at',
-                     )
-                 ),
-                 'Status'           => array(
-                     'class'       => 'vendor.yiiext.status-behavior.EStatusBehavior',
-                     'statusField' => 'status'
-                 ),
-                 'Timestamp'        => array(
-                     'class'               => 'zii.behaviors.CTimestampBehavior',
-                     'createAttribute'     => 'created_at',
-                     'updateAttribute'     => 'updated_at',
-                     'setUpdateOnCreate'   => true,
-                     'timestampExpression' => "date_format(date_create(),'Y-m-d H:i:s');",
-                 ),
+                'Access' => array(
+                    'class' => '\PhAccessBehavior'
+                ),
+                'LoggableBehavior' => array(
+                    'class' => 'vendor.sammaye.auditrail2.behaviors.LoggableBehavior',
+                    'ignored' => array(
+                        'created_at',
+                        'updated_at',
+                    )
+                ),
+                'Status' => array(
+                    'class' => 'vendor.yiiext.status-behavior.EStatusBehavior',
+                    'statusField' => 'status'
+                ),
+                'Timestamp' => array(
+                    'class' => 'zii.behaviors.CTimestampBehavior',
+                    'createAttribute' => 'created_at',
+                    'updateAttribute' => 'updated_at',
+                    'setUpdateOnCreate' => true,
+                    'timestampExpression' => "date_format(date_create(),'Y-m-d H:i:s');",
+                ),
             )
         );
     }
@@ -81,11 +81,11 @@ class P3MediaTranslation extends BaseP3MediaTranslation
 
     /**
      * @return array list of options
-
-    public static function optsAccessOwner()
-    {
-    return self::model()->Access->getAccessOwner();
-    }*/
+     *
+     * public static function optsAccessOwner()
+     * {
+     * return self::model()->Access->getAccessOwner();
+     * }*/
 
     /**
      * @return array list of options

@@ -1,35 +1,37 @@
-
 <!--
 <h2>
     <?php echo Yii::t('P3MediaModule.crud', 'Relations') ?></h2>
 -->
 
 
-<?php 
-        echo '<h3>';
-            echo Yii::t('p3MediaModule.model','relation.P3Medias').' ';
-            $this->widget(
-                'bootstrap.widgets.TbButtonGroup',
-                array(
-                    'type' => '', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                    'size' => 'mini',
-                    'buttons' => array(
-                        array(
-                            'icon' => 'icon-list-alt',
-                            'url' =>  array('//p3media/p3Media/admin','P3Media' => array('tree_parent_id' => $model->{$model->tableSchema->primaryKey}))
-                        ),
-                        array(
+<?php
+echo '<h3>';
+echo Yii::t('p3MediaModule.model', 'relation.P3Medias') . ' ';
+$this->widget(
+    'bootstrap.widgets.TbButtonGroup',
+    array(
+        'type' => '', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+        'size' => 'mini',
+        'buttons' => array(
+            array(
+                'icon' => 'icon-list-alt',
+                'url' => array(
+                    '//p3media/p3Media/admin',
+                    'P3Media' => array('tree_parent_id' => $model->{$model->tableSchema->primaryKey})
+                )
+            ),
+            array(
                 'icon' => 'icon-plus',
                 'url' => array(
                     '//p3media/p3Media/create',
                     'P3Media' => array('tree_parent_id' => $model->{$model->tableSchema->primaryKey})
                 )
             ),
-            
-                    )
-                )
-            );
-        echo '</h3>' ?>
+
+        )
+    )
+);
+echo '</h3>' ?>
 <ul>
 
     <?php
@@ -52,31 +54,34 @@
 </ul>
 
 
-<?php 
-        echo '<h3>';
-            echo Yii::t('p3MediaModule.model','relation.P3MediaTranslations').' ';
-            $this->widget(
-                'bootstrap.widgets.TbButtonGroup',
-                array(
-                    'type' => '', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                    'size' => 'mini',
-                    'buttons' => array(
-                        array(
-                            'icon' => 'icon-list-alt',
-                            'url' =>  array('//p3media/p3MediaTranslation/admin','P3MediaTranslation' => array('p3_media_id' => $model->{$model->tableSchema->primaryKey}))
-                        ),
-                        array(
+<?php
+echo '<h3>';
+echo Yii::t('p3MediaModule.model', 'relation.P3MediaTranslations') . ' ';
+$this->widget(
+    'bootstrap.widgets.TbButtonGroup',
+    array(
+        'type' => '', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+        'size' => 'mini',
+        'buttons' => array(
+            array(
+                'icon' => 'icon-list-alt',
+                'url' => array(
+                    '//p3media/p3MediaTranslation/admin',
+                    'P3MediaTranslation' => array('p3_media_id' => $model->{$model->tableSchema->primaryKey})
+                )
+            ),
+            array(
                 'icon' => 'icon-plus',
                 'url' => array(
                     '//p3media/p3MediaTranslation/create',
                     'P3MediaTranslation' => array('p3_media_id' => $model->{$model->tableSchema->primaryKey})
                 )
             ),
-            
-                    )
-                )
-            );
-        echo '</h3>' ?>
+
+        )
+    )
+);
+echo '</h3>' ?>
 <ul>
 
     <?php

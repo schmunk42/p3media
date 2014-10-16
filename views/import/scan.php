@@ -2,13 +2,17 @@
 
 
 <?php
-$this->widget('TbBreadcrumbs',
-              array(
-                   'links' => $this->breadcrumbs
-              ));
+$this->widget(
+    'TbBreadcrumbs',
+    array(
+        'links' => $this->breadcrumbs
+    )
+);
 ?>
 
-<h1><?php echo Yii::t('P3MediaModule.module', 'Media'); ?> <small><?php echo Yii::t('P3MediaModule.module', 'Scan'); ?></small></h1>
+<h1><?php echo Yii::t('P3MediaModule.module', 'Media'); ?>
+    <small><?php echo Yii::t('P3MediaModule.module', 'Scan'); ?></small>
+</h1>
 
 <p>
     Import alias: <?php echo $this->module->importAlias ?><br/>
@@ -23,23 +27,24 @@ $this->widget('TbBreadcrumbs',
         <?php
         Yii::app()->clientScript->registerScript(
             'p3media-check:' . $file->id,
-            CHtml::ajax(array(
-                             'url' => array('import/check', 'fileName' => $file->name),
-                             'dataType' => 'json',
-                             'beforeSend' => 'function(html){
+            CHtml::ajax(
+                array(
+                    'url' => array('import/check', 'fileName' => $file->name),
+                    'dataType' => 'json',
+                    'beforeSend' => 'function(html){
 					$("#status-' . $file->id . '").html("checking");
 				}',
-                             'success' => 'function(result){
+                    'success' => 'function(result){
 					$("#md5-' . $file->id . '").html(result.md5);
 					$("#status-' . $file->id . '").html(result.message);
 					if (result.errors == null) $("#button-' . $file->id . ' INPUT").attr("disabled", false);
 				}',
-                             'error' => 'function(jqXHR, textStatus, errorThrown){
+                    'error' => 'function(jqXHR, textStatus, errorThrown){
 					$("#status-' . $file->id . '").html(textStatus);
 					$("#status-' . $file->id . '").addClass("error");
 					//alert("err");
 				}',
-                        )
+                )
             )
         );
         ?>
@@ -50,27 +55,27 @@ $this->widget('TbBreadcrumbs',
                 echo CHtml::ajaxButton(
                     'import',
                     array(
-                         'import/localFile',
-                         'fileName' => $file->name,
+                        'import/localFile',
+                        'fileName' => $file->name,
                     ),
                     array(
-                         'dataType' => 'json',
-                         'success' => 'function(data){
+                        'dataType' => 'json',
+                        'success' => 'function(data){
 					$("#status-' . $file->id . '").html("Imported as \'"+data.title+"\'");
 				}',
-                         'error' => 'function(data){
+                        'error' => 'function(data){
 					$("#status-' . $file->id . '").html("Error");
 				}'
                     ),
                     array(
-                         'disabled' => 'disabled',
-                         'class' => 'btn'
+                        'disabled' => 'disabled',
+                        'class' => 'btn'
                     )
                 );
                 ?></td>
-            <td  class="span3" id="status-<?php echo $file->id ?>">-</td>
+            <td class="span3" id="status-<?php echo $file->id ?>">-</td>
         </tr>
-        <?php
+    <?php
     endforeach;
     ?>
 </table>

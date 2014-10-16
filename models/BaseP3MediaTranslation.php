@@ -37,9 +37,15 @@ abstract class BaseP3MediaTranslation extends CActiveRecord
     public function rules()
     {
         return array_merge(
-            parent::rules(), array(
+            parent::rules(),
+            array(
                 array('p3_media_id, status, language, title, access_owner', 'required'),
-                array('description, access_read, access_update, access_delete, copied_from_id, created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
+                array(
+                    'description, access_read, access_update, access_delete, copied_from_id, created_at, updated_at',
+                    'default',
+                    'setOnEmpty' => true,
+                    'value' => null
+                ),
                 array('p3_media_id, copied_from_id', 'numerical', 'integerOnly' => true),
                 array('status', 'length', 'max' => 32),
                 array('language', 'length', 'max' => 8),
@@ -47,7 +53,11 @@ abstract class BaseP3MediaTranslation extends CActiveRecord
                 array('access_owner', 'length', 'max' => 64),
                 array('access_read, access_update, access_delete', 'length', 'max' => 256),
                 array('description, created_at, updated_at', 'safe'),
-                array('id, p3_media_id, status, language, title, description, access_owner, access_read, access_update, access_delete, copied_from_id, created_at, updated_at', 'safe', 'on' => 'search'),
+                array(
+                    'id, p3_media_id, status, language, title, description, access_owner, access_read, access_update, access_delete, copied_from_id, created_at, updated_at',
+                    'safe',
+                    'on' => 'search'
+                ),
             )
         );
     }
@@ -60,7 +70,8 @@ abstract class BaseP3MediaTranslation extends CActiveRecord
     public function behaviors()
     {
         return array_merge(
-            parent::behaviors(), array(
+            parent::behaviors(),
+            array(
                 'savedRelated' => array(
                     'class' => '\GtcSaveRelationsBehavior'
                 )

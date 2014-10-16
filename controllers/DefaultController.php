@@ -33,12 +33,14 @@ class DefaultController extends Controller
     public function accessRules()
     {
         return array(
-            array('allow',
-                  'actions' => array('index', 'ckeditortest', 'browser', 'ajaxDirectory'),
-                  'expression' => 'Yii::app()->user->checkAccess("P3media.Default.*")',
+            array(
+                'allow',
+                'actions' => array('index', 'ckeditortest', 'browser', 'ajaxDirectory'),
+                'expression' => 'Yii::app()->user->checkAccess("P3media.Default.*")',
             ),
-            array('deny',
-                  'users' => array('*'),
+            array(
+                'deny',
+                'users' => array('*'),
             ),
         );
     }
@@ -61,7 +63,7 @@ class DefaultController extends Controller
         // directories
         $directories = P3Media::model()->getFolderItems();
         $criteria = new CDbCriteria();
-        $criteria->condition = "t.type = '".P3Media::TYPE_FOLDER."'";
+        $criteria->condition = "t.type = '" . P3Media::TYPE_FOLDER . "'";
         $this->directoriesList = CHtml::listData(P3Media::model()->findAll($criteria), 'id', 'title');
 
         $attributes = array('files' => $files, 'directories' => $directories);
@@ -71,12 +73,10 @@ class DefaultController extends Controller
             $folderModel = P3Media::model()->findByPk($id);
             $files->tree_parent_id = $id;
             $attributes['folder'] = $folderModel->title;
-        }
-        else {
+        } else {
             $files->tree_parent_id = null;
             $attributes['folder'] = Yii::t('P3MediaModule.module', 'Uploaded Files');
         }
-
 
 
         $this->render('browser', $attributes);

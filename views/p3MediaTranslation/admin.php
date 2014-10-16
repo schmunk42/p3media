@@ -6,19 +6,22 @@ $this->setPageTitle(
 );
 
 $this->breadcrumbs[] = Yii::t('p3MediaModule.model', 'P3 Media Translations');
-Yii::app()->clientScript->registerScript('search', "
-    $('.search-button').click(function(){
-        $('.search-form').toggle();
-        return false;
-    });
-    $('.search-form form').submit(function(){
-        $.fn.yiiGridView.update(
-            'p3-media-translation-grid',
-            {data: $(this).serialize()}
-        );
-        return false;
-    });
-    ");
+Yii::app()->clientScript->registerScript(
+    'search',
+    "
+       $('.search-button').click(function(){
+           $('.search-form').toggle();
+           return false;
+       });
+       $('.search-form form').submit(function(){
+           $.fn.yiiGridView.update(
+               'p3-media-translation-grid',
+               {data: $(this).serialize()}
+           );
+           return false;
+       });
+       "
+);
 ?>
 
 <?php $this->widget("TbBreadcrumbs", array("links" => $this->breadcrumbs)) ?>
@@ -35,7 +38,8 @@ Yii::app()->clientScript->registerScript('search', "
 
 
 <?php
-$this->widget('TbGridView',
+$this->widget(
+    'TbGridView',
     array(
         'id' => 'p3-media-translation-grid',
         'dataProvider' => $model->search(),
@@ -64,7 +68,7 @@ $this->widget('TbGridView',
             array(
                 'name' => 'p3_media_id',
                 'value' => 'CHtml::value($data, \'p3Media.itemLabel\')',
-                'filter' => '',//CHtml::listData(P3Media::model()->findAll(array('limit' => 1000)), 'id', 'itemLabel'),
+                'filter' => '', //CHtml::listData(P3Media::model()->findAll(array('limit' => 1000)), 'id', 'itemLabel'),
             ),
             array(
                 'class' => 'TbEditableColumn',

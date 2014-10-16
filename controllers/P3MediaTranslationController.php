@@ -10,47 +10,47 @@ class P3MediaTranslationController extends Controller
     public $scope = "crud";
 
 
-public function filters()
-{
-    return array(
-        'accessControl',
-    );
-}
+    public function filters()
+    {
+        return array(
+            'accessControl',
+        );
+    }
 
-public function accessRules()
-{
-     return array(
-        array(
-            'allow',
-            'actions' => array('create', 'admin', 'view', 'update', 'editableSaver', 'delete'),
-            'roles' => array('P3media.P3MediaTranslation.*'),
-        ),
-        array(
-            'allow',
-            'actions' => array('create'),
-            'roles' => array('P3media.P3MediaTranslation.Create'),
-        ),
-        array(
-            'allow',
-            'actions' => array('view', 'admin'), // let the user view the grid
-            'roles' => array('P3media.P3MediaTranslation.View'),
-        ),
-        array(
-            'allow',
-            'actions' => array('update', 'editableSaver'),
-            'roles' => array('P3media.P3MediaTranslation.Update'),
-        ),
-        array(
-            'allow',
-            'actions' => array('delete'),
-            'roles' => array('P3media.P3MediaTranslation.Delete'),
-        ),
-        array(
-            'deny',
-            'users' => array('*'),
-        ),
-    );
-}
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions' => array('create', 'admin', 'view', 'update', 'editableSaver', 'delete'),
+                'roles' => array('P3media.P3MediaTranslation.*'),
+            ),
+            array(
+                'allow',
+                'actions' => array('create'),
+                'roles' => array('P3media.P3MediaTranslation.Create'),
+            ),
+            array(
+                'allow',
+                'actions' => array('view', 'admin'), // let the user view the grid
+                'roles' => array('P3media.P3MediaTranslation.View'),
+            ),
+            array(
+                'allow',
+                'actions' => array('update', 'editableSaver'),
+                'roles' => array('P3media.P3MediaTranslation.Update'),
+            ),
+            array(
+                'allow',
+                'actions' => array('delete'),
+                'roles' => array('P3media.P3MediaTranslation.Delete'),
+            ),
+            array(
+                'deny',
+                'users' => array('*'),
+            ),
+        );
+    }
 
     public function beforeAction($action)
     {
@@ -146,7 +146,10 @@ public function accessRules()
                 }
             }
         } else {
-            throw new CHttpException(400, Yii::t('P3MediaModule.crud', 'Invalid request. Please do not repeat this request again.'));
+            throw new CHttpException(400, Yii::t(
+                'P3MediaModule.crud',
+                'Invalid request. Please do not repeat this request again.'
+            ));
         }
     }
 

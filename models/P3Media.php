@@ -9,7 +9,7 @@ Yii::import('P3MediaModule.behaviors.*');
 
 class P3Media extends BaseP3Media
 {
-    const TYPE_FILE   = 'file';
+    const TYPE_FILE = 'file';
     const TYPE_FOLDER = 'directory';
 
     /**
@@ -38,55 +38,55 @@ class P3Media extends BaseP3Media
         return array_merge(
             parent::behaviors(),
             array(
-                 'Access'           => array(
-                     'class' => '\PhAccessBehavior'
-                 ),
-                 'AdjacencyList'    => array(
-                     'class'            => '\AdjacencyListBehavior',
-                     'parentAttribute'  => 'tree_parent_id',
-                     'parentRelation'   => 'treeParent',
-                     'childrenRelation' => 'p3Medias'
-                 ),
-                 'EventBridge' => array(
-                     'class'  => 'EventBridgeBehavior',
-                 ),
-                 'LoggableBehavior' => array(
-                     'class'   => 'vendor.sammaye.auditrail2.behaviors.LoggableBehavior',
-                     'ignored' => array(
-                         'created_at',
-                         'updated_at',
-                     )
-                 ),
-                 'Status'           => array(
-                     'class'       => 'vendor.yiiext.status-behavior.EStatusBehavior',
-                     'statusField' => 'status'
-                 ),
-                 'Timestamp'        => array(
-                     'class'               => 'zii.behaviors.CTimestampBehavior',
-                     'createAttribute'     => 'created_at',
-                     'updateAttribute'     => 'updated_at',
-                     'setUpdateOnCreate'   => true,
-                     'timestampExpression' => "date_format(date_create(),'Y-m-d H:i:s');",
-                 ),
-                 'Translatable'     => array(
-                     'class'                 => 'vendor.mikehaertl.translatable.Translatable',
-                     'translationRelation'   => 'p3MediaTranslations',
-                     'translationAttributes' => array(
-                         'title',
-                         'description',
-                     ),
-                     'fallbackColumns'       => array(
-                         'title'       => 'default_title',
-                         'description' => 'default_description',
-                     ),
-                 ),
-                 'UploadBehaviour'  => array(
-                     'class'            => 'PhFileUploadBehavior',
-                     'dataAlias'        => Yii::app()->getModule('p3media')->dataAlias,
-                     'trashAlias'       => Yii::app()->getModule('p3media')->dataAlias . ".trash",
-                     'dataSubdirectory' => Yii::app()->user->id,
-                     'uploadInstance'   => 'fileUpload',
-                 ),
+                'Access' => array(
+                    'class' => '\PhAccessBehavior'
+                ),
+                'AdjacencyList' => array(
+                    'class' => '\AdjacencyListBehavior',
+                    'parentAttribute' => 'tree_parent_id',
+                    'parentRelation' => 'treeParent',
+                    'childrenRelation' => 'p3Medias'
+                ),
+                'EventBridge' => array(
+                    'class' => 'EventBridgeBehavior',
+                ),
+                'LoggableBehavior' => array(
+                    'class' => 'vendor.sammaye.auditrail2.behaviors.LoggableBehavior',
+                    'ignored' => array(
+                        'created_at',
+                        'updated_at',
+                    )
+                ),
+                'Status' => array(
+                    'class' => 'vendor.yiiext.status-behavior.EStatusBehavior',
+                    'statusField' => 'status'
+                ),
+                'Timestamp' => array(
+                    'class' => 'zii.behaviors.CTimestampBehavior',
+                    'createAttribute' => 'created_at',
+                    'updateAttribute' => 'updated_at',
+                    'setUpdateOnCreate' => true,
+                    'timestampExpression' => "date_format(date_create(),'Y-m-d H:i:s');",
+                ),
+                'Translatable' => array(
+                    'class' => 'vendor.mikehaertl.translatable.Translatable',
+                    'translationRelation' => 'p3MediaTranslations',
+                    'translationAttributes' => array(
+                        'title',
+                        'description',
+                    ),
+                    'fallbackColumns' => array(
+                        'title' => 'default_title',
+                        'description' => 'default_description',
+                    ),
+                ),
+                'UploadBehaviour' => array(
+                    'class' => 'PhFileUploadBehavior',
+                    'dataAlias' => Yii::app()->getModule('p3media')->dataAlias,
+                    'trashAlias' => Yii::app()->getModule('p3media')->dataAlias . ".trash",
+                    'dataSubdirectory' => Yii::app()->user->id,
+                    'uploadInstance' => 'fileUpload',
+                ),
             )
         );
     }
@@ -145,8 +145,8 @@ class P3Media extends BaseP3Media
         }
 
         return new CActiveDataProvider(get_class($this), array(
-                                                              'criteria' => $criteria,
-                                                         ));
+            'criteria' => $criteria,
+        ));
     }
 
     /**
@@ -168,11 +168,11 @@ class P3Media extends BaseP3Media
 
     /**
      * @return array list of options
-
-    public static function optsAccessOwner()
-    {
-    return self::model()->Access->getAccessOwner();
-    }*/
+     *
+     * public static function optsAccessOwner()
+     * {
+     * return self::model()->Access->getAccessOwner();
+     * }*/
 
     /**
      * @return array list of options
@@ -221,7 +221,7 @@ class P3Media extends BaseP3Media
      */
     public function getFolderItems()
     {
-        $criteria        = new CDbCriteria();
+        $criteria = new CDbCriteria();
         $criteria->order = "tree_position";
 
         if ($this->id === null) {
@@ -238,7 +238,7 @@ class P3Media extends BaseP3Media
             } else {
                 $items[] = array(
                     'label' => $model->title,
-                    'url'   => array("", "id" => $model->id),
+                    'url' => array("", "id" => $model->id),
                     'items' => $model->getFolderItems()
                 );
             }
@@ -250,7 +250,7 @@ class P3Media extends BaseP3Media
     /**
      * Generates an image tag with the given preset
      *
-     * @param null  $preset
+     * @param null $preset
      * @param array $htmlOptions
      *
      * @return string
@@ -288,13 +288,13 @@ class P3Media extends BaseP3Media
         $method = $absolute ? "createAbsoluteUrl" : "createUrl";
 
         return Yii::app()->controller->$method(
-                                     '/p3media/file/image',
-                                         array(
-                                              'id'        => $this->id,
-                                              'preset'    => $preset,
-                                              'title'     => !empty($this->title) ? $this->title : 'media',
-                                              'extension' => '.' . $type
-                                         )
+            '/p3media/file/image',
+            array(
+                'id' => $this->id,
+                'preset' => $preset,
+                'title' => !empty($this->title) ? $this->title : 'media',
+                'extension' => '.' . $type
+            )
         );
     }
 

@@ -12,9 +12,11 @@
                 foreach ($this->module->params['presets'] AS $key => $preset) {
 
                     // skip presets without name
-                    if (empty($preset['name'])) continue;
+                    if (empty($preset['name'])) {
+                        continue;
+                    }
 
-                    $identifier        = $key . ((isset($preset['type'])) ? '|' . $preset['type'] : '');
+                    $identifier = $key . ((isset($preset['type'])) ? '|' . $preset['type'] : '');
                     $data[$identifier] = (isset($preset['name'])) ? $preset['name'] : $key;
                 }
                 echo CHtml::dropDownList("preset", $defaultPreset, $data, array("class" => "span3 btn"));
@@ -31,8 +33,8 @@
                 $form = $this->beginWidget(
                     'CActiveForm',
                     array(
-                         //'action'=>Yii::app()->createUrl($this->route),
-                         'method' => 'get',
+                        //'action'=>Yii::app()->createUrl($this->route),
+                        'method' => 'get',
                     )
                 );
                 ?>
@@ -44,8 +46,8 @@
                     Yii::t('P3MediaModule.module', 'Upload'),
                     array('/p3media/import/upload'),
                     array(
-                         'target' => '_blank',
-                         'class'  => 'btn'
+                        'target' => '_blank',
+                        'class' => 'btn'
                     )
                 );
                 echo " ";
@@ -53,9 +55,9 @@
                     Yii::t('P3MediaModule.module', 'Reload'),
                     null,
                     array(
-                         'target'  => '_blank',
-                         'class'   => 'btn',
-                         'onclick' => 'location.reload();'
+                        'target' => '_blank',
+                        'class' => 'btn',
+                        'onclick' => 'location.reload();'
                     )
                 );
                 ?>
@@ -68,9 +70,9 @@
                     $model,
                     'default_title',
                     array(
-                         'size'      => 12,
-                         'maxlength' => 32,
-                         'class'     => 'span2'
+                        'size' => 12,
+                        'maxlength' => 32,
+                        'class' => 'span2'
                     )
                 ); ?>
                 <?php #echo $form->label($model, 'description'); ?>
@@ -78,8 +80,15 @@
 
                 <!--
                 <?php echo $form->label($model, 'type'); ?>
-                <?php echo $form->textField($model, 'type', array('size' => 12, 'maxlength' => 32,
-                                                                  'class' => 'span1')); ?>-->
+                <?php echo $form->textField(
+                    $model,
+                    'type',
+                    array(
+                        'size' => 12,
+                        'maxlength' => 32,
+                        'class' => 'span1'
+                    )
+                ); ?>-->
 
 
                 <?php echo CHtml::submitButton(Yii::t('P3MediaModule.module', 'Search')); ?>
@@ -107,15 +116,15 @@
             $this->widget(
                 'bootstrap.widgets.TbThumbnails',
                 array(
-                     'dataProvider'    => $dataProvider,
-                     'template'        => "{pager}\n{items}",
-                     'pager'           => array(
-                         'class'               => 'TbPager',
-                         'displayFirstAndLast' => true,
-                     ),
-                     'itemView'        => '_thumb',
-                     // Remove the existing tooltips and rebind the plugin after each ajax-call.
-                     'afterAjaxUpdate' => "js:function() {
+                    'dataProvider' => $dataProvider,
+                    'template' => "{pager}\n{items}",
+                    'pager' => array(
+                        'class' => 'TbPager',
+                        'displayFirstAndLast' => true,
+                    ),
+                    'itemView' => '_thumb',
+                    // Remove the existing tooltips and rebind the plugin after each ajax-call.
+                    'afterAjaxUpdate' => "js:function() {
         jQuery('.tooltip').remove();
         jQuery('a[rel=tooltip]').tooltip();
     }",
