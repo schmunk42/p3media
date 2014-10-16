@@ -69,7 +69,7 @@ class ImportController extends Controller {
 		exit;
 	}
 
-	protected function uploadHandler() {
+	protected function uploadHandler($field_name = 'file') {
 		#$script_dir = Yii::app()->basePath.'/data/p3media';
 		#$script_dir_url = Yii::app()->baseUrl;
 		$options = array(
@@ -77,7 +77,7 @@ class ImportController extends Controller {
 			'upload_dir' => $this->module->getDataPath() . DIRECTORY_SEPARATOR,
 			'upload_url' => $this->createUrl("/p3media/p3Media/update", array('preset' => 'raw', 'path' => Yii::app()->user->id . "/")),
 			'script_url' => $this->createUrl("/p3media/import/uploadFile", array('path' => Yii::app()->user->id . "/")),
-			'field_name' => 'files',
+			'field_name' => $field_name,
 			'image_versions' => array(
 				// Uncomment the following version to restrict the size of
 				// uploaded images. You can also add additional versions with
