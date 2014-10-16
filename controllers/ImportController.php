@@ -157,6 +157,9 @@ class ImportController extends Controller {
                 $upload_handler_output = ob_get_contents();
                 $contents = CJSON::decode($upload_handler_output);
 				$result = $this->deleteMedia($_GET['path']);
+                if (!$result) {
+                    throw new CException("Delete media failed");
+                }
 				break;
 			default:
 				header('HTTP/1.0 405 Method Not Allowed');
