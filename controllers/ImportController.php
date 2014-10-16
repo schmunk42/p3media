@@ -70,7 +70,7 @@ class ImportController extends Controller {
 		#echo CJSON::encode($result);
 	}
 
-	private function uploadHandler() {
+	protected function uploadHandler() {
 		#$script_dir = Yii::app()->basePath.'/data/p3media';
 		#$script_dir_url = Yii::app()->baseUrl;
 		$options = array(
@@ -253,7 +253,7 @@ window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$mode
         }
     }
 
-	private function createMedia($fileName, $fullFilePath) {
+	protected function createMedia($fileName, $fullFilePath) {
 		$filePath = str_replace(Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR,"", $fullFilePath);
 
 		$md5 = md5_file($fullFilePath);
@@ -295,7 +295,7 @@ window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$mode
 		}
 	}
 
-	private function deleteMedia($filePath) {
+    protected function deleteMedia($filePath) {
 		$attributes['path'] = $filePath;
 		$model = P3Media::model()->findByAttributes($attributes);
 		#unlink($this->getDataPath(true) . DIRECTORY_SEPARATOR . $fileName);
@@ -303,7 +303,7 @@ window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$mode
 		return true;
 	}
 
-	private function findMd5($md5) {
+    protected function findMd5($md5) {
 		$model = P3Media::model()->findByAttributes(array('hash' => $md5));
 		if ($model === null)
 			return false;
