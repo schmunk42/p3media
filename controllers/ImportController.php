@@ -149,6 +149,7 @@ class ImportController extends Controller {
 				#var_dump($result);exit;
 				$savedMedia = $this->createMedia($result[0]['name'], $this->module->getDataPath() . DIRECTORY_SEPARATOR . $result[0]['name']);
 				$result[0]['p3_media_id'] = $savedMedia->id;
+                $result[0]['p3_media'] = $savedMedia->attributes;
                 $contents = $result;
 				break;
 			case 'DELETE':
