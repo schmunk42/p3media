@@ -65,12 +65,11 @@ class ImportController extends Controller {
 
 	public function actionUploadFile() {
 		$contents = $this->uploadHandler();
-		echo $contents;
+		echo CJSON::encode($contents);
 		exit;
-		#echo CJSON::encode($result);
 	}
 
-	private function uploadHandler() {
+	protected function uploadHandler($field_name = 'file') {
 		#$script_dir = Yii::app()->basePath.'/data/p3media';
 		#$script_dir_url = Yii::app()->baseUrl;
 		$options = array(
@@ -78,7 +77,7 @@ class ImportController extends Controller {
 			'upload_dir' => $this->module->getDataPath() . DIRECTORY_SEPARATOR,
 			'upload_url' => $this->createUrl("/p3media/p3Media/update", array('preset' => 'raw', 'path' => Yii::app()->user->id . "/")),
 			'script_url' => $this->createUrl("/p3media/import/uploadFile", array('path' => Yii::app()->user->id . "/")),
-			'field_name' => 'files',
+			'field_name' => $field_name,
 			'image_versions' => array(
 				// Uncomment the following version to restrict the size of
 				// uploaded images. You can also add additional versions with
@@ -112,8 +111,9 @@ class ImportController extends Controller {
 			case 'HEAD':
 			case 'GET':
 				$upload_handler->get();
-				#$contents = ob_get_contents();
-                $contents = "{}"; // we do not show existing files, since this list may get very long
+                //$upload_handler_output = ob_get_contents();
+                //$contents = CJSON::decode($upload_handler_output);
+                $contents = array(); // we do not show existing files, since this list may get very long
 				break;
 			case 'POST':
 				// check if file exists
@@ -139,8 +139,7 @@ class ImportController extends Controller {
 								$file->error .= $error[0];
 							}
 							$info[] = $file;
-							echo CJSON::encode($info);
-							exit;
+                            return $info;
 						}
 					}
 
@@ -150,16 +149,22 @@ class ImportController extends Controller {
 				#var_dump($result);exit;
 				$savedMedia = $this->createMedia($result[0]['name'], $this->module->getDataPath() . DIRECTORY_SEPARATOR . $result[0]['name']);
 				$result[0]['p3_media_id'] = $savedMedia->id;
-				$contents = CJSON::encode($result);
+                $result[0]['p3_media'] = $savedMedia->attributes;
+                $contents = $result;
 				break;
 			case 'DELETE':
 				$upload_handler->delete();
-				$contents = ob_get_contents();
+                $upload_handler_output = ob_get_contents();
+                $contents = CJSON::decode($upload_handler_output);
 				$result = $this->deleteMedia($_GET['path']);
+                if (!$result) {
+                    throw new CException("Delete media failed");
+                }
 				break;
 			default:
 				header('HTTP/1.0 405 Method Not Allowed');
-				$contents = ob_get_contents();
+                $upload_handler_output = ob_get_contents();
+                $contents = CJSON::decode($upload_handler_output);
 		}
 		ob_end_clean();
 
@@ -253,7 +258,7 @@ window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$mode
         }
     }
 
-	private function createMedia($fileName, $fullFilePath) {
+	protected function createMedia($fileName, $fullFilePath) {
 		$filePath = str_replace(Yii::getPathOfAlias($this->module->dataAlias) . DIRECTORY_SEPARATOR,"", $fullFilePath);
 
 		$md5 = md5_file($fullFilePath);
@@ -295,7 +300,7 @@ window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$mode
 		}
 	}
 
-	private function deleteMedia($filePath) {
+    protected function deleteMedia($filePath) {
 		$attributes['path'] = $filePath;
 		$model = P3Media::model()->findByAttributes($attributes);
 		#unlink($this->getDataPath(true) . DIRECTORY_SEPARATOR . $fileName);
@@ -303,7 +308,7 @@ window.parent.CKEDITOR.tools.callFunction(".$_GET['CKEditorFuncNum'].", '".$mode
 		return true;
 	}
 
-	private function findMd5($md5) {
+    protected function findMd5($md5) {
 		$model = P3Media::model()->findByAttributes(array('hash' => $md5));
 		if ($model === null)
 			return false;
