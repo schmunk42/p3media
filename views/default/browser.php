@@ -10,7 +10,7 @@
     $this->widget(
         'TbBreadcrumbs',
         array(
-             'links' => $this->breadcrumbs
+            'links' => $this->breadcrumbs
         )
     );
     ?>
@@ -37,11 +37,11 @@
         <?php $this->widget(
             'bootstrap.widgets.TbButton',
             array(
-                 'type'  => 'primary',
-                 'icon'  => 'refresh white',
-                 'label' => Yii::t('P3MediaModule.module', 'Browser'),
-                 'url'   => array(''),
-                 #'htmlOptions' => array('data-dismiss' => 'modal'),
+                'type' => 'primary',
+                'icon' => 'refresh white',
+                'label' => Yii::t('P3MediaModule.module', 'Browser'),
+                'url' => array(''),
+                #'htmlOptions' => array('data-dismiss' => 'modal'),
             )
         ); ?>
     </div>
@@ -52,13 +52,13 @@
         $this->widget(
             'bootstrap.widgets.TbButton',
             array(
-                 'label'       => Yii::t('P3MediaModule.module', 'Upload'),
-                 'icon'        => 'circle-arrow-up',
-                 'htmlOptions' => array(
-                     'data-toggle' => 'modal',
-                     'data-target' => '#upload-modal',
-                 ),
-                 'active'      => false
+                'label' => Yii::t('P3MediaModule.module', 'Upload'),
+                'icon' => 'circle-arrow-up',
+                'htmlOptions' => array(
+                    'data-toggle' => 'modal',
+                    'data-target' => '#upload-modal',
+                ),
+                'active' => false
             )
         );
         ?>
@@ -67,22 +67,22 @@
         $this->widget(
             'bootstrap.widgets.TbButtonGroup',
             array(
-                 #'size'=>'large',
-                 #'type'=>'inverse', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                 'buttons' => array(
-                     array(
-                         'label'  => Yii::t('P3MediaModule.module', 'Uploaded Files'),
-                         'icon'   => 'inbox',
-                         'url'    => array("/p3media/default/browser"),
-                         'active' => false
-                     ),
-                     array(
-                         #'class' => 'TbMenu',
-                         'label' => Yii::t('P3MediaModule.module', 'Folders'),
-                         'icon'  => 'folder-open',
-                         'items' => $directories
-                     )
-                 ),
+                #'size'=>'large',
+                #'type'=>'inverse', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                'buttons' => array(
+                    array(
+                        'label' => Yii::t('P3MediaModule.module', 'Uploaded Files'),
+                        'icon' => 'inbox',
+                        'url' => array("/p3media/default/browser"),
+                        'active' => false
+                    ),
+                    array(
+                        #'class' => 'TbMenu',
+                        'label' => Yii::t('P3MediaModule.module', 'Folders'),
+                        'icon' => 'folder-open',
+                        'items' => $directories
+                    )
+                ),
             )
         );
         ?>
@@ -92,28 +92,31 @@
         $this->widget(
             'bootstrap.widgets.TbButtonGroup',
             array(
-                 'buttons' => array(
-                     array(
-                         'label'       => Yii::t('P3MediaModule.module', 'Create File'),
-                         'icon'        => 'plus',
-                         'url'         => array(
-                             'p3Media/create',
-                             'P3Media'   => array('type' => P3Media::TYPE_FILE, 'tree_parent_id'=>(isset($_GET['id'])?$_GET['id']:null)),
-                             'returnUrl' => $this->createUrl("", $_GET)
-                         ),
-                         'htmlOptions' => array('class' => 'btn')
-                     ),
-                     array(
-                         'label'       => Yii::t('P3MediaModule.module', 'Create Folder'),
-                         'icon'        => 'plus',
-                         'url'         => array(
-                             'p3Media/create',
-                             'P3Media'   => array('type' => P3Media::TYPE_FOLDER),
-                             'returnUrl' => $this->createUrl("", $_GET)
-                         ),
-                         'htmlOptions' => array('class' => 'btn')
-                     )
-                 )
+                'buttons' => array(
+                    array(
+                        'label' => Yii::t('P3MediaModule.module', 'Create File'),
+                        'icon' => 'plus',
+                        'url' => array(
+                            'p3Media/create',
+                            'P3Media' => array(
+                                'type' => P3Media::TYPE_FILE,
+                                'tree_parent_id' => (isset($_GET['id']) ? $_GET['id'] : null)
+                            ),
+                            'returnUrl' => $this->createUrl("", $_GET)
+                        ),
+                        'htmlOptions' => array('class' => 'btn')
+                    ),
+                    array(
+                        'label' => Yii::t('P3MediaModule.module', 'Create Folder'),
+                        'icon' => 'plus',
+                        'url' => array(
+                            'p3Media/create',
+                            'P3Media' => array('type' => P3Media::TYPE_FOLDER),
+                            'returnUrl' => $this->createUrl("", $_GET)
+                        ),
+                        'htmlOptions' => array('class' => 'btn')
+                    )
+                )
             )
         );
         ?>
@@ -122,13 +125,13 @@
         $this->widget(
             'bootstrap.widgets.TbButton',
             array(
-                 'label'       => Yii::t('P3MediaModule.module', 'Manage'),
-                 'icon'        => 'list',
-                 'url'         => array(
-                     'p3Media/admin',
-                     'returnUrl' => $this->createUrl("", $_GET)
-                 ),
-                 'htmlOptions' => array('class' => 'btn')
+                'label' => Yii::t('P3MediaModule.module', 'Manage'),
+                'icon' => 'list',
+                'url' => array(
+                    'p3Media/admin',
+                    'returnUrl' => $this->createUrl("", $_GET)
+                ),
+                'htmlOptions' => array('class' => 'btn')
             )
         );
         ?>
@@ -136,7 +139,11 @@
 
         <div class="form-search" style="display: inline-block">
             <?php $form = $this->beginWidget('CActiveForm', array('method' => 'get')); ?>
-            <?php echo $form->textField($files, 'default_title', array('size' => 12, 'maxlength' => 32, 'class' => '')); ?>
+            <?php echo $form->textField(
+                $files,
+                'default_title',
+                array('size' => 12, 'maxlength' => 32, 'class' => '')
+            ); ?>
             <?php echo CHtml::submitButton(Yii::t('P3MediaModule.module', 'Search'), array('class' => 'btn')); ?>
             <?php $this->endWidget(); ?>
         </div>
@@ -150,6 +157,7 @@
     </style>
 
     <h4><i class="icon icon-folder-open"></i>&nbsp;<?php echo $folder ?></h4>
+
     <div class="">
         <div class="span12">
             <div class="files">
@@ -160,19 +168,21 @@
                 $this->widget(
                     'bootstrap.widgets.TbThumbnails',
                     array(
-                         'ajaxUpdate'         => false, // TODO: ajax update not compatible with EditableField
-                         'dataProvider'       => $dataProvider,
-                         'template'           => "{sorter}<br/>\n{pager}\n{items}\n{pager}\n{summary}", // TODO: fix template (no br)
-                         'sortableAttributes' => array(
-                             'title' => Yii::t('P3MediaModule.module', 'Title'),
-                             'id'    => Yii::t('P3MediaModule.module', 'ID')
-                         ),
-                         'pager'              => array(
-                             'class'               => 'TbPager',
-                             'displayFirstAndLast' => true,
-                         ),
-                         'itemView'           => '_thumb',
-                         // Remove the existing tooltips and rebind the plugin after each ajax-call.
+                        'ajaxUpdate' => false,
+                        // TODO: ajax update not compatible with EditableField
+                        'dataProvider' => $dataProvider,
+                        'template' => "{sorter}<br/>\n{pager}\n{items}\n{pager}\n{summary}",
+                        // TODO: fix template (no br)
+                        'sortableAttributes' => array(
+                            'title' => Yii::t('P3MediaModule.module', 'Title'),
+                            'id' => Yii::t('P3MediaModule.module', 'ID')
+                        ),
+                        'pager' => array(
+                            'class' => 'TbPager',
+                            'displayFirstAndLast' => true,
+                        ),
+                        'itemView' => '_thumb',
+                        // Remove the existing tooltips and rebind the plugin after each ajax-call.
                     )
                 );
                 ?>

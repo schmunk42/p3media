@@ -6,7 +6,7 @@ $appRoot = dirname(__FILE__) . '/../../../..';
 
 // define table list (eg. you don't need MANY_MANY tables)
 $tables = array(
-    'p3_media'             => 'p3Media',
+    'p3_media' => 'p3Media',
     'p3_media_translation' => 'p3MediaTranslation'
 );
 
@@ -24,17 +24,17 @@ foreach ($cruds AS $crud) {
         "templates" => array(
             'slim' => $appRoot . '/vendor/phundament/gii-template-collection/fullCrud/templates/slim',
         ),
-        "model"     => array(
-            "model"                  => "vendor.phundament.p3Media.models." . ucfirst($crud),
-            "controller"             => 'p3media/' . $crud,
-            'messageCatalog'         => 'p3MediaModule.model',
+        "model" => array(
+            "model" => "vendor.phundament.p3Media.models." . ucfirst($crud),
+            "controller" => 'p3media/' . $crud,
+            'messageCatalog' => 'p3MediaModule.model',
             'messageCatalogStandard' => 'P3MediaModule.crud',
-            'providers'              => array(
+            'providers' => array(
                 'vendor.phundament.gii-template-collection.fullCrud.providers.GtcPartialViewProvider',
                 'vendor.schmunk42.giic.examples.PhFieldProvider'
             ),
-            "template"               => "slim",
-            'formEnctype'            => 'multipart/form-data'
+            "template" => "slim",
+            'formEnctype' => 'multipart/form-data'
         )
     );
 }

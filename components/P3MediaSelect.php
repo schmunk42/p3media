@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by JetBrains PhpStorm.
  * User: tobias
@@ -16,7 +17,7 @@ class P3MediaSelect extends CWidget
      * set the tree_parent_id
      * @var integer
      */
-    public $tree_parent_id      = null;
+    public $tree_parent_id = null;
     /**
      * looking for the Model name
      * @var null
@@ -39,44 +40,51 @@ class P3MediaSelect extends CWidget
         $url = Yii::app()->controller->createUrl('/p3media/p3Media/ajaxSearch');
 
         // Get only images form a specific folder
-        if(!is_null($this->tree_parent_id)){
-            $url = Yii::app()->controller->createUrl('/p3media/p3Media/ajaxSearch',array('tree_parent_id' => $this->tree_parent_id));
-        } elseif(!is_null($this->tree_parent_name_id)){
-            $model = P3Media::model()->findByAttributes(array('name_id'=>$this->tree_parent_name_id));
+        if (!is_null($this->tree_parent_id)) {
+            $url = Yii::app()->controller->createUrl(
+                '/p3media/p3Media/ajaxSearch',
+                array('tree_parent_id' => $this->tree_parent_id)
+            );
+        } elseif (!is_null($this->tree_parent_name_id)) {
+            $model = P3Media::model()->findByAttributes(array('name_id' => $this->tree_parent_name_id));
 
-            if(!is_null($model)){
-                $url = Yii::app()->controller->createUrl('/p3media/p3Media/ajaxSearch',array('tree_parent_id' => $model->id));
-            }else{
-                throw new CHttpException(500,"Folder with name_id : {$this->tree_parent_name_id} does not exist!");
+            if (!is_null($model)) {
+                $url = Yii::app()->controller->createUrl(
+                    '/p3media/p3Media/ajaxSearch',
+                    array('tree_parent_id' => $model->id)
+                );
+            } else {
+                throw new CHttpException(500, "Folder with name_id : {$this->tree_parent_name_id} does not exist!");
             }
 
         }
 
-        $this->widget('TbSelect2',
-                      array(
-                           'model'=> $this->model,
-                           'attribute'=> $this->attribute,
-                           'asDropDownList' => false,
-                           'options'  => array(
-                               'width'              => '100%',
-                               'height'             => '500px',
-                               'placeholder'        => 'Search Media File',
-                               'allowClear'         => true,
-                               'minimumInputLength' => 0,
-                               'ajax'               => array(
-                                   'url'      => $url,
-                                   'dataType' => 'jsonp',
-                                   'data'     => 'js: function(term,page) {
+        $this->widget(
+            'TbSelect2',
+            array(
+                'model' => $this->model,
+                'attribute' => $this->attribute,
+                'asDropDownList' => false,
+                'options' => array(
+                    'width' => '100%',
+                    'height' => '500px',
+                    'placeholder' => 'Search Media File',
+                    'allowClear' => true,
+                    'minimumInputLength' => 0,
+                    'ajax' => array(
+                        'url' => $url,
+                        'dataType' => 'jsonp',
+                        'data' => 'js: function(term,page) {
                                                         return {
                                                             q: term,
                                                             page_limit: 10,
                                                         };
                                                   }',
-                                   'results'  => 'js: function(data,page){
+                        'results' => 'js: function(data,page){
                                                       return {results: data};
                                                   }',
-                               ),
-                               'formatResult'       => 'js:function(data){
+                    ),
+                    'formatResult' => 'js:function(data){
                                     var markup = "<table class=\"data-result\"><tr>";
                                     if (data.image !== undefined) {
                                         markup += "<td class=\"data-image\">" + data.image.replace(/\&amp;/, "&") + "</td>";
@@ -85,14 +93,15 @@ class P3MediaSelect extends CWidget
                                     markup += "</td></tr></table>";
                                     return markup;
                                 }',
-                               'formatSelection'    => 'js: function(data) {
+                    'formatSelection' => 'js: function(data) {
                                     return data.title;
                                 }',
-                               'initSelection'      => 'js: function(element, callback) {
+                    'initSelection' => 'js: function(element, callback) {
                                     callback({"title":"' . $selectedTitle . '"});
                                }'
-                           ),
-                      ));
+                ),
+            )
+        );
     }
 
     private function getMediaModel()

@@ -30,12 +30,14 @@ class CkeditorController extends Controller
     public function accessRules()
     {
         return array(
-            array('allow',
-                  'actions'    => array('index', 'image', 'flash', 'upload'),
-                  'expression' => 'Yii::app()->user->checkAccess("P3media.Ckeditor.*")',
+            array(
+                'allow',
+                'actions' => array('index', 'image', 'flash', 'upload'),
+                'expression' => 'Yii::app()->user->checkAccess("P3media.Ckeditor.*")',
             ),
-            array('deny',
-                  'users' => array('*'),
+            array(
+                'deny',
+                'users' => array('*'),
             ),
         );
     }
@@ -58,7 +60,7 @@ class CkeditorController extends Controller
         $model->unsetAttributes();
 
         if (isset($_GET['P3Media'])) {
-            $model->scenario   = "search";
+            $model->scenario = "search";
             $model->attributes = $_GET['P3Media'];
         }
 

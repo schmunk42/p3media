@@ -51,9 +51,15 @@ abstract class BaseP3Media extends CActiveRecord
     public function rules()
     {
         return array_merge(
-            parent::rules(), array(
+            parent::rules(),
+            array(
                 array('status, default_title, access_owner, access_domain', 'required'),
-                array('type, name_id, default_description, tree_parent_id, tree_position, custom_data_json, original_name, path, hash, mime_type, size, info_php_json, info_image_magick_json, access_read, access_update, access_delete, access_append, copied_from_id, created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
+                array(
+                    'type, name_id, default_description, tree_parent_id, tree_position, custom_data_json, original_name, path, hash, mime_type, size, info_php_json, info_image_magick_json, access_read, access_update, access_delete, access_append, copied_from_id, created_at, updated_at',
+                    'default',
+                    'setOnEmpty' => true,
+                    'value' => null
+                ),
                 array('tree_parent_id, tree_position, size, copied_from_id', 'numerical', 'integerOnly' => true),
                 array('status', 'length', 'max' => 32),
                 array('type, name_id, hash, access_owner', 'length', 'max' => 64),
@@ -61,8 +67,15 @@ abstract class BaseP3Media extends CActiveRecord
                 array('original_name, mime_type', 'length', 'max' => 128),
                 array('access_domain', 'length', 'max' => 8),
                 array('access_read, access_update, access_delete, access_append', 'length', 'max' => 256),
-                array('default_description, custom_data_json, info_php_json, info_image_magick_json, created_at, updated_at', 'safe'),
-                array('id, status, type, name_id, default_title, default_description, tree_parent_id, tree_position, custom_data_json, original_name, path, hash, mime_type, size, info_php_json, info_image_magick_json, access_owner, access_domain, access_read, access_update, access_delete, access_append, copied_from_id, created_at, updated_at', 'safe', 'on' => 'search'),
+                array(
+                    'default_description, custom_data_json, info_php_json, info_image_magick_json, created_at, updated_at',
+                    'safe'
+                ),
+                array(
+                    'id, status, type, name_id, default_title, default_description, tree_parent_id, tree_position, custom_data_json, original_name, path, hash, mime_type, size, info_php_json, info_image_magick_json, access_owner, access_domain, access_read, access_update, access_delete, access_append, copied_from_id, created_at, updated_at',
+                    'safe',
+                    'on' => 'search'
+                ),
             )
         );
     }
@@ -75,7 +88,8 @@ abstract class BaseP3Media extends CActiveRecord
     public function behaviors()
     {
         return array_merge(
-            parent::behaviors(), array(
+            parent::behaviors(),
+            array(
                 'savedRelated' => array(
                     'class' => '\GtcSaveRelationsBehavior'
                 )
@@ -87,7 +101,7 @@ abstract class BaseP3Media extends CActiveRecord
     {
         return array(
             'treeParent' => array(self::BELONGS_TO, 'P3Media', 'tree_parent_id'),
-            'p3Medias' => array(self::HAS_MANY, 'P3Media', 'tree_parent_id','order' => 'tree_position ASC'),
+            'p3Medias' => array(self::HAS_MANY, 'P3Media', 'tree_parent_id', 'order' => 'tree_position ASC'),
             'p3MediaTranslations' => array(self::HAS_MANY, 'P3MediaTranslation', 'p3_media_id'),
         );
     }
@@ -122,7 +136,6 @@ abstract class BaseP3Media extends CActiveRecord
             'updated_at' => Yii::t('P3MediaModule.model', 'Updated At'),
         );
     }
-
 
 
 }

@@ -16,20 +16,20 @@
  *
  * NOTE, this file must be saved in UTF-8 encoding.
  */
-return array (
-  'Cancel' => 'Abbrechen',
-  'Create' => 'Erstellen',
-  'Data' => 'Daten',
-  'Delete' => 'Löschen',
-  'Do you want to delete this item?' => 'Wollen Sie diesen Eintrag löschen?',
-  'Fields with <span class="required">*</span> are required.' => 'Felder mit <span class="required">*</span> sind Pflichtfelder.',
-  'Invalid request. Please do not repeat this request again.' => 'Ungültige Anfrage. Bitte wiederholen Sie diese Anfrage nicht.',
-  'Manage' => 'Verwalten',
-  'Relations' => 'Verknüpfungen',
-  'Save' => 'Speichern',
-  'Search' => 'Suche',
-  'Switch to view mode to edit related records.' => 'Wechseln Sie in den Ansichtsmodus, um verknüpfte Datensätze zu bearbeiten.',
-  'The requested page does not exist.' => 'Die angeforderte Seite existiert nicht.',
-  'Update' => 'Aktualisieren',
-  'View' => 'Ansicht',
+return array(
+    'Cancel' => 'Abbrechen',
+    'Create' => 'Erstellen',
+    'Data' => 'Daten',
+    'Delete' => 'Löschen',
+    'Do you want to delete this item?' => 'Wollen Sie diesen Eintrag löschen?',
+    'Fields with <span class="required">*</span> are required.' => 'Felder mit <span class="required">*</span> sind Pflichtfelder.',
+    'Invalid request. Please do not repeat this request again.' => 'Ungültige Anfrage. Bitte wiederholen Sie diese Anfrage nicht.',
+    'Manage' => 'Verwalten',
+    'Relations' => 'Verknüpfungen',
+    'Save' => 'Speichern',
+    'Search' => 'Suche',
+    'Switch to view mode to edit related records.' => 'Wechseln Sie in den Ansichtsmodus, um verknüpfte Datensätze zu bearbeiten.',
+    'The requested page does not exist.' => 'Die angeforderte Seite existiert nicht.',
+    'Update' => 'Aktualisieren',
+    'View' => 'Ansicht',
 );

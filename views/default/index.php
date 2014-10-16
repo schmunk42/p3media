@@ -5,14 +5,17 @@ $this->breadcrumbs = array(
 ?>
 
 <?php
-$this->widget('TbBreadcrumbs',
-              array(
-                   'links' => $this->breadcrumbs
-              )
+$this->widget(
+    'TbBreadcrumbs',
+    array(
+        'links' => $this->breadcrumbs
+    )
 );
 ?>
 
-<h1><?php echo Yii::t('P3MediaModule.module', 'Media'); ?> <small><?php echo Yii::t('P3MediaModule.module', 'Overview'); ?></small></h1>
+<h1><?php echo Yii::t('P3MediaModule.module', 'Media'); ?>
+    <small><?php echo Yii::t('P3MediaModule.module', 'Overview'); ?></small>
+</h1>
 
 
 <h2><?php echo Yii::t('P3MediaModule.module', 'Manage'); ?></h2>
