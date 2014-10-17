@@ -35,7 +35,7 @@ class ImportController extends Controller
         return array(
             array(
                 'allow',
-                'actions' => array('upload', 'uploadPopup', 'uploadFile', 'ckeditorUpload'),
+                'actions' => array('upload', 'uploadPopup', 'uploadFile', 'ckeditorUpload', 'sirTrevorUpload'),
                 'expression' => 'Yii::app()->user->checkAccess("P3media.Import.*")',
             ),
             array(
@@ -296,6 +296,54 @@ window.parent.CKEDITOR.tools.callFunction(" . $_GET['CKEditorFuncNum'] . ", '" .
         } else {
             throw new CHttpException(500, 'File not found');
         }
+    }
+
+    /**
+     * Action for file uploads via sir-trevor image block from SirTrevorWidget (input widget)
+     * Making it compatible with http://www.yiiframework.com/extension/yii2-sir-trevor-js/
+     *
+     * @param $root relative base folder
+     * @return array|mixed
+     * @throws CException
+     */
+    public function actionSirTrevorUpload()
+    {
+
+        $response = new stdClass();
+        $response->message = "File";
+
+        if ($_FILES['attachment']['tmp_name']) {
+
+            $fileName = $_FILES['attachment']['name']['file'];
+            $importFilePath = $_FILES['attachment']['tmp_name']['file'];
+
+            $dataFilePath = $this->module->getDataPath() . DIRECTORY_SEPARATOR . $fileName;
+            if (copy($importFilePath, $dataFilePath)) {
+
+                /* @var P3Media $model */
+                $model = $this->createMedia($fileName, $dataFilePath);
+
+                if ($model) {
+                    $response->file = array(
+                        'url' => $model->createUrl("original-public", true),
+                        'p3_media_id' => $model->id,
+                    );
+                    header("HTTP/1.1 200 OK");
+                } else {
+                    header("HTTP/1.1 500 Database record could not be saved.");
+                }
+
+            } else {
+                header("HTTP/1.1 500 File could not be saved.");
+            }
+
+        } else {
+            header("HTTP/1.1 500 No temporary file found after upload.");
+        }
+
+        echo CJSON::encode($response);
+        exit;
+
     }
 
     protected function createMedia($fileName, $fullFilePath)
