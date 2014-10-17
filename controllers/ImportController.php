@@ -71,6 +71,11 @@ class ImportController extends Controller
         $this->render('upload');
     }
 
+    /**
+     * Upload handler action to handle $_FILES contents sent by jQuery File Upload
+     * @return array|mixed
+     * @throws CException
+     */
     public function actionUploadFile()
     {
         $contents = $this->uploadHandler();
@@ -78,7 +83,12 @@ class ImportController extends Controller
         exit;
     }
 
-    protected function uploadHandler($field_name = 'file')
+    /**
+     * Upload handler helper method to handle $_FILES contents sent by jQuery File Upload
+     * @return array|mixed
+     * @throws CException
+     */
+    protected function uploadHandler()
     {
         #$script_dir = Yii::app()->basePath.'/data/p3media';
         #$script_dir_url = Yii::app()->baseUrl;
@@ -90,7 +100,7 @@ class ImportController extends Controller
                     array('preset' => 'raw', 'path' => Yii::app()->user->id . "/")
                 ),
             'script_url' => $this->createUrl("/p3media/import/uploadFile", array('path' => Yii::app()->user->id . "/")),
-            'field_name' => $field_name,
+            'field_name' => 'files',
             'image_versions' => array(
                 // Uncomment the following version to restrict the size of
                 // uploaded images. You can also add additional versions with
@@ -126,10 +136,11 @@ class ImportController extends Controller
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'HEAD':
             case 'GET':
-                $upload_handler->get();
+                //$upload_handler->get();
                 //$upload_handler_output = ob_get_contents();
                 //$contents = CJSON::decode($upload_handler_output);
                 $contents = array(); // we do not show existing files, since this list may get very long
+                header('HTTP/1.0 405 Method Not Allowed');
                 break;
             case 'POST':
                 // check if file exists
