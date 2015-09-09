@@ -48,10 +48,7 @@
             <?php
             echo CHtml::link(
                 CHtml::image(
-                    Yii::app()->controller->createUrl(
-                        "/p3media/file/image",
-                        array("id" => $data->id, "preset" => "p3media-manager")
-                    ),
+                    $data->createUrl("p3media-manager"),
                     $data->title,
                     array("class" => "280x180")
                 ),
