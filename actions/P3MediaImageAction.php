@@ -53,7 +53,7 @@ class P3MediaImageAction extends CAction
             $result = self::processMediaFile($identifier, $preset);
             switch ($result['type']) {
                 case 'public':
-                    header('location: ' . $result['data']);
+                    header('location: ' . $result['data'], true, 301);
                     break;
                 case 'protected':
                     $model = self::findModel($identifier);
